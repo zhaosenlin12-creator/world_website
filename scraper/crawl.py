@@ -9,7 +9,8 @@ OUT = ROOT / "scraper"
 OUT.mkdir(exist_ok=True, parents=True)
 DATA = ROOT / "data"
 DATA.mkdir(exist_ok=True, parents=True)
-IMG_DIR = ROOT / "public" / "assets" / "images"
+IMG_DIR = ROOT / "scraper" / "cache" / "images"
+IMG_DIR.mkdir(parents=True, exist_ok=True)
 IMG_DIR.mkdir(exist_ok=True, parents=True)
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
 BASE = "https://science.nasa.gov"

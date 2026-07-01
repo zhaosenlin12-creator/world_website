@@ -9,3 +9,4 @@ scripts/screenshots/
 scraper/*.log
 scraper/*.err
 scraper/*.out
+scraper/cache/
