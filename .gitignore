@@ -1,0 +1,8 @@
+node_modules/
+.next/
+server_out.log
+server_err.log
+build.log
+dev.log
+scraper/screenshots/
+scripts/screenshots/

@@ -1,0 +1,286 @@
+Fetching 142 URLs...
+  (1/142) https://science.nasa.gov/ceres/
+    ok title="Ceres" body=9 imgs=15
+  (2/142) https://science.nasa.gov/ceres/exploration/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (3/142) https://science.nasa.gov/ceres/facts/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (4/142) https://science.nasa.gov/ceres/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (5/142) https://science.nasa.gov/ceres/moons/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (6/142) https://science.nasa.gov/earth/
+    ok title="Earth - NASA Science" body=13 imgs=26
+  (7/142) https://science.nasa.gov/earth/exploration/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (8/142) https://science.nasa.gov/earth/facts/
+    ok title="Facts About Earth" body=32 imgs=12
+  (9/142) https://science.nasa.gov/earth/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (10/142) https://science.nasa.gov/earth/moons/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (11/142) https://science.nasa.gov/eris/
+    ok title="Eris" body=17 imgs=6
+  (12/142) https://science.nasa.gov/eris/exploration/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (13/142) https://science.nasa.gov/eris/facts/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (14/142) https://science.nasa.gov/eris/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (15/142) https://science.nasa.gov/eris/moons/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (16/142) https://science.nasa.gov/haumea/
+    ok title="Haumea" body=14 imgs=4
+  (17/142) https://science.nasa.gov/haumea/exploration/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (18/142) https://science.nasa.gov/haumea/facts/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (19/142) https://science.nasa.gov/haumea/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (20/142) https://science.nasa.gov/haumea/moons/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (21/142) https://science.nasa.gov/jupiter/
+    ok title="Jupiter" body=15 imgs=28
+  (22/142) https://science.nasa.gov/jupiter/exploration/
+    ok title="Jupiter Exploration" body=9 imgs=15
+  (23/142) https://science.nasa.gov/jupiter/facts/
+    ok title="Jupiter Facts" body=29 imgs=6
+  (24/142) https://science.nasa.gov/jupiter/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (25/142) https://science.nasa.gov/jupiter/moons/
+    ok title="Jupiter Moons" body=8 imgs=12
+  (26/142) https://science.nasa.gov/makemake/
+    ok title="Makemake" body=16 imgs=5
+  (27/142) https://science.nasa.gov/makemake/exploration/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (28/142) https://science.nasa.gov/makemake/facts/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (29/142) https://science.nasa.gov/makemake/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (30/142) https://science.nasa.gov/makemake/moons/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (31/142) https://science.nasa.gov/mars/
+    ok title="Mars - NASA Science" body=31 imgs=27
+  (32/142) https://science.nasa.gov/mars/exploration/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (33/142) https://science.nasa.gov/mars/facts/
+    ok title="Mars: Facts - NASA Science" body=30 imgs=6
+  (34/142) https://science.nasa.gov/mars/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (35/142) https://science.nasa.gov/mars/moons/
+    ok title="Mars Moons - NASA Science" body=6 imgs=9
+  (36/142) https://science.nasa.gov/mercury/
+    ok title="Mercury" body=11 imgs=25
+  (37/142) https://science.nasa.gov/mercury/exploration/
+    ok title="Mercury: Exploration" body=4 imgs=10
+  (38/142) https://science.nasa.gov/mercury/facts/
+    ok title="Mercury: Facts" body=21 imgs=5
+  (39/142) https://science.nasa.gov/mercury/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (40/142) https://science.nasa.gov/mercury/moons/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (41/142) https://science.nasa.gov/neptune/
+    ok title="Neptune" body=11 imgs=16
+  (42/142) https://science.nasa.gov/neptune/exploration/
+    ok title="Neptune: Exploration - NASA Science" body=1 imgs=8
+  (43/142) https://science.nasa.gov/neptune/facts/
+    ok title="Neptune: Facts - NASA Science" body=22 imgs=6
+  (44/142) https://science.nasa.gov/neptune/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (45/142) https://science.nasa.gov/neptune/moons/
+    ok title="Neptune Moons - NASA Science" body=3 imgs=18
+  (46/142) https://science.nasa.gov/pluto
+    ok title="Pluto" body=10 imgs=16
+  (47/142) https://science.nasa.gov/pluto/
+    ok title="Pluto" body=10 imgs=16
+  (48/142) https://science.nasa.gov/pluto/exploration/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (49/142) https://science.nasa.gov/pluto/facts/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (50/142) https://science.nasa.gov/pluto/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (51/142) https://science.nasa.gov/pluto/moons/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (52/142) https://science.nasa.gov/saturn/
+    ok title="Saturn" body=11 imgs=26
+  (53/142) https://science.nasa.gov/saturn/exploration/
+    ok title="Saturn: Exploration - NASA Science" body=6 imgs=12
+  (54/142) https://science.nasa.gov/saturn/facts/
+    ok title="Saturn: Facts - NASA Science" body=23 imgs=6
+  (55/142) https://science.nasa.gov/saturn/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (56/142) https://science.nasa.gov/saturn/moons/
+    ok title="Saturn Moons" body=2 imgs=17
+  (57/142) https://science.nasa.gov/solar-system/10-things-going-interstellar/
+    ok title="10 Things: Going Interstellar" body=26 imgs=16
+  (58/142) https://science.nasa.gov/solar-system/10-things-movie-night/
+    ok title="10 Things: Movie Night" body=6 imgs=12
+  (59/142) https://science.nasa.gov/solar-system/10-things-whats-that-space-rock/
+    ok title="10 Things: What's That Space Rock? - NASA Science" body=20 imgs=19
+  (60/142) https://science.nasa.gov/solar-system/asteroids/
+    ok title="Asteroids" body=12 imgs=26
+  (61/142) https://science.nasa.gov/solar-system/asteroids/101955-bennu/
+    ok title="Bennu - NASA Science" body=11 imgs=15
+  (62/142) https://science.nasa.gov/solar-system/asteroids/16-psyche/
+    ok title="Asteroid Psyche" body=16 imgs=14
+  (63/142) https://science.nasa.gov/solar-system/asteroids/2024-yr4/
+    ok title="Asteroid 2024 YR4" body=14 imgs=17
+  (64/142) https://science.nasa.gov/solar-system/asteroids/243-ida/
+    ok title="243 Ida - NASA Science" body=7 imgs=5
+  (65/142) https://science.nasa.gov/solar-system/asteroids/25143-itokawa/
+    ok title="25143 Itokawa - NASA Science" body=9 imgs=5
+  (66/142) https://science.nasa.gov/solar-system/asteroids/4-vesta/
+    ok title="4 Vesta - NASA Science" body=9 imgs=5
+  (67/142) https://science.nasa.gov/solar-system/asteroids/433-eros/
+    ok title="433 Eros - NASA Science" body=11 imgs=5
+  (68/142) https://science.nasa.gov/solar-system/asteroids/apophis/
+    ok title="Apophis - NASA Science" body=9 imgs=12
+  (69/142) https://science.nasa.gov/solar-system/asteroids/didymos/
+    ok title="Didymos & Dimorphos - NASA Science" body=31 imgs=16
+  (70/142) https://science.nasa.gov/solar-system/asteroids/dinkinesh/
+    ok title="Dinkinesh - NASA Science" body=18 imgs=13
+  (71/142) https://science.nasa.gov/solar-system/asteroids/donaldjohanson/
+    ok title="Asteroid Donaldjohanson" body=13 imgs=14
+  (72/142) https://science.nasa.gov/solar-system/asteroids/exploration/
+    ok title="Asteroids: Exploration - NASA Science" body=11 imgs=17
+  (73/142) https://science.nasa.gov/solar-system/asteroids/facts/
+    ok title="Asteroid Facts" body=23 imgs=13
+  (74/142) https://science.nasa.gov/solar-system/comets/
+    ok title="Comets" body=6 imgs=25
+  (75/142) https://science.nasa.gov/solar-system/comets/103p-hartley-hartley-2/
+    ok title="Comet 103P/Hartley (Hartley 2) - NASA Science" body=7 imgs=5
+  (76/142) https://science.nasa.gov/solar-system/comets/109p-swift-tuttle/
+    ok title="109P/Swift-Tuttle - NASA Science" body=0 imgs=5
+  (77/142) https://science.nasa.gov/solar-system/comets/19p-borrelly/
+    ok title="19P/Borrelly - NASA Science" body=6 imgs=5
+  (78/142) https://science.nasa.gov/solar-system/comets/1p-halley/
+    ok title="1P/Halley - NASA Science" body=16 imgs=6
+  (79/142) https://science.nasa.gov/solar-system/comets/2i-borisov/
+    ok title="Comet 2I/Borisov - NASA Science" body=0 imgs=5
+  (80/142) https://science.nasa.gov/solar-system/comets/2p-encke/
+    ok title="2P/Encke - NASA Science" body=0 imgs=6
+  (81/142) https://science.nasa.gov/solar-system/comets/3i-atlas/
+    ok title="Comet 3I/ATLAS - NASA Science" body=26 imgs=30
+  (82/142) https://science.nasa.gov/solar-system/comets/67p-churyumov-gerasimenko/
+    ok title="67P/Churyumov-Gerasimenko - NASA Science" body=8 imgs=5
+  (83/142) https://science.nasa.gov/solar-system/comets/81p-wild/
+    ok title="81P/Wild (Wild 2) - NASA Science" body=0 imgs=5
+  (84/142) https://science.nasa.gov/solar-system/comets/9p-tempel-1/
+    ok title="9P/Tempel 1 - NASA Science" body=0 imgs=5
+  (85/142) https://science.nasa.gov/solar-system/comets/c-1995-o1-hale-bopp/
+    ok title="C/1995 O1 (Hale-Bopp) - NASA Science" body=0 imgs=5
+  (86/142) https://science.nasa.gov/solar-system/comets/c-2012-s1-ison/
+    ok title="C/2012 S1 (ISON) - NASA Science" body=6 imgs=5
+  (87/142) https://science.nasa.gov/solar-system/comets/c-2013-a1-siding-spring/
+    ok title="C/2013 A1 Siding Spring - NASA Science" body=0 imgs=5
+  (88/142) https://science.nasa.gov/solar-system/comets/facts/
+    ok title="Comet Facts" body=12 imgs=8
+  (89/142) https://science.nasa.gov/solar-system/comets/oumuamua/
+    ok title="'Oumuamua - NASA Science" body=2 imgs=7
+  (90/142) https://science.nasa.gov/solar-system/comets/p-shoemaker-levy-9/
+    ok title="Comer Shoemaker-Levy 9" body=10 imgs=7
+  (91/142) https://science.nasa.gov/solar-system/facts/
+    ok title="Solar System: Facts - NASA Science" body=29 imgs=20
+  (92/142) https://science.nasa.gov/solar-system/how-to-photograph-a-meteor-shower/
+    ok title="How to Photograph a Meteor Shower - NASA Science" body=20 imgs=18
+  (93/142) https://science.nasa.gov/solar-system/kuiper-belt/
+    ok title="Kuiper Belt" body=9 imgs=24
+  (94/142) https://science.nasa.gov/solar-system/kuiper-belt/exploration/
+    ok title="Kuiper Belt: Exploration - NASA Science" body=7 imgs=7
+  (95/142) https://science.nasa.gov/solar-system/kuiper-belt/facts/
+    ok title="Kuiper Belt: Facts - NASA Science" body=36 imgs=6
+  (96/142) https://science.nasa.gov/solar-system/kuiper-belt/stories/
+    ok title="Kuiper Belt Stories - NASA Science" body=3 imgs=3
+  (97/142) https://science.nasa.gov/solar-system/meteors-meteorites/
+    ok title="Meteors and Meteorites - NASA Science" body=11 imgs=14
+  (98/142) https://science.nasa.gov/solar-system/meteors-meteorites/exploration/
+    ok title="Meteors and Meteorites: Exploration - NASA Science" body=5 imgs=6
+  (99/142) https://science.nasa.gov/solar-system/meteors-meteorites/facts/
+    ok title="Meteors and Meteorites: Facts - NASA Science" body=28 imgs=13
+  (100/142) https://science.nasa.gov/solar-system/moons/
+    ok title="Moons" body=21 imgs=34
+  (101/142) https://science.nasa.gov/solar-system/moons/10-things-about-our-solar-systems-most-marvelous-moons/
+    ok title="10 Things: Our Solar System's Most Marvelous Moons" body=3 imgs=18
+  (102/142) https://science.nasa.gov/solar-system/moons/facts/
+    ok title="Moons: Facts" body=12 imgs=10
+  (103/142) https://science.nasa.gov/solar-system/oort-cloud/
+    ok title="Oort Cloud" body=8 imgs=13
+  (104/142) https://science.nasa.gov/solar-system/oort-cloud/facts/
+    ok title="Oort Cloud: Facts - NASA Science" body=1 imgs=5
+  (105/142) https://science.nasa.gov/solar-system/oort-cloud/multimedia/
+    ok title="Oort Cloud Multimedia - NASA Science" body=0 imgs=7
+  (106/142) https://science.nasa.gov/solar-system/planet-sizes-and-locations-in-our-solar-system/
+    ok title="Planet Sizes and Locations in Our Solar System" body=18 imgs=19
+  (107/142) https://science.nasa.gov/solar-system/planet-x/
+    ok title="Hypothetical Planet X" body=22 imgs=5
+  (108/142) https://science.nasa.gov/solar-system/planets/
+    ok title="About the Planets" body=23 imgs=22
+  (109/142) https://science.nasa.gov/solar-system/planets/analog-explorer/
+    ok title="Planetary Analog Explorer - NASA Science" body=16 imgs=40
+  (110/142) https://science.nasa.gov/solar-system/planets/planet-sizes-and-locations-in-our-solar-system/
+    ok title="Planet Sizes and Locations in Our Solar System" body=18 imgs=19
+  (111/142) https://science.nasa.gov/solar-system/planets/planetary-analogs/
+    ok title="Planetary Analogs - NASA Science" body=36 imgs=26
+  (112/142) https://science.nasa.gov/solar-system/planets/what-is-a-planet/
+    ok title="What is a Planet?" body=20 imgs=5
+  (113/142) https://science.nasa.gov/solar-system/resources/
+    ok title="Solar System Resources - NASA Science" body=11 imgs=15
+  (114/142) https://science.nasa.gov/solar-system/resources/resource-packages/
+    ok title="Solar System Resource Packages - NASA Science" body=3 imgs=18
+  (115/142) https://science.nasa.gov/solar-system/resources/resource-packages/asteroid-and-comet-resources/
+    ok title="Asteroid and Comet Resources" body=56 imgs=40
+  (116/142) https://science.nasa.gov/solar-system/resources/resource-packages/earths-moon-resources/
+    ok title="Earth's Moon Resources - NASA Science" body=56 imgs=40
+  (117/142) https://science.nasa.gov/solar-system/resources/resource-packages/ice-giant-resources/
+    ok title="Ice Giant Resources - NASA Science" body=23 imgs=26
+  (118/142) https://science.nasa.gov/solar-system/resources/resource-packages/jupiter-resources/
+    ok title="Jupiter Resources - NASA Science" body=36 imgs=37
+  (119/142) https://science.nasa.gov/solar-system/resources/resource-packages/lucy-mission-resources/
+    ok title="Lucy Mission Resources - NASA Science" body=33 imgs=35
+  (120/142) https://science.nasa.gov/solar-system/resources/resource-packages/mars-resources/
+    ok title="Mars Resources - NASA Science" body=22 imgs=36
+  (121/142) https://science.nasa.gov/solar-system/resources/resource-packages/mercury-resources/
+    ok title="Mercury Resources - NASA Science" body=16 imgs=19
+  (122/142) https://science.nasa.gov/solar-system/resources/resource-packages/ocean-worlds-resources/
+    ok title="Ocean Worlds Resources - NASA Science" body=41 imgs=40
+  (123/142) https://science.nasa.gov/solar-system/resources/resource-packages/osiris-rex-resources/
+    ok title="OSIRIS-REx Resources - NASA Science" body=41 imgs=40
+  (124/142) https://science.nasa.gov/solar-system/resources/resource-packages/pluto-dwarf-planet-resources/
+    ok title="Pluto and Dwarf Planet Resources - NASA Science" body=27 imgs=31
+  (125/142) https://science.nasa.gov/solar-system/resources/resource-packages/saturn-and-titan-resources/
+    ok title="Saturn and Titan Resources - NASA Science" body=32 imgs=34
+  (126/142) https://science.nasa.gov/solar-system/resources/resource-packages/venus-resources/
+    ok title="Venus Resources - NASA Science" body=30 imgs=33
+  (127/142) https://science.nasa.gov/solar-system/skywatching/night-sky-network/tropical-solstice-shadows/
+    ok title="Tropical Solstice Shadows - NASA Science" body=6 imgs=3
+  (128/142) https://science.nasa.gov/solar-system/solar-system-facts/
+    ok title="Solar System: Facts - NASA Science" body=29 imgs=20
+  (129/142) https://science.nasa.gov/solar-system/stories/
+    ok title="Solar System Exploration Stories - NASA Science" body=10 imgs=10
+  (130/142) https://science.nasa.gov/solar-system/temperatures-across-our-solar-system/
+    ok title="Temperatures Across Our Solar System - NASA Scienc" body=38 imgs=21
+  (131/142) https://science.nasa.gov/solar-system/view-interstellar-comet-3i-atlas-through-nasas-multiple-lenses/
+    ok title="View Interstellar Comet 3I/ATLAS Through NASA¡¯s Mu" body=7 imgs=12
+  (132/142) https://science.nasa.gov/solar-system/whats-up-june-2026-skywatching-tips-from-nasa/
+    ok title="What¡¯s Up: June 2026 Skywatching Tips from NASA - " body=13 imgs=8
+  (133/142) https://science.nasa.gov/uranus/
+    ok title="Uranus" body=11 imgs=17
+  (134/142) https://science.nasa.gov/uranus/exploration/
+    ok title="Uranus: Exploration - NASA Science" body=2 imgs=8
+  (135/142) https://science.nasa.gov/uranus/facts/
+    ok title="Uranus: Facts - NASA Science" body=26 imgs=5
+  (136/142) https://science.nasa.gov/uranus/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (137/142) https://science.nasa.gov/uranus/moons/
+    ok title="Uranus Moons - NASA Science" body=1 imgs=9
+  (138/142) https://science.nasa.gov/venus/
+    ok title="Venus" body=11 imgs=24
+  (139/142) https://science.nasa.gov/venus/exploration/
+    ok title="Venus Exploration" body=10 imgs=15
+  (140/142) https://science.nasa.gov/venus/facts/
+    ok title="Venus: Facts - NASA Science" body=35 imgs=5
+  (141/142) https://science.nasa.gov/venus/in-depth/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+  (142/142) https://science.nasa.gov/venus/moons/
+    ok title="Page not found - NASA Science" body=1 imgs=1
+Downloading images...
