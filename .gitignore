@@ -6,3 +6,6 @@ build.log
 dev.log
 scraper/screenshots/
 scripts/screenshots/
+scraper/*.log
+scraper/*.err
+scraper/*.out
