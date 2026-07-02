@@ -1,16 +1,23 @@
 ﻿"use client";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { zh } from "@/i18n/zh";
-import { Aurora } from "@/components/fx/Aurora";
-import { StarField } from "@/components/fx/StarField";
-import { SolarSystemMini } from "@/components/fx/SolarSystemMini";
 import { ClickRipples } from "@/components/fx/ClickRipples";
-import { GradientBlob } from "@/components/fx/GradientBlob";
 import { TextSplitReveal } from "@/components/fx/TextSplitReveal";
 import { MagneticButton } from "@/components/fx/MagneticButton";
 import { CountUp } from "@/components/fx/CountUp";
+
+// 动态加载 3D 场景 (避免 SSR + 首屏阻塞)
+const Hero3DScene = dynamic(() => import("@/components/fx/Hero3DScene").then((m) => m.Hero3DScene), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 bg-[#05060f]">
+      <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-transparent to-transparent" />
+    </div>
+  )
+});
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -25,31 +32,23 @@ export function Hero() {
         className="relative min-h-screen overflow-hidden flex items-center justify-center pt-24 pb-12 bg-[#05060f]"
         style={{ cursor: "crosshair" }}
       >
-        {/* 背景层: 星点 + 流星 */}
-        <StarField density={140} />
+        {/* 3D 太阳系背景 (含粒子星空 + 自动 orbit 切换) */}
+        <Hero3DScene />
 
-        {/* 极光 + 渐变球 (降低不透明度避免过曝) */}
-        <Aurora opacity={0.14} />
-        <GradientBlob size={620} speed={32} className="-top-40 -left-40" opacity={0.14} colors={["#a855f7", "#ec4899", "#f59e0b", "#3b82f6"]} />
-        <GradientBlob size={480} speed={40} className="-bottom-32 -right-32" opacity={0.12} colors={["#22d3ee", "#a855f7", "#ec4899"]} />
-
-        {/* 简易太阳系 - 居中, 大尺寸慢速旋转 */}
-        <motion.div
-          className="absolute top-1/2 left-1/2"
-          style={{ x: "-50%", y: "-50%" }}
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <SolarSystemMini size={820} />
-        </motion.div>
+        {/* 暗角 (增强中心文字可读) */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse at center, transparent 0%, transparent 30%, rgba(5,6,15,0.55) 75%, rgba(5,6,15,0.85) 100%)"
+          }}
+        />
 
         {/* 文字内容 */}
         <motion.div style={{ opacity, scale }} className="relative z-10 max-w-6xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
+            transition={{ delay: 1.0, duration: 0.8 }}
             className="eyebrow mb-6 inline-block"
           >
             <span className="relative">
@@ -58,24 +57,24 @@ export function Hero() {
                 className="absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ delay: 2.0, duration: 1 }}
+                transition={{ delay: 1.8, duration: 1 }}
               />
             </span>
           </motion.div>
 
           <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.15] tracking-tight glow-text">
             <span className="block">
-              <TextSplitReveal text={zh.hero.titleA} delay={1.3} stagger={0.025} />
+              <TextSplitReveal text={zh.hero.titleA} delay={1.1} stagger={0.025} />
             </span>
             <span className="block gradient-text">
-              <TextSplitReveal text={zh.hero.titleB} delay={1.6} stagger={0.025} />
+              <TextSplitReveal text={zh.hero.titleB} delay={1.4} stagger={0.025} />
             </span>
           </h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.0, duration: 0.8 }}
+            transition={{ delay: 1.8, duration: 0.8 }}
             className="mt-8 max-w-2xl mx-auto text-lg md:text-xl text-white/70 leading-relaxed"
           >
             {zh.hero.desc}
@@ -84,7 +83,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.2, duration: 0.8 }}
+            transition={{ delay: 2.0, duration: 0.8 }}
             className="mt-10 flex flex-wrap items-center justify-center gap-4"
           >
             <MagneticButton strength={0.4} className="inline-block">
@@ -103,7 +102,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2.6, duration: 0.8 }}
+            transition={{ delay: 2.4, duration: 0.8 }}
             className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"
           >
             {[
@@ -116,7 +115,7 @@ export function Hero() {
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.7 + i * 0.1, duration: 0.6 }}
+                transition={{ delay: 2.5 + i * 0.1, duration: 0.6 }}
                 whileHover={{ y: -4, scale: 1.04 }}
                 className="glass px-4 py-3 cursor-default transition-shadow hover:shadow-[0_0_40px_rgba(168,85,247,0.3)]"
               >
@@ -129,12 +128,12 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* 提示文字 - 鼓励用户点击 */}
+        {/* 提示文字 */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 3.0, duration: 0.8 }}
-          className="absolute top-28 right-8 text-[10px] tracking-[0.3em] text-white/30 hidden md:block"
+          transition={{ delay: 2.8, duration: 0.8 }}
+          className="absolute top-28 right-8 text-[10px] tracking-[0.3em] text-white/30 hidden md:block z-10"
         >
           ✦ 点击任意位置产生星轨波纹
         </motion.div>
