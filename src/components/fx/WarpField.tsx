@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useEffect, useRef } from "react";
 
 export function WarpField({ speed = 1, density = 240 }: { speed?: number; density?: number }) {
@@ -33,14 +33,13 @@ export function WarpField({ speed = 1, density = 240 }: { speed?: number; densit
       };
     });
 
-    // 中央径向光晕
+    // 涓ぎ寰勫悜鍏夋檿
     let raf = 0;
     const tick = () => {
-      // 拖尾效果: 用半透明黑覆盖
-      ctx.fillStyle = "rgba(2, 6, 23, 0.18)";
+      // 鎷栧熬鏁堟灉: 鐢ㄥ崐閫忔槑榛戣鐩?      ctx.fillStyle = "rgba(2, 6, 23, 0.18)";
       ctx.fillRect(0, 0, w, h);
 
-      // 中心光晕
+      // 涓績鍏夋檿
       const cx = w / 2, cy = h / 2;
       const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.55);
       grd.addColorStop(0, "rgba(168, 85, 247, 0.15)");
@@ -49,17 +48,17 @@ export function WarpField({ speed = 1, density = 240 }: { speed?: number; densit
       ctx.fillStyle = grd;
       ctx.fillRect(0, 0, w, h);
 
-      // 星空推进
+      // 鏄熺┖鎺ㄨ繘
       for (const s of stars) {
         s.pz = s.z;
-        s.z += 0.012 * speed;
+        s.z += 0.003 * speed;
         if (s.z > 1) {
           s.x = (Math.random() - 0.5) * w;
           s.y = (Math.random() - 0.5) * h;
           s.z = 0;
           s.pz = 0;
         }
-        // 投影: z 越接近 1 越大
+        // 鎶曞奖: z 瓒婃帴杩?1 瓒婂ぇ
         const sx = (s.x / s.z) * 0.5 + w / 2;
         const sy = (s.y / s.z) * 0.5 + h / 2;
         const psx = (s.x / s.pz) * 0.5 + w / 2;
@@ -73,7 +72,7 @@ export function WarpField({ speed = 1, density = 240 }: { speed?: number; densit
         ctx.moveTo(psx, psy);
         ctx.lineTo(sx, sy);
         ctx.stroke();
-        // 头部光点
+        // 澶撮儴鍏夌偣
         if (r > 0.5) {
           ctx.beginPath();
           ctx.fillStyle = "#fff";

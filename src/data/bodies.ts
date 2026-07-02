@@ -599,3 +599,7 @@ export const SCENE = {
   // Uranus 19.20-> 22.5  Neptune 30.10-> 24.5
   distance: (au: number) => 8.5 + Math.log(1 + Math.max(au, 0.05)) * 6.4
 };
+
+// 兼容旧代码的别名导出
+export const PLANET_LIST: SolarBody[] = BODIES.filter((b) => b.kind === "planet");
+export const DWARF_LIST: SolarBody[] = BODIES.filter((b) => b.kind === "dwarf");
