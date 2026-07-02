@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { zh } from "@/i18n/zh";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -44,13 +44,37 @@ export function PlanetDetail({ body, articles }: { body: SolarBody; articles: Ar
 
     const radius = 1.5;
     const geom = new THREE.SphereGeometry(radius, 96, 96);
+    const TEX_MAP = {
+      sun: "/assets/textures/sun.jpg",
+      mercury: "/assets/textures/mercury.jpg",
+      venus: "/assets/textures/venus.jpg",
+      earth: "/assets/textures/earth.jpg",
+      mars: "/assets/textures/mars.jpg",
+      jupiter: "/assets/textures/jupiter.jpg",
+      saturn: "/assets/textures/saturn.jpg",
+      uranus: "/assets/textures/uranus.jpg",
+      neptune: "/assets/textures/neptune.webp",
+      pluto: "/assets/textures/pluto.jpg",
+      ceres: "/assets/textures/ceres.jpg",
+      moon: "/assets/textures/moon.jpg"
+    };
+    const texUrl = body.textureUrl || TEX_MAP[body.id] || "";
     const mat = new THREE.MeshStandardMaterial({
       color: new THREE.Color(body.color),
-      roughness: 0.7,
-      metalness: 0.1,
-      emissive: new THREE.Color(body.color),
-      emissiveIntensity: 0.05
+      roughness: 0.85,
+      metalness: 0.05,
+      emissive: new THREE.Color(body.id === "sun" ? "#fbbf24" : "#000000"),
+      emissiveIntensity: body.id === "sun" ? 0.6 : 0
     });
+    if (texUrl) {
+      const loader = new THREE.TextureLoader();
+      loader.load(texUrl, (t) => {
+        t.colorSpace = THREE.SRGBColorSpace;
+        mat.map = t;
+        mat.color = new THREE.Color("#ffffff");
+        mat.needsUpdate = true;
+      });
+    }
     const mesh = new THREE.Mesh(geom, mat);
     scene.add(mesh);
 

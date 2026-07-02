@@ -2,8 +2,8 @@ import { PlanetsIndex } from "@/components/PlanetsIndex";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Planets — Cosmos",
-  description: "All eight planets, the dwarf planets, and the major bodies in our solar system."
+  title: "行星 — 宇宙探索者",
+  description: "八颗大行星、五颗官方矮行星，以及太阳系中的主要天体。"
 };
 
 export default function PlanetsPage() {

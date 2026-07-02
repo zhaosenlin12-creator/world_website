@@ -3,7 +3,7 @@ import { allStories } from "@/lib/articles";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Stories — Cosmos",
+  title: "故事 — 宇宙探索者",
   description: "Featured stories and articles from across the solar system."
 };
 

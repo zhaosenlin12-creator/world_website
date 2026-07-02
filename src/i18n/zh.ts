@@ -84,12 +84,28 @@ export const zh = {
   facts: {
     eyebrow: "数字说话",
     title: "数据与数字",
-    desc: "排序、比较、探索。点击列标题即可排序。"
+    desc: "排序、比较、探索。点击列标题即可排序。",
+    columns: {
+      order: "序",
+      body: "天体",
+      type: "类型",
+      diameter: "直径 (km)",
+      distance: "距日 (AU)",
+      day: "日长 (h)",
+      year: "年长 (d)",
+      moons: "卫星"
+    }
   },
   missions: {
     eyebrow: "机器人与载人探测",
     title: "任务",
-    desc: "过去、现在与未来的航天器——塑造了我们对太阳系理解的使者。"
+    desc: "过去、现在与未来的航天器——塑造了我们对太阳系理解的使者。",
+    active: "进行中",
+    upcoming: "即将启动",
+    ended: "已结束",
+    live: "在线",
+    future: "未来",
+    past: "已归档"
   },
   // Resources
   resources: {
@@ -203,6 +219,13 @@ export const zh = {
     asteroid: "小行星",
     comet: "彗星",
     belt: "区域"
+  },
+  // Stories
+  stories: {
+    eyebrow: "文章与新闻",
+    title: "来自太阳系的故事",
+    desc: "精选自 NASA 科学任务理事会——发现、任务更新以及头条背后的科学。",
+    searchPlaceholder: "搜索故事…"
   },
   // Footer
   footer: {
