@@ -35,7 +35,7 @@ export function Explorer() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden pt-16">
-      <div className="absolute inset-0 pt-16">
+      <div className={"absolute inset-0 pt-16 transition-[padding] duration-500 " + (selected ? "md:pl-[380px]" : "")}>
         <SolarSystem3D
           selectedId={selectedId}
           onSelect={onSelect}
@@ -58,7 +58,7 @@ export function Explorer() {
           onReset={() => setSelectedId(null)}
         />
       </div>
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col gap-1 max-h-[70vh] overflow-y-auto glass-strong p-2 rounded-2xl">
+      <div className={"absolute top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col gap-1 max-h-[70vh] overflow-y-auto glass-strong p-2 rounded-2xl transition-all duration-500 " + (selected ? "right-[400px] opacity-50 hover:opacity-100" : "right-4 opacity-100")}>
         <button
           onClick={() => setSelectedId("sun")}
           className={`flex items-center gap-2 text-left px-3 py-1.5 rounded-lg text-sm transition ${
