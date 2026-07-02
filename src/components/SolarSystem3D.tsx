@@ -1,4 +1,4 @@
-"use client";
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿"use client";
 import { Canvas, useFrame, useThree, ThreeEvent } from "@react-three/fiber";
 import { Stars, OrbitControls, Html, useTexture } from "@react-three/drei";
 import { Suspense, useMemo, useRef, useState, useEffect, useLayoutEffect, useCallback, MutableRefObject } from "react";
@@ -121,7 +121,7 @@ function Sun({ paused }: { paused: boolean }) {
   const halo2 = useRef<THREE.Mesh>(null!);
   const halo3 = useRef<THREE.Mesh>(null!);
   const tex = useTexture(TEXTURES.sun);
-  useEffect(() => { tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4; }, [tex]);
+  useEffect(() => { tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 2; }, [tex]);
 
   const materialRef = useRef<THREE.ShaderMaterial>(null!);
   useFrame((_, dt) => {
@@ -220,7 +220,7 @@ function Planet({ body, onSelect, paused, showLabel, registerHandle, unregisterH
   }, [body.radiusKm]);
 
   const angleRef = useRef(Math.random() * Math.PI * 2);
-  const speed = useMemo(() => 0.04 / Math.sqrt(Math.max(body.orbitAu, 0.05)), [body.orbitAu]);
+  const speed = useMemo(() => 0.18 / Math.sqrt(Math.max(body.orbitAu, 0.05)), [body.orbitAu]);
   const axialTilt = (body.axialTiltDeg || 0) * Math.PI / 180;
   const retrograde = (body.rotationHours || 0) < 0;
 
@@ -229,7 +229,7 @@ function Planet({ body, onSelect, paused, showLabel, registerHandle, unregisterH
   useEffect(() => {
     if (!texture) return;
     texture.wrapS = THREE.RepeatWrapping;
-    texture.anisotropy = 8;
+    texture.anisotropy = 4;
     texture.colorSpace = THREE.SRGBColorSpace;
   }, [texture]);
 
@@ -264,7 +264,7 @@ function Planet({ body, onSelect, paused, showLabel, registerHandle, unregisterH
     <group ref={groupRef}>
       <mesh
         ref={ref}
-        castShadow
+
         onClick={(e: ThreeEvent<MouseEvent>) => { e.stopPropagation(); onSelect(body.id); }}
         onPointerOver={(e: ThreeEvent<PointerEvent>) => { e.stopPropagation(); setHover(true); document.body.style.cursor = "pointer"; }}
         onPointerOut={() => { setHover(false); document.body.style.cursor = "auto"; }}
@@ -275,10 +275,10 @@ function Planet({ body, onSelect, paused, showLabel, registerHandle, unregisterH
           map={texture}
           bumpMap={bumpMap}
           bumpScale={body.id === "jupiter" || body.id === "saturn" ? 0.04 : 0.018}
-          roughness={body.id === "mercury" ? 0.85 : body.id === "earth" ? 0.78 : body.id === "mars" ? 0.95 : body.id === "venus" ? 0.7 : body.id === "jupiter" || body.id === "saturn" || body.id === "uranus" || body.id === "neptune" ? 0.55 : 0.85}
+          roughness={body.id === "mercury" ? 0.85 : body.id === "earth" ? 0.85 : body.id === "mars" ? 0.95 : body.id === "venus" ? 0.7 : body.id === "jupiter" || body.id === "saturn" || body.id === "uranus" || body.id === "neptune" ? 0.55 : 0.85}
           metalness={body.id === "mercury" ? 0.4 : body.id === "venus" ? 0.15 : body.id === "earth" ? 0.05 : body.id === "mars" ? 0.05 : body.id === "jupiter" || body.id === "saturn" ? 0.0 : body.id === "uranus" || body.id === "neptune" ? 0.0 : 0.1}
           emissive={highlight ? body.color : body.color}
-          emissiveIntensity={highlight ? 0.22 : 0.06}
+          emissiveIntensity={highlight ? 0.18 : 0.04}
         />
       </mesh>
 
@@ -312,7 +312,7 @@ function EarthClouds({ size, paused }: { size: number; paused: boolean }) {
   return (
     <mesh ref={cloudsRef} scale={size * 1.02}>
       <sphereGeometry args={[1, 48, 48]} />
-      <meshStandardMaterial color="#ffffff" transparent opacity={0.18} depthWrite={false} roughness={1} />
+      <meshStandardMaterial color="#ffffff" transparent opacity={0.32} depthWrite={false} roughness={1} />
     </mesh>
   );
 }
@@ -322,7 +322,7 @@ function SaturnRings({ size }: { size: number }) {
   useEffect(() => {
     if (ringTex) {
       ringTex.colorSpace = THREE.SRGBColorSpace;
-      ringTex.anisotropy = 8;
+      ringTex.anisotropy = 4;
     }
   }, [ringTex]);
   return (
@@ -345,7 +345,7 @@ function SaturnRings({ size }: { size: number }) {
 
 function Moon({ size, paused }: { size: number; paused: boolean }) {
   const moonTex = useTexture(TEXTURES.moon);
-  useEffect(() => { if (moonTex) { moonTex.colorSpace = THREE.SRGBColorSpace; moonTex.anisotropy = 8; } }, [moonTex]);
+  useEffect(() => { if (moonTex) { moonTex.colorSpace = THREE.SRGBColorSpace; moonTex.anisotropy = 4; } }, [moonTex]);
   const moonRef = useRef<THREE.Mesh>(null!);
   const mAngle = useRef(0);
   useFrame((_, dt) => {
@@ -400,9 +400,10 @@ function FocusDriver({ handlesRef, selectedIdRef, enabled, focusDistance }: { ha
   const { camera, controls } = useThree() as any;
   const targetVec = useMemo(() => new THREE.Vector3(), []);
   const desiredPos = useMemo(() => new THREE.Vector3(), []);
-  const tmp = useMemo(() => new THREE.Vector3(), []);
+  const offsetVec = useMemo(() => new THREE.Vector3(), []);
   const lastTargetId = useRef<string | null>(null);
 
+  // 每次切换目标时,记录一个从旧位置看新目标的方向,保持视角连续
   useFrame((_, dt) => {
     if (!enabled) return;
     const id = selectedIdRef.current;
@@ -411,20 +412,19 @@ function FocusDriver({ handlesRef, selectedIdRef, enabled, focusDistance }: { ha
     if (!h || !h.group) return;
 
     h.group.getWorldPosition(targetVec);
-    const dist = focusDistance;
+
     if (lastTargetId.current !== id) {
       lastTargetId.current = id;
+      offsetVec.copy(camera.position).sub(targetVec);
+      if (offsetVec.lengthSq() < 1e-3) offsetVec.set(0.6, 0.5, 1);
+      offsetVec.normalize();
     }
-    const dir = tmp.copy(camera.position).sub(targetVec);
-    if (dir.lengthSq() < 1e-3) dir.set(0.4, 0.5, 1);
-    dir.normalize();
 
-    const cur = camera.position.distanceTo(targetVec);
-    const newDist = THREE.MathUtils.lerp(cur, dist, Math.min(1, dt * 2.0));
-    desiredPos.copy(targetVec).add(dir.multiplyScalar(newDist));
-
-    const t = Math.min(1, dt * 2.5);
+    const dist = focusDistance;
+    const t = Math.min(1, dt * 2.4);
+    desiredPos.copy(targetVec).add(offsetVec.clone().multiplyScalar(dist));
     camera.position.lerp(desiredPos, t);
+
     if (controls) {
       controls.target.lerp(targetVec, t);
       controls.update?.();
@@ -457,16 +457,16 @@ function Scene({ selectedId, onSelect, paused, speed, showOrbits, showLabels }: 
     if (!b) return;
     const r = b.radiusKm || 1000;
     const s = Math.max(0.22, Math.min(2.4, 0.18 + Math.log10(Math.max(r, 50)) * 0.42));
-    if (selectedId === "sun") setFocusDistance(SCENE.sunSize * 3.5);
-    else if (selectedId === "jupiter" || selectedId === "saturn") setFocusDistance(s * 5.0);
-    else if (selectedId === "mercury" || selectedId === "mars") setFocusDistance(3.0);
-    else setFocusDistance(Math.max(2.5, s * 3.2));
+    if (selectedId === "sun") setFocusDistance(SCENE.sunSize * 5.5);
+    else if (selectedId === "jupiter" || selectedId === "saturn") setFocusDistance(Math.max(5, s * 6.0));
+    else if (selectedId === "mercury" || selectedId === "mars") setFocusDistance(4.5);
+    else setFocusDistance(Math.max(3.5, s * 4.5));
   }, [selectedId]);
 
   return (
     <>
-      <ambientLight intensity={0.35} color="#a5b4fc" />
-      <directionalLight position={[5, 10, 5]} intensity={0.45} color="#e0e7ff" />
+      <ambientLight intensity={0.55} color="#fff1d6" />
+      <directionalLight position={[5, 10, 5]} intensity={0.85} color="#fff7e6" />
       <Stars radius={150} depth={50} count={4000} factor={4} fade speed={0.6} />
       <Sun paused={paused} />
       {showOrbits && BODIES.map((b) => (
@@ -490,7 +490,7 @@ function Scene({ selectedId, onSelect, paused, speed, showOrbits, showLabels }: 
         enablePan
         enableZoom
         minDistance={1.2}
-        maxDistance={220}
+        maxDistance={600}
         autoRotate={false}
         dampingFactor={0.08}
       />
@@ -509,7 +509,7 @@ export function SolarSystem3D(props: SolarSystem3DProps) {
       dpr={[1, 1.5]}
       performance={{ min: 0.5 }}
     >
-      <color attach="background" args={["#020617"]} />
+      <color attach="background" args={["#05060f"]} />
       <fog attach="fog" args={["#020617", 80, 300]} />
       <Suspense fallback={null}>
         <Scene {...props} />

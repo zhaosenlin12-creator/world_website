@@ -1,10 +1,8 @@
-import { ResourcesView } from "@/components/ResourcesView";
-import { loadArticles } from "@/lib/articles";
+﻿import { ResourcesView } from "@/components/ResourcesView";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "Resources — Cosmos" };
+export const metadata: Metadata = { title: "资源库 · 宇宙探索者" };
 
 export default function Page() {
-  const articles = loadArticles().filter((a) => a.slug.startsWith("solar-system/resources/"));
-  return <ResourcesView articles={articles} />;
+  return <ResourcesView />;
 }

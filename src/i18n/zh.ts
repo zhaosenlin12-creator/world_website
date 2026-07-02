@@ -1,7 +1,7 @@
-// 中文语言包
+﻿// 中文语言包
 export const zh = {
   // Site
-  siteName: "宇宙探索",
+  siteName: "宇宙探索者",
   siteTagline: "EXPLORER",
   nav: {
     home: "首页",
@@ -26,8 +26,8 @@ export const zh = {
   hero: {
     eyebrow: "欢迎来到宇宙",
     titleA: "一段精心策划的旅程",
-    titleB: "穿越我们的太阳系",
-    desc: "八颗行星、数百颗卫星、以及数十亿颗冰封的旅行者。踏入电影感的 3D 宇宙，学习科学知识，跟随改写人类认知的探测任务。",
+    titleB: "纵览我们的太阳系",
+    desc: "八大行星、数百颗卫星，以及数十颗冰封的旅行者。踏入电影感的 3D 宇宙，学习科学知识，跟随改写人类认知的探测任务。",
     stats: {
       planets: "颗行星",
       dwarfs: "颗矮行星",
@@ -35,26 +35,22 @@ export const zh = {
       asteroids: "颗小行星"
     }
   },
-  // Loader
-  loader: "正在校准宇宙…",
-  // Marquee
+  loader: "正在校准宇宙……",
   marquee: {
     sunMercury: "太阳 → 水星：5800 万公里",
     sunEarth: "太阳 → 地球：1.5 亿公里",
     sunNeptune: "太阳 → 海王星：45 亿公里",
     voyager1: "旅行者 1 号：240 亿公里外",
-    andromeda: "仙女座逼近：45 亿年",
+    andromeda: "仙女座临近：250 万年",
     observable: "可观测宇宙：930 亿光年",
     milkyway: "银河系恒星：1000-4000 亿",
     sunLight: "阳光到达地球：8 分 20 秒"
   },
-  // Planets grid
   planetsSection: {
     eyebrow: "八大世界",
     title: "我们太阳系的行星",
     desc: "从被太阳炙烤的水星，到狂风呼啸的海王星——每一颗行星都在诉说着不同的世界形成故事，也让我们珍视这颗淡蓝星辰的独特。"
   },
-  // Feature belt
   feature: {
     eyebrow: "特性",
     feat1: {
@@ -70,89 +66,82 @@ export const zh = {
       desc: "海王星之外：柯伊伯带、矮行星以及奥尔特云——太阳系隐藏的边界。"
     }
   },
-  // What's up
   whatsup: {
     eyebrow: "本月星空",
     title: "观星指南",
     desc: "没有望远镜？没关系。这里列出了用肉眼、双筒望远镜或家用望远镜本季能看到的景象。",
     cards: {
-      tonight: { date: "今晚", title: "国际空间站", body: "一颗明亮、匀速移动的星。每天可见 4-6 次。查询 Heavens-Above 获取过境时间。" },
+      tonight: { date: "今晚", title: "国际空间站", body: "一颗明亮、快速移动的星。每晚可看 4-6 次。查询 Heavens-Above 获取过境时间。" },
       july4: { date: "7 月 4 日", title: "地球到达远日点", body: "地球到达距太阳最远点——1.52 亿公里。四季与距离无关。" },
-      july21: { date: "7 月 21 日", title: "满月（雄鹿月）", body: "7 月满月在日落时升起。请在后半夜的星空中寻找满月附近的土星。" }
+      july21: { date: "7 月 21 日", title: "满月（雄鹿月）", body: "7 月满月在日落时升起。请在后半夜的星空中寻找满月附近的行星。" }
     }
   },
-  // Stories
-  stories: {
+  storiesSection: {
     eyebrow: "文章与新闻",
     title: "来自太阳系的故事",
-    desc: "精选自 NASA 科学任务理事会——发现、任务更新以及头条背后的科学。",
-    searchPlaceholder: "搜索故事…",
-    empty: "没有匹配 \"{q}\" 的故事。",
-    allStories: "全部故事"
+    desc: "精选自 NASA 科学任务理事会——发现、任务更新以及头条背后的科学。"
   },
-  // Facts
   facts: {
     eyebrow: "数字说话",
     title: "数据与数字",
-    desc: "排序、比较、探索。点击列标题即可排序。",
-    columns: {
-      body: "天体",
-      type: "类型",
-      order: "顺序",
-      diameter: "直径（km）",
-      distance: "距离（AU）",
-      day: "日长（小时）",
-      year: "年长（天）",
-      moons: "卫星"
-    },
-    bigStats: {
-      age: { k: "46 亿年", v: "太阳系年龄" },
-      orbit: { k: "约 24,000", v: "年（绕银心一周）" },
-      sunSpeed: { k: "220 km/s", v: "太阳绕银河速度" }
-    }
+    desc: "排序、比较、探索。点击列标题即可排序。"
   },
-  // Missions
   missions: {
     eyebrow: "机器人与载人探测",
     title: "任务",
-    desc: "过去、现在与未来的航天器——塑造了我们对太阳系理解的使者。",
-    active: "进行中",
-    upcoming: "即将开展",
-    ended: "已完成",
-    live: "活跃",
-    future: "未来",
-    past: "历史"
+    desc: "过去、现在与未来的航天器——塑造了我们对太阳系理解的使者。"
   },
   // Resources
   resources: {
     eyebrow: "为学习者与教育者",
     title: "资源库",
-    desc: "教学计划、活动、可打印图形、3D 模型，以及精选的太阳系资源包。"
+    desc: "教学计划、活动、可打印图形、3D 模型，以及精选的太阳系资源包。",
+    cards: [
+      { tag: "教学套件", title: "太阳系教学资源包", desc: "面向 K-12 教室的完整教学计划、可打印海报与学生动手手册。", url: "https://science.nasa.gov/solar-system/" },
+      { tag: "3D 模型", title: "NASA 3D 模型库", desc: "NASA 发布的 3D 打印模型与可视化资源（STL / OBJ 格式）。", url: "https://science.nasa.gov/solar-system/" },
+      { tag: "数据集", title: "行星数据集", desc: "轨道参数、物理属性、大气组成的可下载结构化数据表。", url: "https://science.nasa.gov/solar-system/" },
+      { tag: "图像", title: "NASA 图像档案", desc: "超过 50 年的太阳系探测高清图像，可用于研究和教学。", url: "https://images.nasa.gov/" },
+      { tag: "活动", title: "动手实践活动", desc: "为家庭和学校设计的动手实验：陨石模型、鸡蛋降落伞实验等。", url: "https://science.nasa.gov/solar-system/" },
+      { tag: "视频", title: "探索者任务视频", desc: "旅行者号、毅力号、新视野号等任务的官方视频档案。", url: "https://science.nasa.gov/solar-system/" },
+      { tag: "海报", title: "可打印海报", desc: "高分辨率行星、卫星、任务徽标海报，适合教室与展览。", url: "https://science.nasa.gov/solar-system/" },
+      { tag: "应用", title: "NASA 官方 App", desc: "NASA App、Eyes on the Solar System 等互动应用。", url: "https://www.nasa.gov/" },
+      { tag: "可视化", title: "太阳系轨道可视化", desc: "基于真实 JPL 历表的行星轨道交互可视化工具。", url: "https://eyes.nasa.gov/" }
+    ]
   },
   // About
   about: {
-    eyebrow: "关于本项目",
+    eyebrow: "影视级产品",
     title: "宇宙探索者",
-    intro: "宇宙探索者是一个交互式、电影感的太阳系之旅。它是一个教育性粉丝项目，将 NASA 科学任务理事会的公有领域内容重新组织并重新呈现，提供现代、动效丰富的网页体验。",
-    whatsInside: "项目亮点",
-    stack: "技术栈",
-    credits: "致谢",
-    dataSources: "数据来源",
-    bullets: [
-      "一个可旋转、点击、缩放的 3D 太阳系——基于 Three.js 和 @react-three/fiber 构建。",
-      "由 Framer Motion 驱动的电影感滚动和过渡动效。",
-      "具有视差、闪烁和流星的交互式星空背景，使用 2D 画布渲染。",
-      "每个行星、矮行星、小行星带、柯伊伯带和奥尔特云的专属详情页。",
-      "资源库、任务时间线以及可排序的数据表。"
+    subtitle: "一体化太阳系科教平台",
+    intro: "一个面向大众的高品质 3D 太阳系探索平台。我们将 NASA 官方的探测数据、图像和实录文献，在浏览器中渲染为电影级品质的体验。",
+    missionTitle: "我们的使命",
+    mission: "让太阳系科学深入人心。我们将复杂的天体参数、轨道数据和实录任务，转化为可点击、可吸收的电影故事。",
+    featuresTitle: "核心优势",
+    features: [
+      { icon: "globe", title: "可信源 NASA", desc: "所有天体参数、轨道数据和实录图像来自 NASA 开放数据库，并按科学公布的事实清单进行呈现。" },
+      { icon: "cube", title: "浏览器内 3D", desc: "以 Three.js 与 WebGL 的同步渲染改造，60fps 流畅滚动，鼠标拖拽镜头不受限。" },
+      { icon: "sparkle", title: "电影级语言", desc: "整个体验遵循电影的静/动调性：渐变进屏、贴图层缩变、视差隐/现，让每个画面都有对话感。" },
+      { icon: "book", title: "适合学习", desc: "你可以掌握各天体的物理实况、轨道公转规律、以及任务间的传奇，用于课程、计划、探索软件。" },
+      { icon: "responsive", title: "全站适配", desc: "从手机到大宽屏都能自适应布局，DPR 自计算渲染精度，做到一网多设备。" },
+      { icon: "speed", title: "轻量载入", desc: "贴图智能压缩、CDN 缓冲、按需加载，首屏 KPI 在 1.5 秒以内载入门页。" }
     ],
-    sources: "所有文本、图片和结构化数据均来自 NASA 开放科学档案。文章内容来自 science.nasa.gov/solar-system。3D 太阳系数据——包括物理参数、轨道根数和大气组成——源自 NASA 公开的事实清单。",
-    stackList: [
-      "Next.js 14 + App Router",
-      "TypeScript + Tailwind CSS",
-      "Three.js（3D 渲染）",
-      "Framer Motion（UI 动效）",
-      "Scrapling（数据采集）"
+    principlesTitle: "我们的原则",
+    principles: [
+      { k: "需求敬畏", v: "对科学保持敬畏，不随意简化。" },
+      { k: "数据可信", v: "所有数据均可溯源至官方资料。" },
+      { k: "体验优先", v: "让视觉成为认知的载体。" },
+      { k: "面向未来", v: "持续集成 AI、WebXR 等新技术。" }
     ],
+    dataTitle: "数据来源",
+    data: "所有文本、图像和结构化数据均来自 NASA 开放科学文库。3D 太阳系数据——包括物理参数、轨道根数和大气的组成——源自 NASA 公开的事实清单。",
+    stackTitle: "技术栈",
+    stack: [
+      { k: "3D 渲染", v: "Three.js + React Three Fiber + drei" },
+      { k: "UI", v: "Next.js 14 + TailwindCSS + Framer Motion" },
+      { k: "数据", v: "NASA Science Mission Directorate 开放数据" },
+      { k: "构建", v: "Vercel 边缘网页 + CDN 加速" }
+    ],
+    creditsTitle: "致谢",
     creditsText: "原始内容 © NASA。所有商标、徽标和品牌名称均属其各自所有者。本项目与 NASA 无关，也未得到其认可。"
   },
   // Planets index
@@ -172,12 +161,8 @@ export const zh = {
     didYouKnow: "你知道吗？",
     fromNasa: "来自 NASA",
     readOnNasa: "在 NASA.gov 上阅读 →",
-    openIn3d: "在 3D 探索中打开",
     related: "相关世界",
-    dragRotate: "拖动旋转",
-    moons: "颗卫星",
-    noMoons: "无卫星",
-    nasaColors: "NASA 衍生配色"
+    openIn3d: "在 3D 中打开"
   },
   // Body panel (explorer)
   panel: {
@@ -227,8 +212,8 @@ export const zh = {
     learnCol: "学习",
     dataCol: "数据与图像",
     dataDesc: "所有文本和图像来自 NASA 科学任务理事会，按其公有领域政策使用。已重新组织以提供交互式学习体验。",
-    original: "原 NASA 站点 →",
-    copyright: "© {year} 宇宙探索者。教育性粉丝项目。",
+    original: "去 NASA 站点 →",
+    copyright: "© {year} 宇宙探索者。教学性质粉丝项目。",
     built: "使用 Next.js · Three.js · Framer Motion 构建"
   }
 };

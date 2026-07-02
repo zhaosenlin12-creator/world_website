@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { SolarBody, ALL_BODIES } from "@/data/bodies";
 import { useEffect, useState } from "react";
@@ -19,7 +19,7 @@ function kindLabel(k: string) {
   if (k === "star") return zh.type.star;
   if (k === "planet") return zh.type.planet;
   if (k === "dwarf") return zh.type.dwarf;
-  if (k === "belt") return "区域";
+  if (k === "belt") return zh.type.belt;
   return k;
 }
 
@@ -47,7 +47,7 @@ export function BodyPanel({ body, onClose }: Props) {
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: "-100%", opacity: 0 }}
         transition={{ type: "spring", stiffness: 200, damping: 26 }}
-        className="absolute left-0 top-16 bottom-0 w-full max-w-md z-30 glass-strong overflow-y-auto p-6 md:p-8"
+        className="absolute left-0 top-16 bottom-0 w-full max-w-md z-40 glass-strong overflow-y-auto p-6 md:p-8"
       >
         <button onClick={onClose} className="absolute top-4 right-4 p-2 text-white/60 hover:text-white" title={zh.panel.close}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6 6 18M6 6l12 12"/></svg>

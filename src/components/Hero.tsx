@@ -1,9 +1,10 @@
-"use client";
+﻿"use client";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 import { zh } from "@/i18n/zh";
 import { Aurora } from "@/components/fx/Aurora";
+import { WarpField } from "@/components/fx/WarpField";
 import { GradientBlob } from "@/components/fx/GradientBlob";
 import { TextSplitReveal } from "@/components/fx/TextSplitReveal";
 import { MagneticButton } from "@/components/fx/MagneticButton";
@@ -16,10 +17,11 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.5, 0]);
 
   return (
-    <section ref={ref} className="relative min-h-screen overflow-hidden flex items-center justify-center pt-24 pb-12">
-      <Aurora opacity={0.4} />
-      <GradientBlob size={700} speed={28} className="-top-40 -left-40" opacity={0.35} colors={["#a855f7", "#ec4899", "#f59e0b", "#3b82f6"]} />
-      <GradientBlob size={500} speed={36} className="-bottom-32 -right-32" opacity={0.25} colors={["#22d3ee", "#a855f7", "#ec4899"]} />
+    <section ref={ref} className="relative min-h-screen overflow-hidden flex items-center justify-center pt-24 pb-12 bg-[#05060f]">
+      <WarpField speed={1.6} density={260} />
+      <Aurora opacity={0.32} />
+      <GradientBlob size={700} speed={28} className="-top-40 -left-40" opacity={0.28} colors={["#a855f7", "#ec4899", "#f59e0b", "#3b82f6"]} />
+      <GradientBlob size={500} speed={36} className="-bottom-32 -right-32" opacity={0.22} colors={["#22d3ee", "#a855f7", "#ec4899"]} />
 
       <motion.div style={{ opacity, scale }} className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         <motion.div
