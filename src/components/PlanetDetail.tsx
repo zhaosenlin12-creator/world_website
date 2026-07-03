@@ -79,7 +79,7 @@ export function PlanetDetail({ body, articles }: { body: SolarBody; articles: Ar
     scene.add(mesh);
 
     if (body.hasRings) {
-      const ringGeom = new THREE.RingGeometry(radius * 1.4, radius * 2.2, 128);
+      const ringGeom = new THREE.RingGeometry(radius * 1.35, radius * 1.85, 128);
       const ringMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(body.ringColor || "#fde68a"), side: THREE.DoubleSide, transparent: true, opacity: 0.65 });
       const ring = new THREE.Mesh(ringGeom, ringMat);
       ring.rotation.x = Math.PI / 2.2;

@@ -468,7 +468,7 @@ function AutoCamera({ focusId }: { focusId: string | null }) {
         const tz = -Math.sin(orbitT) * shot.target;
         camera.lookAt(tx, 0, tz);
       } else {
-        camera.lookAt(0, -3, 0);
+        camera.lookAt(0, 1, 0);
       }
     }
   });
@@ -504,7 +504,7 @@ export function Hero3DScene({ className = "" }: { className?: string }) {
     <div className={"absolute inset-0 " + className}>
       <Canvas
         dpr={[1, 2]}
-        camera={{ position: [0, 18, 60], fov: 55, near: 0.1, far: 200 }}
+        camera={{ position: [15, 22, 60], fov: 55, near: 0.1, far: 200 }}
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
       >
         <Suspense fallback={null}>

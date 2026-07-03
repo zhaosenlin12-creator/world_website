@@ -80,8 +80,8 @@ export function FactsView({ bodies }: { bodies: SolarBody[] }) {
                     </td>
                     <td className="px-4 py-3 text-white/60">{kindZh(b.kind)}</td>
                     <td className="px-4 py-3 text-white/80">{b.diameterKm > 0 ? b.diameterKm.toLocaleString() : "—"}</td>
-                    <td className="px-4 py-3 text-white/80">{(b.orbitAu >= 0 ? b.orbitAu : "—")}</td>
-                    <td className="px-4 py-3 text-white/80">{(b.rotationHours ? b.rotationHours : "—")}</td>
+                    <td className="px-4 py-3 text-white/80">{b.orbitAu >= 0 ? b.orbitAu.toFixed(2) : "—"}</td>
+                    <td className="px-4 py-3 text-white/80">{b.rotationHours ? (Math.abs(b.rotationHours) > 48 ? (b.rotationHours/24).toFixed(1) + "d" : b.rotationHours + "h") : "—"}</td>
                     <td className="px-4 py-3 text-white/80">{b.orbitPeriodDays > 0 ? b.orbitPeriodDays.toLocaleString() : "—"}</td>
                     <td className="px-4 py-3 text-white/80">{b.moons ?? "—"}</td>
                   </motion.tr>
