@@ -10,3 +10,9 @@ scraper/*.log
 scraper/*.err
 scraper/*.out
 scraper/cache/
+# temp build/patch scripts
+scripts/_*.cjs
+scripts/_*.json
+scripts/_*.txt
+tsconfig.tsbuildinfo
+

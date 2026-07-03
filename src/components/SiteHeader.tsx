@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { zh } from "@/i18n/zh";
@@ -7,6 +8,7 @@ import { zh } from "@/i18n/zh";
 const NAV = [
   { href: "/", label: zh.nav.home },
   { href: "/explore", label: zh.nav.explorer },
+  { href: "/play", label: zh.nav.play },
   { href: "/planets", label: zh.nav.planets },
   { href: "/stories", label: zh.nav.stories },
   { href: "/facts", label: zh.nav.facts },
@@ -18,6 +20,8 @@ const NAV = [
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  if (pathname === "/play") return null;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);

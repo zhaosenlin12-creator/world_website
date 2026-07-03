@@ -97,6 +97,13 @@ export function Hero() {
                 {zh.buttons.browsePlanets}
               </Link>
             </MagneticButton>
+            <MagneticButton strength={0.4} className="inline-block">
+              <Link href="/play" className="text-base px-6 py-3 inline-flex items-center gap-2 rounded-full border border-fuchsia-400/50 bg-fuchsia-500/10 hover:bg-fuchsia-500/20 text-fuchsia-200 transition">
+                <span>{"🎮"}</span>
+                <span>{"开始游戏"}</span>
+                <span className="text-[10px] uppercase tracking-widest text-fuchsia-300/70 ml-1">{"NEW"}</span>
+              </Link>
+            </MagneticButton>
           </motion.div>
 
           <motion.div

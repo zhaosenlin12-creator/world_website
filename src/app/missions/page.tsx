@@ -1,7 +1,7 @@
 import { MissionsView } from "@/components/MissionsView";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "任务 — 宇宙探索" };
+export const metadata: Metadata = { title: "任务 — 宇宙探索者" };
 
 const MISSIONS = [
   { name: "旅行者 1 号", agency: "NASA", status: "active", year: 1977, target: "星际空间", body: "interstellar", desc: "1977 年发射，旅行者 1 号是人类迄今最遥远的使者。在造访木星与土星后，它于 2012 年穿越进入星际空间。如今距地球超过 240 亿公里，仍在从太阳系边界外传回数据。", color: "#a78bfa" },
