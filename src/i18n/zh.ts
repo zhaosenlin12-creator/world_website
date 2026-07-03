@@ -253,6 +253,18 @@ export const zh = {
     launchShip: "启动引擎",
     takeoff: "重返航道",
     cancel: "取消",
+    fuel: "燃料",
+    energy: "能量",
+    samples: "样本",
+    missionLog: "任务日志",
+    missionDesc: "启动引擎驶驶飞船，逐个探索 8 颗行星。采集核心样本，加深对太阳系的理解。",
+    clickHint: "· 点击接近 ·",
+    targetMission: "本次任务",
+    knowledgeCheck: "科学考验",
+    touchdown: "· 安全着陆 ·",
+    startMission: "启动任务",
+    takingOff: "重返太空",
+    warping: "超光速跳迁中 ·",
     targetPlanet: "目标行星",
     questions: [
       // 水星
