@@ -178,7 +178,7 @@ export const zh = {
     about: "关于 {name}",
     didYouKnow: "你知道吗？",
     fromNasa: "来自 NASA",
-    readOnNasa: "在 NASA.gov 上阅读 →",
+    readOnNasa: "在 NASA 站点阅读", nasaColors: "NASA 真实色彩", dragRotate: "拖动旋转",
     related: "相关世界",
     openIn3d: "在 3D 中打开"
   },
@@ -367,3 +367,4 @@ export const zh = {
     built: "使用 Next.js · Three.js · Framer Motion 构建"
   }
 };
+
