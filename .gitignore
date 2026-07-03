@@ -16,3 +16,7 @@ scripts/_*.json
 scripts/_*.txt
 tsconfig.tsbuildinfo
 
+# Archive data
+marblequest_20230124-205102_archive/
+marblequest_20230124-205102_archive.zip
+marblequest_*.zip
