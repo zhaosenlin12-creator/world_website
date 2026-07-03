@@ -5,8 +5,7 @@ import Link from "next/link";
 import { zh } from "@/i18n/zh";
 import { GameWorld, BODIES } from "./GameWorld";
 
-type Scene = "INTRO" | "CRUISE" | "APPROACH" | "WARP" | "LANDED" | "MISSION" | "LAUNCH" | "FINISHED";
-
+type Scene = "INTRO" | "CRUISE" | "APPROACH" | "WARP" | "LANDED" | "MISSION" | "LAUNCH" | "EVENT" | "FINISHED";
 type PlanetId = "mercury" | "venus" | "earth" | "mars" | "jupiter" | "saturn" | "uranus" | "neptune";
 
 const QUESTIONS: Record<PlanetId, { q: string; options: string[]; a: number; fact: string; mission: string }> = {
@@ -20,8 +19,14 @@ const QUESTIONS: Record<PlanetId, { q: string; options: string[]; a: number; fac
   neptune: { q: "\u6d77\u738b\u661f\u4e0a\u7684\u201c\u5927\u9ed1\u6597\u201d\u662f\u4ec0\u4e48\uff1f", options: ["\u4e00\u4e2a\u706b\u5c71\u53e3", "\u4e00\u573a\u98ce\u66b4\u53cd\u6c14\u65cb", "\u4e00\u5757\u6df1\u8272\u5927\u9646", "\u4e00\u9897\u9ed1\u8272\u536b\u661f"], a: 1, fact: "\u5927\u9ed1\u6597\u662f\u4e00\u4e2a\u53cd\u6c14\u65cb\u98ce\u66b4\uff0c\u98ce\u901f\u8d85\u8fc7 2000 \u516c\u91cc/\u5c0f\u65f6\uff0c\u662f\u592a\u9633\u7cfb\u4e2d\u6700\u5feb\u7684\u98ce\u3002", mission: "\u5b9d\u85cf\u5728\u6d77\u738b\u661f\u201c\u5927\u9ed1\u6597\u201d\u4e2d\u7684\u9ed1\u8272\u5c01\u95ed\u70b9" }
 };
 
+const PROBES = [
+  { id: "voyager", name: "旅行者 1 号", dist: 50, fact: "1977 年发射,已飞越太阳风顶层进入星际空间" },
+  { id: "cassini", name: "卡西尼号", dist: 18, fact: "1997-2017 年环绕土星,最终坠入土星大气" },
+  { id: "mariner", name: "水手 10 号", dist: 7, fact: "1974 年飞越水星和金星,首次近距离探测类地行星" }
+];
+
 const BEST_KEY = "cosmic-voyage-3d-best";
-const SAMPLE_KEY = "cosmic-voyage-3d-samples";
+const SAVE_KEY = "cosmic-voyage-3d-save";
 
 export function GameClient() {
   const [scene, setScene] = useState<Scene>("INTRO");
@@ -33,40 +38,61 @@ export function GameClient() {
   const [samples, setSamples] = useState<Set<string>>(new Set());
   const [energy, setEnergy] = useState(100);
   const [fuel, setFuel] = useState(100);
-  const [warpFrom, setWarpFrom] = useState<[number, number, number] | undefined>(undefined);
-  const [warpTo, setWarpTo] = useState<[number, number, number] | undefined>(undefined);
+  const [shields, setShields] = useState(100);
+  const [oxygen, setOxygen] = useState(100);
   const [startTime, setStartTime] = useState(0);
   const [hoveredPlanet, setHoveredPlanet] = useState<PlanetId | null>(null);
   const [showIntro, setShowIntro] = useState(true);
   const [missionLog, setMissionLog] = useState<string[]>(["[\u4efb\u52a1] \u63a2\u7d22\u592a\u9633\u7cfb\u5168\u90e8 8 \u9897\u884c\u661f"]);
   const [newRecord, setNewRecord] = useState(false);
   const [showConfirm, setShowConfirm] = useState<PlanetId | null>(null);
+  const [asteroidReached, setAsteroidReached] = useState(false);
+  const [kuiperReached, setKuiperReached] = useState(false);
+  const [probesFound, setProbesFound] = useState<Set<string>>(new Set());
+  const [crystals, setCrystals] = useState(0);
+  const [eventMsg, setEventMsg] = useState<string | null>(null);
+  const [eventEndAt, setEventEndAt] = useState(0);
+  const [distance, setDistance] = useState(0);
   const introStartRef = useRef(0);
-
+  // === 持久化加载 ===
   useEffect(() => {
     try {
       const v = parseInt(localStorage.getItem(BEST_KEY) || "0", 10);
       if (!Number.isNaN(v)) setBestScore(v);
-      const s = localStorage.getItem(SAMPLE_KEY);
-      if (s) setSamples(new Set(JSON.parse(s)));
+      const s = localStorage.getItem(SAVE_KEY);
+      if (s) {
+        const data = JSON.parse(s);
+        if (data.samples) setSamples(new Set(data.samples));
+        if (data.probes) setProbesFound(new Set(data.probes));
+        if (typeof data.crystals === "number") setCrystals(data.crystals);
+        if (typeof data.asteroidReached === "boolean") setAsteroidReached(data.asteroidReached);
+        if (typeof data.kuiperReached === "boolean") setKuiperReached(data.kuiperReached);
+      }
     } catch {}
     setStartTime(performance.now() / 1000);
     introStartRef.current = performance.now() / 1000;
   }, []);
 
+  // === INTRO 自动结束 ===
   useEffect(() => {
     if (scene === "INTRO") {
-      const t = setTimeout(() => {
-        setShowIntro(false);
-        setScene("CRUISE");
-      }, 5500);
+      const t = setTimeout(() => { setShowIntro(false); setScene("CRUISE"); }, 5500);
       return () => clearTimeout(t);
     }
   }, [scene]);
 
+  // === 持久化自动保存 ===
   useEffect(() => {
-    try { localStorage.setItem(SAMPLE_KEY, JSON.stringify(Array.from(samples))); } catch {}
-  }, [samples]);
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify({
+        samples: Array.from(samples),
+        probes: Array.from(probesFound),
+        crystals,
+        asteroidReached,
+        kuiperReached,
+      }));
+    } catch {}
+  }, [samples, probesFound, crystals, asteroidReached, kuiperReached]);
 
   useEffect(() => {
     if (scene === "FINISHED" && score > bestScore) {
@@ -76,13 +102,43 @@ export function GameClient() {
     }
   }, [scene, score, bestScore]);
 
-  // \u80fd\u91cf\u6c88\u8017\uff08\u6e38\u620f\u8d77\u98de\u3001\u4efb\u52a1\u7b49\uff09
+  // === 资源持续消耗 ===
   useEffect(() => {
     const t = setInterval(() => {
-      if (scene === "CRUISE") setFuel((f) => Math.max(0, f - 0.05));
-      if (scene === "LANDED") setEnergy((e) => Math.max(0, e - 0.15));
+      if (scene === "CRUISE") {
+        setFuel((f) => Math.max(0, f - 0.05));
+        setOxygen((o) => Math.max(0, o - 0.03));
+      }
+      if (scene === "LANDED") {
+        setEnergy((e) => Math.max(0, e - 0.2));
+        setOxygen((o) => Math.max(0, o - 0.15));
+      }
     }, 1000);
     return () => clearInterval(t);
+  }, [scene]);
+
+  // === 随机事件调度 ===
+  useEffect(() => {
+    if (scene !== "CRUISE") return;
+    const interval = setInterval(() => {
+      const r = Math.random();
+      if (r < 0.35) {
+        setEventMsg(zh.game.eventFlare); setEventEndAt(performance.now() + 8000);
+        setMissionLog((l) => [...l.slice(-9), "[\u8b66\u62a5] " + zh.game.eventFlare]);
+        setTimeout(() => setEventMsg(null), 8000);
+        setShields((s) => Math.max(0, s - 20));
+      } else if (r < 0.7) {
+        setEventMsg(zh.game.eventMeteors); setEventEndAt(performance.now() + 5000);
+        setMissionLog((l) => [...l.slice(-9), "[\u8b66\u62a5] " + zh.game.eventMeteors]);
+        setTimeout(() => setEventMsg(null), 5000);
+        setShields((s) => Math.max(0, s - 10));
+      } else {
+        setEventMsg(zh.game.eventOxygen); setEventEndAt(performance.now() + 6000);
+        setMissionLog((l) => [...l.slice(-9), "[\u8b66\u62a5] " + zh.game.eventOxygen]);
+        setTimeout(() => setEventMsg(null), 6000);
+      }
+    }, 25000);
+    return () => clearInterval(interval);
   }, [scene]);
 
   const handlePlanetClick = useCallback((id: string) => {
@@ -96,15 +152,16 @@ export function GameClient() {
     setShowConfirm(null);
     setActivePlanet(id);
     setScene("APPROACH");
-    setMissionLog((l) => [...l, "[\u70b9\u4eae] \u542f\u52a8\u5f15\u64ce\uff0c\u8d70\u8fd1" + BODIES.find((b) => b.id === id)?.name]);
+    setMissionLog((l) => [...l.slice(-9), "[\u70b9\u4eae] \u542f\u52a8\u5f15\u64ce\uff0c\u8d70\u8fd1" + BODIES.find((b) => b.id === id)?.name]);
   }, [showConfirm]);
 
   const handleApproachComplete = useCallback(() => {
     if (!activePlanet) return;
     setScene("LANDED");
-    setMissionLog((l) => [...l, "[\u4e0b\u964d] \u5b89\u5168\u7740\u9646" + BODIES.find((b) => b.id === activePlanet)?.name]);
+    setMissionLog((l) => [...l.slice(-9), "[\u4e0b\u964d] \u5b89\u5168\u7740\u9646" + BODIES.find((b) => b.id === activePlanet)?.name]);
     setEnergy(100);
     setFuel((f) => Math.max(0, f - 8));
+    setOxygen(100);
   }, [activePlanet]);
 
   const handleAnswer = useCallback((i: number) => {
@@ -116,70 +173,150 @@ export function GameClient() {
     if (ok) {
       setScore((s) => s + 200);
       setSamples((s) => { const n = new Set(s); n.add(activePlanet); return n; });
-      setMissionLog((l) => [...l, "[\u4efb\u52a1\u5b8c\u6210] \u83b7\u5f97\u201c" + BODIES.find((b) => b.id === activePlanet)?.name + "\u6838\u5fc3\u6837\u672c\u201d +200"]);
+      setMissionLog((l) => [...l.slice(-9), "[\u4efb\u52a1\u5b8c\u6210] \u83b7\u5f97\u201c" + BODIES.find((b) => b.id === activePlanet)?.name + "\u6838\u5fc3\u6837\u672c\u201d +200"]);
     } else {
       setEnergy((e) => Math.max(0, e - 15));
-      setMissionLog((l) => [...l, "[\u4efb\u52a1\u5931\u8d25] \u6d88\u8017\u80fd\u91cf -15"]);
+      setMissionLog((l) => [...l.slice(-9), "[\u4efb\u52a1\u5931\u8d25] \u6d88\u8017\u80fd\u91cf -15"]);
     }
   }, [answered, activePlanet]);
-
   const handleLaunch = useCallback(() => {
     if (!activePlanet) return;
     setScene("LAUNCH");
     setSelectedAnswer(null);
     setAnswered(false);
     setTimeout(() => {
-      if (samples.size === 8 || (samples.size + 1 === 8 && answered && selectedAnswer === QUESTIONS[activePlanet].a)) {
+      if (samples.size === 8) {
         setScene("FINISHED");
       } else {
         setActivePlanet(null);
         setScene("CRUISE");
-        setMissionLog((l) => [...l, "[\u8d77\u98de] \u8fd4\u56de\u822a\u9053\uff0c\u5f80\u4e0b\u4e00\u4e2a\u76ee\u6807"]);
+        setMissionLog((l) => [...l.slice(-9), "[\u8d77\u98de] \u8fd4\u56de\u822a\u9053\uff0c\u5f80\u4e0b\u4e00\u4e2a\u76ee\u6807"]);
       }
     }, 1500);
-  }, [activePlanet, samples.size, answered, selectedAnswer]);
+  }, [activePlanet, samples.size]);
 
   const handleRestart = useCallback(() => {
     setScore(0); setSamples(new Set()); setActivePlanet(null);
     setSelectedAnswer(null); setAnswered(false);
     setNewRecord(false); setShowIntro(true);
-    setEnergy(100); setFuel(100);
+    setEnergy(100); setFuel(100); setShields(100); setOxygen(100);
+    setCrystals(0); setProbesFound(new Set());
+    setAsteroidReached(false); setKuiperReached(false);
     setMissionLog(["[\u4efb\u52a1] \u63a2\u7d22\u592a\u9633\u7cfb\u5168\u90e8 8 \u9897\u884c\u661f"]);
     introStartRef.current = performance.now() / 1000;
     setStartTime(performance.now() / 1000);
     setScene("INTRO");
   }, []);
 
+  // === HUD 触发探索/收集事件 ===
+  const handleWorldEvent = useCallback((event: { kind: string; payload?: any }) => {
+    if (event.kind === "enterAsteroidBelt" && !asteroidReached) {
+      setAsteroidReached(true);
+      setScore((s) => s + 150);
+      setMissionLog((l) => [...l.slice(-9), "[\u652f\u7ebf] \u63a2\u7d22\u5c0f\u884c\u661f\u5e26 +150"]);
+    } else if (event.kind === "enterKuiperBelt" && !kuiperReached) {
+      setKuiperReached(true);
+      setScore((s) => s + 200);
+      setMissionLog((l) => [...l.slice(-9), "[\u652f\u7ebf] \u62b5\u8fbe\u67ef\u4f0a\u4f2f\u5e26 +200"]);
+    } else if (event.kind === "collectCrystal") {
+      setCrystals((c) => c + 1);
+      setFuel((f) => Math.min(100, f + 5));
+      setScore((s) => s + 10);
+      setMissionLog((l) => [...l.slice(-9), "[\u6536\u96c6] " + zh.game.energyCollected]);
+      if (crystals + 1 >= 5) {
+        setScore((s) => s + 300);
+        setMissionLog((l) => [...l.slice(-9), "[\u652f\u7ebf\u5b8c\u6210] " + zh.game.questComplete + " +300"]);
+      }
+    } else if (event.kind === "pickProbe") {
+      const probeId = event.payload?.id;
+      if (probeId && !probesFound.has(probeId)) {
+        setProbesFound((s) => { const n = new Set(s); n.add(probeId); return n; });
+        setScore((s) => s + 500);
+        setMissionLog((l) => [...l.slice(-9), "[\u9690\u85cf] " + zh.game.probePicked + " (" + (PROBES.find((p) => p.id === probeId)?.name || "") + ")"]);
+        if (probesFound.size + 1 >= 3) {
+          setMissionLog((l) => [...l.slice(-9), "[\u9690\u85cf\u5b8c\u6210] " + zh.game.questComplete + " +1500"]);
+          setScore((s) => s + 1500);
+        }
+      }
+    } else if (event.kind === "distance") {
+      setDistance(event.payload?.value || 0);
+    }
+  }, [asteroidReached, kuiperReached, crystals, probesFound]);
+
   const currentPlanetData = activePlanet ? BODIES.find((b) => b.id === activePlanet) : null;
+  const isPerfectEnding = samples.size === 8 && asteroidReached && kuiperReached && crystals >= 5 && probesFound.size >= 3;
 
   return (
-    <div className="relative w-full h-[calc(100vh-72px)] overflow-hidden bg-[#03020a]">
+    <div className="relative w-full h-[calc(100vh-72px)] overflow-hidden bg-[#02010a]">
       {/* 3D \u4e3b\u573a\u666f */}
       <div className="absolute inset-0">
-        <GameWorld mode={scene === "INTRO" ? "INTRO" : scene === "APPROACH" ? "APPROACH" : scene === "LAUNCH" ? "APPROACH" : "CRUISE"} targetId={activePlanet} onApproachComplete={handleApproachComplete} onPlanetClick={handlePlanetClick} startTime={startTime} selectedId={activePlanet} />
+        <GameWorld
+          mode={scene === "INTRO" ? "INTRO" : scene === "APPROACH" ? "APPROACH" : scene === "LAUNCH" ? "APPROACH" : "CRUISE"}
+          targetId={activePlanet}
+          onApproachComplete={handleApproachComplete}
+          onPlanetClick={handlePlanetClick}
+          onWorldEvent={handleWorldEvent}
+          startTime={startTime}
+          selectedId={activePlanet}
+          shields={shields}
+        />
       </div>
-
-      {/* HUD \u4eea\u8868\u76d8 - \u5de6\u4e0a */}
-      <div className="absolute top-0 left-0 z-30 p-3 flex flex-col gap-2 pointer-events-none">
+      {/* HUD - \u5de6\u4e0a: \u8d44\u6e90 + \u4efb\u52a1\u6e05\u5355 */}
+      <div className="absolute top-0 left-0 z-30 p-2 flex flex-col gap-1.5 pointer-events-none max-w-[240px]">
         <div className="pointer-events-auto flex items-center gap-2">
-          <Link href="/" className="px-3 py-1.5 rounded-lg text-xs glass-strong hover:bg-white/10 transition flex items-center gap-1.5"><span>{"\u2190"}</span> {zh.game.back}</Link>
+          <Link href="/" className="px-3 py-1.5 rounded-lg text-xs glass-strong hover:bg-white/10 transition flex items-center gap-1.5">
+            <span>{"\u2190"}</span> {zh.game.back}
+          </Link>
           <div className="glass-strong px-3 py-1.5 rounded-lg">
             <div className="font-display text-sm gradient-text leading-none">{zh.game.title}</div>
           </div>
         </div>
-        {/* \u8d44\u6e90\u6761 */}
-        <div className="glass-strong rounded-lg p-2.5 w-44 space-y-1.5 pointer-events-auto">
+        <div className="glass-strong rounded-lg p-2.5 w-full space-y-0.5 pointer-events-auto">
           <Resource label={zh.game.fuel} value={fuel} color="#22d3ee" />
           <Resource label={zh.game.energy} value={energy} color="#a855f7" />
-          <Resource label={zh.game.samples} value={(samples.size / 8) * 100} color="#10b981" countText={samples.size + "/8"} />
+          <Resource label={zh.game.shields} value={shields} color="#3b82f6" />
+          <Resource label={zh.game.oxygen} value={oxygen} color="#10b981" />
+          <Resource label={zh.game.samples} value={(samples.size / 8) * 100} color="#fbbf24" countText={samples.size + "/8"} />
+          <Resource label={zh.game.exploration} value={Math.min(100, (samples.size * 8 + (asteroidReached ? 10 : 0) + (kuiperReached ? 10 : 0) + crystals * 2 + probesFound.size * 5))} color="#f472b6" />
+        </div>
+        {/* \u4efb\u52a1\u6e05\u5355 */}
+        <div className="glass-strong rounded-lg p-2.5 pointer-events-auto text-[11px]">
+          <div className="text-[9px] text-purple-300/80 tracking-widest uppercase mb-1">
+            <span className="inline-block w-1.5 h-1 rounded-full bg-purple-400 animate-pulse mr-1" />
+            {zh.game.mainQuests} {samples.size}/8
+          </div>
+          <div className="grid grid-cols-4 gap-1">
+            {BODIES.filter((b) => b.id !== "sun").map((b) => (
+              <div key={b.id} className={"px-1 py-0.5 rounded text-center text-[9px] " + (samples.has(b.id) ? "bg-emerald-500/20 text-emerald-300" : "bg-white/5 text-white/40")}>{b.name}</div>
+            ))}
+          </div>
+          <div className="mt-2 text-[10px] text-cyan-300/80 tracking-widest uppercase mb-1">
+            {zh.game.sideQuests} {asteroidReached && kuiperReached && crystals >= 5 ? "3/3" : [asteroidReached, kuiperReached, crystals >= 5].filter(Boolean).length + "/3"}
+          </div>
+          <div className="text-[10px] text-white/65 leading-relaxed">
+            <div>{"\u2022 "} {zh.game.questAsteroid} {asteroidReached ? "\u2713" : ""}</div>
+            <div>{"\u2022 "} {zh.game.questKuiper} {kuiperReached ? "\u2713" : ""}</div>
+            <div>{"\u2022 "} {zh.game.questCollect} {crystals}/5</div>
+          </div>
+          <div className="mt-2 text-[10px] text-amber-300/80 tracking-widest uppercase mb-1">
+            {zh.game.hiddenQuests} {probesFound.size}/3
+          </div>
+          <div className="text-[10px] text-white/65 leading-relaxed">
+            {PROBES.map((p) => (
+              <div key={p.id}>{"\u2022 "} {p.name} {probesFound.has(p.id) ? "\u2713" : ""}</div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* HUD - \u53f3\u4e0a \u4efb\u52a1\u65e5\u5fd7 */}
-      <div className="absolute top-0 right-0 z-30 p-3 flex flex-col gap-2 pointer-events-none items-end">
-        <div className="glass-strong rounded-lg p-2.5 w-56 pointer-events-auto">
-          <div className="text-[10px] text-amber-300/80 tracking-widest uppercase mb-1.5">{zh.game.missionLog}</div>
-          <div className="space-y-1 max-h-44 overflow-hidden">
+      {/* HUD - \u53f3\u4e0a: \u4efb\u52a1\u65e5\u5fd7 + \u5206\u6570 */}
+      <div className="absolute top-0 right-0 z-30 p-2 flex flex-col gap-1.5 pointer-events-none items-end">
+        <div className="glass-strong rounded-lg p-2.5 w-60 pointer-events-auto">
+          <div className="text-[10px] text-amber-300/80 tracking-widest uppercase mb-1.5 flex items-center gap-1">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+            {zh.game.missionLog}
+          </div>
+          <div className="space-y-0.5 max-h-44 overflow-hidden">
             {missionLog.slice(-5).map((line, i) => (
               <motion.div key={i + line} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="text-[11px] text-white/75 font-mono leading-snug">{line}</motion.div>
             ))}
@@ -191,8 +328,16 @@ export function GameClient() {
             <div><span className="text-white/40">{zh.game.bestScore}</span> <span className="font-mono text-amber-300 font-bold">{bestScore}</span></div>
           </div>
         </div>
+        {eventMsg && (
+          <motion.div initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="glass-strong rounded-lg p-2.5 w-60 pointer-events-auto border border-rose-500/40">
+            <div className="text-[10px] text-rose-300 tracking-widest uppercase mb-1 flex items-center gap-1">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse" />
+              ALERT
+            </div>
+            <div className="text-[12px] text-white/90 font-medium">{eventMsg}</div>
+          </motion.div>
+        )}
       </div>
-
       {/* \u4e2d\u592e\u51c6\u661f (\u5bfc\u822a\u65f6) */}
       {scene === "CRUISE" && (
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
@@ -218,12 +363,19 @@ export function GameClient() {
         );
       })()}
 
+      {/* \u63a7\u5236\u63d0\u793a (\u521d\u59cb) */}
+      {scene === "CRUISE" && missionLog.length <= 2 && (
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 glass-strong rounded-full px-4 py-1.5 text-[11px] pointer-events-none text-white/60">
+          {zh.game.controlHint}
+        </div>
+      )}
+
       {/* INTRO \u5e8f\u7ae0 */}
       <AnimatePresence>
         {showIntro && scene === "INTRO" && (
           <motion.div key="intro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-40 flex items-center justify-center bg-black/30 backdrop-blur-sm pointer-events-none">
             <div className="text-center max-w-3xl px-6">
-              <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.3, duration: 0.8 }} className="text-amber-200/80 text-xs tracking-[0.5em] uppercase mb-3">{"\u00b7 \u5b87航\u4f20\u9001\u4e2d ·"}</motion.div>
+              <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.3, duration: 0.8 }} className="text-amber-200/80 text-xs tracking-[0.5em] uppercase mb-3">{"\u00b7 \u5b87\u822a\u4f20\u9001\u4e2d \u00b7"}</motion.div>
               <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.6, duration: 0.8 }} className="font-display text-5xl md:text-7xl font-semibold gradient-text mb-5 glow-text">{zh.game.title}</motion.h1>
               <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.0, duration: 0.8 }} className="text-white/80 text-base md:text-lg leading-relaxed mb-3">{zh.game.subtitle}</motion.p>
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4, duration: 0.8 }} className="text-white/50 text-sm">{zh.game.missionDesc}</motion.p>
@@ -235,56 +387,56 @@ export function GameClient() {
           </motion.div>
         )}
       </AnimatePresence>
-
       {/* \u63a5\u8fd1\u786e\u8ba4 */}
       <AnimatePresence>
         {showConfirm && (() => {
           const b = BODIES.find((x) => x.id === showConfirm);
           if (!b) return null;
           const q = QUESTIONS[showConfirm as PlanetId];
+          const collected = samples.has(showConfirm as PlanetId);
           return (
             <motion.div key="confirm" initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }} className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 glass-strong rounded-2xl p-6 max-w-sm mx-4 text-center">
               <div className="text-4xl mb-2">{"\ud83d\ude80"}</div>
               <h3 className="font-display text-2xl gradient-text mb-2">{b.name}</h3>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">{zh.game.confirmDesc.replace("{planet}", b.name)}</p>
-              <div className="glass rounded-xl p-3 mb-4 text-left">
-                <div className="text-[10px] text-purple-300 tracking-widest uppercase mb-1">{zh.game.targetMission}</div>
-                <div className="text-xs text-white/80">{q.mission}</div>
+              <p className="text-white/70 text-sm mb-3">
+                {zh.game.confirmDesc.replace("{planet}", b.name)}
+              </p>
+              <div className="glass rounded-xl p-2.5 mb-3 text-left">
+                <div className="text-[10px] text-purple-300/80 tracking-widest uppercase mb-1">{zh.game.targetMission}</div>
+                <div className="text-xs text-white/85">{q.mission}</div>
               </div>
-              <div className="text-[10px] text-amber-300/80 mb-4">{"\u26a0 \u5f15\u64ce\u5c06\u6d88\u8017 8 \u70b9\u71c3\u6599"}</div>
+              <div className="text-[11px] text-amber-300/80 mb-3">{"\u26a0 \u5f15\u64ce\u5c06\u6d88\u8017 8 \u70b9\u71c3\u6599"}</div>
               <div className="flex gap-2">
-                <button onClick={() => setShowConfirm(null)} className="btn-ghost flex-1 py-2 text-sm">{zh.game.cancel}</button>
-                <button onClick={handleApproachConfirm} className="btn-primary flex-1 py-2 text-sm">{zh.game.launchShip}</button>
+                <button onClick={() => setShowConfirm(null)} className="btn-ghost flex-1">{zh.game.cancel}</button>
+                <button onClick={handleApproachConfirm} className="btn-primary flex-1">{zh.game.launchShip}</button>
               </div>
             </motion.div>
           );
         })()}
       </AnimatePresence>
 
-      {/* LANDED \u4e2d - \u663e\u793a\u63a5\u4e0b\u6765\u4efb\u52a1\u63d0\u793a */}
+      {/* LANDED \u63d0\u793a\u5361 */}
       <AnimatePresence>
         {scene === "LANDED" && currentPlanetData && (
-          <motion.div key="landed" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} className="absolute left-1/2 -translate-x-1/2 bottom-6 z-30 max-w-2xl mx-4">
-            <div className="glass-strong rounded-2xl px-6 py-4 text-center">
-              <div className="text-xs text-emerald-300 tracking-widest uppercase mb-1">{zh.game.touchdown}</div>
-              <div className="font-display text-xl gradient-text mb-1">{currentPlanetData.name}</div>
-              <div className="text-sm text-white/80">{QUESTIONS[activePlanet!].mission}</div>
-              <button onClick={() => setScene("MISSION")} className="btn-primary mt-3 text-sm py-2 px-6">{zh.game.startMission}</button>
-            </div>
+          <motion.div key="landed" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }} className="absolute bottom-12 left-1/2 -translate-x-1/2 z-30 glass-strong rounded-2xl p-5 max-w-md mx-4 text-center">
+            <div className="text-[10px] text-emerald-300/80 tracking-widest uppercase mb-1">{zh.game.touchdown}</div>
+            <h3 className="font-display text-2xl gradient-text mb-1">{currentPlanetData.name}</h3>
+            <p className="text-white/70 text-sm mb-3">{QUESTIONS[activePlanet!].mission}</p>
+            <button onClick={() => setScene("MISSION")} className="btn-primary w-full">{zh.game.startMission}</button>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* MISSION \u4efb\u52a1\u7b54\u9898\u5361 */}
+      {/* MISSION \u7b54\u9898\u5361 */}
       <AnimatePresence>
-        {scene === "MISSION" && currentPlanetData && activePlanet && (() => {
-          const q = QUESTIONS[activePlanet];
+        {scene === "MISSION" && currentPlanetData && (() => {
+          const q = QUESTIONS[activePlanet!];
           return (
-            <motion.div key="quiz" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} className="absolute right-4 top-1/2 -translate-y-1/2 w-80 glass-strong rounded-2xl p-5 z-30 max-h-[80vh] overflow-y-auto">
-              <div className="text-[10px] tracking-widest uppercase text-amber-300 mb-2">{zh.game.knowledgeCheck}</div>
-              <div className="font-display text-lg gradient-text mb-1">{currentPlanetData.name}</div>
-              <div className="text-xs text-purple-300 mb-4">{q.mission}</div>
-              <div className="text-sm font-medium text-white/90 mb-4 leading-relaxed">{q.q}</div>
+            <motion.div key="mission" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 50 }} className="absolute right-4 top-1/2 -translate-y-1/2 z-30 glass-strong rounded-2xl p-5 max-w-sm">
+              <div className="text-[10px] text-purple-300/80 tracking-widest uppercase mb-1">{zh.game.knowledgeCheck}</div>
+              <h3 className="font-display text-xl gradient-text mb-1">{currentPlanetData.name}</h3>
+              <p className="text-white/60 text-xs mb-3">{q.mission}</p>
+              <div className="text-white/90 text-sm font-medium mb-3">{q.q}</div>
               <div className="space-y-2 mb-3">
                 {q.options.map((opt, i) => {
                   const isCorrect = i === q.a; const isPicked = selectedAnswer === i;
@@ -320,20 +472,25 @@ export function GameClient() {
           </motion.div>
         )}
       </AnimatePresence>
-
       {/* FINISHED \u5b8c\u6210\u5f39\u7a97 */}
       <AnimatePresence>
         {scene === "FINISHED" && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md">
             <motion.div initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring" }} className="glass-strong rounded-3xl p-8 max-w-md text-center mx-4">
-              <motion.div animate={{ rotate: [0, 8, -8, 0] }} transition={{ duration: 1.5, repeat: Infinity }} className="text-6xl mb-3">{"\ud83c\udfc5"}</motion.div>
-              <h2 className="font-display text-3xl gradient-text mb-2">{zh.game.finished}</h2>
-              <p className="text-white/70 text-sm mb-3">{zh.game.finishedDesc}</p>
+              <motion.div animate={{ rotate: [0, 8, -8, 0] }} transition={{ duration: 1.5, repeat: Infinity }} className="text-6xl mb-3">{isPerfectEnding ? "\ud83c\udfc5" : "\ud83c\udf1f"}</motion.div>
+              <h2 className="font-display text-3xl gradient-text mb-2">{isPerfectEnding ? zh.game.perfectEnding : zh.game.finished}</h2>
+              <p className="text-white/70 text-sm mb-3">{isPerfectEnding ? zh.game.perfectDesc : zh.game.finishedDesc}</p>
               {newRecord && <div className="text-amber-300 text-sm font-bold mb-2 animate-pulse">{"\u2728 " + zh.game.newRecord}</div>}
               <div className="grid grid-cols-3 gap-2 my-5 text-xs">
                 <div className="glass rounded-lg p-2"><div className="text-white/50">{zh.game.samples}</div><div className="text-emerald-300 font-mono text-lg">{samples.size}/8</div></div>
                 <div className="glass rounded-lg p-2"><div className="text-white/50">{zh.game.score}</div><div className="text-fuchsia-300 font-mono text-lg">{score}</div></div>
                 <div className="glass rounded-lg p-2"><div className="text-white/50">{zh.game.bestScore}</div><div className="text-amber-300 font-mono text-lg">{Math.max(score, bestScore)}</div></div>
+              </div>
+              <div className="text-[10px] text-white/50 mb-3 space-y-0.5">
+                <div>{zh.game.questAsteroid} {asteroidReached ? "\u2713" : "\u2717"}</div>
+                <div>{zh.game.questKuiper} {kuiperReached ? "\u2713" : "\u2717"}</div>
+                <div>{zh.game.questCollect} {crystals}/5</div>
+                <div>{zh.game.questProbe} {probesFound.size}/3</div>
               </div>
               <div className="flex flex-col gap-2">
                 <button onClick={handleRestart} className="btn-primary w-full">{zh.game.restart}</button>
@@ -350,8 +507,13 @@ export function GameClient() {
 function Resource({ label, value, color, countText }: { label: string; value: number; color: string; countText?: string }) {
   return (
     <div>
-      <div className="flex items-center justify-between text-[10px] mb-0.5"><span className="text-white/50 uppercase tracking-widest">{label}</span>{countText ? <span className="font-mono text-white/80">{countText}</span> : <span className="font-mono text-white/80">{Math.round(value)}%</span>}</div>
-      <div className="h-1.5 rounded-full bg-white/5 overflow-hidden"><motion.div className="h-full" style={{ background: color, boxShadow: "0 0 8px " + color }} initial={{ width: 0 }} animate={{ width: value + "%" }} transition={{ type: "spring", stiffness: 80, damping: 18 }} /></div>
+      <div className="flex items-center justify-between text-[10px] mb-0.5">
+        <span className="text-white/50 uppercase tracking-widest">{label}</span>
+        {countText ? <span className="font-mono text-white/80">{countText}</span> : <span className="font-mono text-white/80">{Math.round(value)}%</span>}
+      </div>
+      <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
+        <motion.div className="h-full" style={{ background: color, boxShadow: "0 0 8px " + color }} initial={{ width: 0 }} animate={{ width: Math.max(0, Math.min(100, value)) + "%" }} transition={{ type: "spring", stiffness: 80, damping: 18 }} />
+      </div>
     </div>
   );
 }

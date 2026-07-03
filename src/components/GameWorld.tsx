@@ -1,7 +1,7 @@
 "use client";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
-import { Suspense, useMemo, useRef, useState, useImperativeHandle, forwardRef } from "react";
+import { Suspense, useMemo, useRef, useState, useEffect, useImperativeHandle, forwardRef } from "react";
 import * as THREE from "three";
 
 export type PlanetId = "mercury" | "venus" | "earth" | "mars" | "jupiter" | "saturn" | "uranus" | "neptune";
@@ -147,14 +147,14 @@ function Planet({ body, angle, onHover, onClick, onUnhover, selected }: { body: 
         onPointerOut={() => { setHovered(false); onUnhover(); document.body.style.cursor = "auto"; }}
         onClick={(e) => { e.stopPropagation(); onClick(body.id); }}
       >
-        <sphereGeometry args={[body.radius * 1.4, 16, 16]} />
+        <sphereGeometry args={[body.radius * 1.5, 12, 12]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
       <mesh
         ref={meshRef}
         scale={scale}
       >
-        <sphereGeometry args={[body.radius, 64, 64]} />
+        <sphereGeometry args={[body.radius, 20, 20]} />
         <meshStandardMaterial
           map={texture}
           emissive={new THREE.Color(body.glow || "#222244")}
@@ -166,7 +166,7 @@ function Planet({ body, angle, onHover, onClick, onUnhover, selected }: { body: 
 
       {body.glow && (
         <mesh ref={atmosphereRef} scale={1.22}>
-          <sphereGeometry args={[body.radius, 32, 32]} />
+          <sphereGeometry args={[body.radius, 20, 20]} />
           <meshBasicMaterial color={body.glow} transparent opacity={0.18} side={THREE.BackSide} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
         </mesh>
       )}
@@ -197,7 +197,7 @@ function Planet({ body, angle, onHover, onClick, onUnhover, selected }: { body: 
   );
 }
 // Sun: procedural texture + 6-layer halo + corona + flames
-function Sun() {
+function Sun({ shields = 100 }: { shields?: number }) {
   const sun = BODIES[0];
   const meshRef = useRef<THREE.Mesh>(null!);
   const halo1Ref = useRef<THREE.Mesh>(null!);
@@ -227,11 +227,11 @@ function Sun() {
   });
   return (
     <group>
-      <pointLight color="#fde68a" intensity={1.8} distance={150} decay={1.5} />
+      <pointLight color="#fde68a" intensity={shields < 30 ? 2.4 : 1.8} distance={150} decay={1.5} />
       <pointLight color="#f97316" intensity={0.6} distance={70} decay={1.8} />
       <ambientLight intensity={0.55} color="#a78bfa" />
       <mesh ref={meshRef}>
-        <sphereGeometry args={[sun.radius, 64, 64]} />
+        <sphereGeometry args={[sun.radius, 14, 14]} />
         <meshStandardMaterial
           map={tex}
           emissive={new THREE.Color("#fbbf24")}
@@ -245,7 +245,7 @@ function Sun() {
         <meshBasicMaterial color="#fbbf24" transparent opacity={0.32} side={THREE.BackSide} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
       </mesh>
       <mesh ref={halo2Ref} scale={1.55}>
-        <sphereGeometry args={[sun.radius, 24, 24]} />
+        <sphereGeometry args={[sun.radius, 16, 16]} />
         <meshBasicMaterial color="#f59e0b" transparent opacity={0.16} side={THREE.BackSide} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
       </mesh>
       <mesh ref={halo3Ref} scale={2.0}>
@@ -333,7 +333,7 @@ function OrbitRings() {
 // Asteroid belt (Mars-Jupiter)
 function AsteroidBelt() {
   const ref = useRef<THREE.InstancedMesh>(null!);
-  const COUNT = 600;
+  const COUNT = 200;
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const asteroids = useMemo(() => {
     const arr = [];
@@ -442,11 +442,11 @@ function Comet() {
   return (
     <group>
       <mesh ref={headRef}>
-        <sphereGeometry args={[0.35, 16, 16]} />
+        <sphereGeometry args={[0.35, 10, 10]} />
         <meshBasicMaterial color="#a5f3fc" transparent opacity={0.95} toneMapped={false} />
       </mesh>
       <mesh>
-        <sphereGeometry args={[0.9, 16, 16]} />
+        <sphereGeometry args={[0.9, 10, 10]} />
         <meshBasicMaterial color="#22d3ee" transparent opacity={0.3} side={THREE.BackSide} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
       </mesh>
       <line ref={lineRef}>
@@ -462,14 +462,16 @@ function Comet() {
 
 // Meteors (random flashes)
 function Meteors() {
+  const COUNT = 3;
   const refs = useRef<THREE.Mesh[]>([]);
-  const META = useMemo(() => Array.from({ length: 6 }, () => ({ active: false, startTime: 0, duration: 0.8, start: new THREE.Vector3(), end: new THREE.Vector3() })), []);
+  const metaRef = useRef(Array.from({ length: COUNT }, () => ({ active: false, startTime: 0, duration: 0.8, start: new THREE.Vector3(), end: new THREE.Vector3() })));
   useFrame(() => {
     const now = performance.now() / 1000;
-    for (let i = 0; i < refs.current.length; i++) {
+    for (let i = 0; i < COUNT; i++) {
       const m = refs.current[i];
-      const meta = META[i];
-      if (!meta.active && Math.random() < 0.005) {
+      if (!m) continue;
+      const meta = metaRef.current[i];
+      if (!meta.active && Math.random() < 0.008) {
         meta.active = true;
         meta.startTime = now;
         meta.duration = 0.6 + Math.random() * 0.6;
@@ -492,7 +494,7 @@ function Meteors() {
   return (
     <>{Array.from({ length: 6 }).map((_, i) => (
       <mesh key={i} ref={(el) => { if (el) refs.current[i] = el; }} visible={false}>
-        <sphereGeometry args={[0.2, 8, 8]} />
+        <sphereGeometry args={[0.2, 6, 6]} />
         <meshBasicMaterial color="#fef3c7" transparent opacity={0.9} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
     ))}</>
@@ -571,6 +573,215 @@ function CameraRig({ mode, targetId, onApproachComplete, startTime, warpFrom, wa
   return null;
 }
 
+// ====== 能量晶体 (在小行星带和行星附近) ======
+function EnergyCrystals({ onCollect }: { onCollect: (idx: number) => void }) {
+  const refs = useRef<THREE.Mesh[]>([]);
+  const collectedRef = useRef<Set<number>>(new Set());
+  const CRYSTAL_COUNT = 12;
+  const positions = useMemo(() => {
+    const arr: { pos: [number, number, number]; color: string }[] = [];
+    const colors = ["#22d3ee", "#a855f7", "#10b981", "#fbbf24", "#f472b6"];
+    // 6 在小行星带 (19-21)
+    for (let i = 0; i < 6; i++) {
+      const ang = (i / 6) * Math.PI * 2 + Math.random() * 0.5;
+      const r = 19 + Math.random() * 2;
+      arr.push({ pos: [Math.cos(ang) * r, (Math.random() - 0.5) * 1.5, Math.sin(ang) * r], color: colors[i % colors.length] });
+    }
+    // 3 在金星/地球/火星之间 (8-16)
+    for (let i = 0; i < 3; i++) {
+      const ang = Math.random() * Math.PI * 2;
+      const r = 8 + Math.random() * 8;
+      arr.push({ pos: [Math.cos(ang) * r, (Math.random() - 0.5) * 2, Math.sin(ang) * r], color: colors[(i + 2) % colors.length] });
+    }
+    // 3 在外行星区 (24-44)
+    for (let i = 0; i < 3; i++) {
+      const ang = Math.random() * Math.PI * 2;
+      const r = 24 + Math.random() * 20;
+      arr.push({ pos: [Math.cos(ang) * r, (Math.random() - 0.5) * 2, Math.sin(ang) * r], color: colors[(i + 3) % colors.length] });
+    }
+    return arr;
+  }, []);
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    for (let i = 0; i < positions.length; i++) {
+      if (collectedRef.current.has(i)) continue;
+      const m = refs.current[i];
+      if (!m) continue;
+      m.rotation.y = t * 1.5;
+      m.rotation.x = t * 0.7;
+      m.position.y = positions[i].pos[1] + Math.sin(t * 1.2 + i) * 0.3;
+    }
+  });
+  return (
+    <>{positions.map((p, i) => (
+      <mesh
+        key={i}
+        ref={(el) => { if (el) refs.current[i] = el; }}
+        position={p.pos}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (collectedRef.current.has(i)) return;
+          collectedRef.current.add(i);
+          const m = refs.current[i];
+          if (m) m.visible = false;
+          onCollect(i);
+        }}
+      >
+        <octahedronGeometry args={[0.35, 0]} />
+        <meshStandardMaterial color={p.color} emissive={p.color} emissiveIntensity={1.5} toneMapped={false} />
+      </mesh>
+    ))}</>
+  );
+}
+
+// ====== NASA 探测器 (旅行者号/卡西尼号/水手号) ======
+function Probes({ onPick }: { onPick: (id: string) => void }) {
+  const refs = useRef<Record<string, THREE.Mesh>>({});
+  const pickedRef = useRef<Set<string>>(new Set());
+  const probes = useMemo(() => [
+    { id: "voyager", dist: 50, label: "旅行者 1 号", color: "#a5f3fc" },
+    { id: "cassini", dist: 18, label: "卡西尼号", color: "#fde68a" },
+    { id: "mariner", dist: 7, label: "水手 10 号", color: "#fca5a5" }
+  ], []);
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    for (let i = 0; i < probes.length; i++) {
+      const p = probes[i];
+      if (pickedRef.current.has(p.id)) continue;
+      const m = refs.current[p.id];
+      if (!m) continue;
+      const ang = (i / probes.length) * Math.PI * 2 + t * 0.05;
+      m.position.set(Math.cos(ang) * p.dist, Math.sin(t * 0.4 + i) * 0.5, Math.sin(ang) * p.dist);
+      m.rotation.y = t * 0.5;
+    }
+  });
+  return (
+    <>{probes.map((p) => (
+      <mesh
+        key={p.id}
+        ref={(el) => { if (el) refs.current[p.id] = el; }}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (pickedRef.current.has(p.id)) return;
+          pickedRef.current.add(p.id);
+          const m = refs.current[p.id];
+          if (m) m.visible = false;
+          onPick(p.id);
+        }}
+      >
+        <coneGeometry args={[0.25, 0.6, 4]} />
+        <meshStandardMaterial color={p.color} emissive={p.color} emissiveIntensity={1.0} toneMapped={false} metalness={0.6} roughness={0.3} />
+      </mesh>
+    ))}</>
+  );
+}
+
+// ====== 区域触发 (小行星带/柯伊伯带) ======
+function ZoneTriggers({ onEnter }: { onEnter: (zone: string) => void }) {
+  const firedRef = useRef<Set<string>>(new Set());
+  // 简化: 通过帧时间累积和随机事件触发
+  useFrame(() => {
+    if (Math.random() < 0.001) {
+      const r = Math.random();
+      if (r < 0.5 && !firedRef.current.has("enterAsteroidBelt")) {
+        firedRef.current.add("enterAsteroidBelt");
+        onEnter("enterAsteroidBelt");
+      } else if (!firedRef.current.has("enterKuiperBelt")) {
+        firedRef.current.add("enterKuiperBelt");
+        onEnter("enterKuiperBelt");
+      }
+    }
+  });
+  return null;
+}
+
+// ====== 玩家飞船 ======
+function Ship() {
+  const ref = useRef<THREE.Group>(null!);
+  const flameRef = useRef<THREE.Mesh>(null!);
+  const tRef = useRef(0);
+  const keysRef = useRef<Record<string, boolean>>({});
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => { keysRef.current[e.key.toLowerCase()] = true; };
+    const up = (e: KeyboardEvent) => { keysRef.current[e.key.toLowerCase()] = false; };
+    window.addEventListener("keydown", down);
+    window.addEventListener("keyup", up);
+    return () => { window.removeEventListener("keydown", down); window.removeEventListener("keyup", up); };
+  }, []);
+  useFrame((state, delta) => {
+    if (!ref.current) return;
+    const t = state.clock.getElapsedTime();
+    tRef.current += delta;
+    const k = keysRef.current;
+    const speed = 8;
+    let dx = 0, dz = 0;
+    if (k["w"] || k["arrowup"]) dz -= 1;
+    if (k["s"] || k["arrowdown"]) dz += 1;
+    if (k["a"] || k["arrowleft"]) dx -= 1;
+    if (k["d"] || k["arrowright"]) dx += 1;
+    if (dx !== 0 || dz !== 0) {
+      const len = Math.sqrt(dx * dx + dz * dz);
+      dx /= len; dz /= len;
+      ref.current.position.x += dx * speed * delta;
+      ref.current.position.z += dz * speed * delta;
+    } else {
+      // 自动巡航: 绕中心慢转
+      ref.current.position.x = Math.cos(t * 0.05) * 22;
+      ref.current.position.z = Math.sin(t * 0.05) * 22;
+    }
+    // 限制范围 5-55
+    const dist = Math.sqrt(ref.current.position.x ** 2 + ref.current.position.z ** 2);
+    if (dist > 55) { ref.current.position.x *= 55 / dist; ref.current.position.z *= 55 / dist; }
+    if (dist < 5) { ref.current.position.x *= 5 / dist; ref.current.position.z *= 5 / dist; }
+    // 朝向
+    const ang = Math.atan2(ref.current.position.x, ref.current.position.z);
+    ref.current.rotation.y = ang;
+    // 轻微浮动
+    ref.current.position.y = Math.sin(t * 1.2) * 0.3;
+    if (flameRef.current) {
+      const flameScale = 1 + Math.sin(t * 20) * 0.3;
+      flameRef.current.scale.set(flameScale, flameScale * 1.5, flameScale);
+      flameRef.current.material.opacity = 0.6 + Math.sin(t * 15) * 0.2;
+    }
+  });
+  return (
+    <group ref={ref} position={[0, 0, 22]}>
+      {/* 主体 */}
+      <mesh>
+        <coneGeometry args={[0.4, 1.2, 8]} />
+        <meshStandardMaterial color="#e0e7ff" emissive="#a5b4fc" emissiveIntensity={0.3} metalness={0.7} roughness={0.2} />
+      </mesh>
+      {/* 驾驶舱 */}
+      <mesh position={[0, 0.2, 0.3]}>
+        <sphereGeometry args={[0.25, 12, 12]} />
+        <meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={0.6} transparent opacity={0.7} toneMapped={false} />
+      </mesh>
+      {/* 尾焰 */}
+      <mesh ref={flameRef} position={[0, 0, -0.9]} rotation={[Math.PI / 2, 0, 0]}>
+        <coneGeometry args={[0.18, 0.7, 8]} />
+        <meshBasicMaterial color="#fbbf24" transparent opacity={0.7} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+      {/* 侧翼 */}
+      <mesh position={[0.5, 0, -0.2]} rotation={[0, 0, -0.3]}>
+        <boxGeometry args={[0.5, 0.05, 0.4]} />
+        <meshStandardMaterial color="#94a3b8" metalness={0.5} roughness={0.3} />
+      </mesh>
+      <mesh position={[-0.5, 0, -0.2]} rotation={[0, 0, 0.3]}>
+        <boxGeometry args={[0.5, 0.05, 0.4]} />
+        <meshStandardMaterial color="#94a3b8" metalness={0.5} roughness={0.3} />
+      </mesh>
+      {/* 点光源 */}
+      <pointLight color="#22d3ee" intensity={0.6} distance={6} decay={1.5} />
+    </group>
+  );
+}
+
+// ====== 事件视觉效果 (太阳耀斑等) ======
+function EventEffects({ shields }: { shields: number }) {
+  // shields 低时: 屏幕边缘红色 vignette (用一个全屏 quad, 不拦截 raycast)
+  return null;
+}
+
 function OrbitingBodies({ planetAngles, onHover, onClick, onUnhover, selected }: { planetAngles: React.MutableRefObject<Record<string, number>>; onHover: (id: string) => void; onClick: (id: string) => void; onUnhover: () => void; selected: string | null }) {
   const ref = useRef<THREE.Group>(null!);
   useFrame((_, delta) => {
@@ -594,26 +805,31 @@ function PlanetBody({ body, planetAngles, onHover, onClick, onUnhover, selected 
   return <Planet body={body} angle={angle} onHover={onHover} onClick={onClick} onUnhover={onUnhover} selected={selected === body.id} />;
 }
 
-function WorldScene({ mode, targetId, onApproachComplete, startTime, planetAngles, hoveredId, setHoveredId, selectedId, onPlanetClick, warpFrom, warpTo }: any) {
+function WorldScene({ mode, targetId, onApproachComplete, startTime, planetAngles, hoveredId, setHoveredId, selectedId, onPlanetClick, onWorldEvent, warpFrom, warpTo, shields = 100 }: any) {
   return (
     <>
       <color attach="background" args={["#02010a"]} />
       <fog attach="fog" args={["#02010a", 70, 200]} />
-      <Starfield count={8000} radius={220} />
+      <Starfield count={4000} radius={220} />
       <OrbitRings />
-      <Sun />
+      <Sun shields={shields} />
       <OrbitingBodies planetAngles={planetAngles} onHover={setHoveredId} onClick={onPlanetClick} onUnhover={() => setHoveredId(null)} selected={selectedId} />
       <AsteroidBelt />
       <KuiperBelt />
       <Comet />
       <Meteors />
+      <EnergyCrystals onCollect={(idx) => onWorldEvent && onWorldEvent({ kind: "collectCrystal", payload: { idx } })} />
+      <Probes onPick={(id) => onWorldEvent && onWorldEvent({ kind: "pickProbe", payload: { id } })} />
+      <ZoneTriggers onEnter={(zone) => onWorldEvent && onWorldEvent({ kind: zone })} />
+      <Ship />
+      <EventEffects shields={shields} />
       <CameraRig mode={mode} targetId={targetId} onApproachComplete={onApproachComplete} startTime={startTime} warpFrom={warpFrom} warpTo={warpTo} />
     </>
   );
 }
 
 export type GameWorldHandle = { setSelected: (id: string | null) => void };
-export const GameWorld = forwardRef<GameWorldHandle, { mode: CameraMode; targetId: string | null; onApproachComplete: () => void; onPlanetClick: (id: string) => void; warpFrom?: [number, number, number]; warpTo?: [number, number, number]; startTime: number; selectedId: string | null }>(function GameWorld({ mode, targetId, onApproachComplete, onPlanetClick, warpFrom, warpTo, startTime, selectedId }, ref) {
+export const GameWorld = forwardRef<GameWorldHandle, { mode: CameraMode; targetId: string | null; onApproachComplete: () => void; onPlanetClick: (id: string) => void; onWorldEvent?: (e: { kind: string; payload?: any }) => void; warpFrom?: [number, number, number]; warpTo?: [number, number, number]; startTime: number; selectedId: string | null; shields?: number }>(function GameWorld({ mode, targetId, onApproachComplete, onPlanetClick, onWorldEvent, warpFrom, warpTo, startTime, selectedId, shields = 100 }, ref) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const planetAngles = useRef<Record<string, number>>({});
   if (Object.keys(planetAngles.current).length === 0) {
@@ -626,7 +842,7 @@ export const GameWorld = forwardRef<GameWorldHandle, { mode: CameraMode; targetI
   }
   useImperativeHandle(ref, () => ({ setSelected: () => {} }));
   return (
-    <Canvas dpr={[1, 2]} camera={{ position: [40, 30, 60], fov: 55, near: 0.1, far: 500 }} gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}>
+    <Canvas dpr={[1, 1.5]} camera={{ position: [40, 30, 60], fov: 55, near: 0.1, far: 500 }} gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}>
       <Suspense fallback={null}>
         <WorldScene mode={mode} targetId={targetId} onApproachComplete={onApproachComplete} startTime={startTime} planetAngles={planetAngles} hoveredId={hoveredId} setHoveredId={setHoveredId} selectedId={selectedId} onPlanetClick={onPlanetClick} warpFrom={warpFrom} warpTo={warpTo} />
       </Suspense>
