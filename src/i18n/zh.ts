@@ -248,6 +248,11 @@ export const zh = {
     rulesList: "驾驶飞船探索 8 颗行星；每颗答对 +100 分；错误不倊分但会告诉你正确答案。全部完成触发完成弹窗。",
     instructions: "鼠标拖动 / 方向键 驾驶飞船。点击行星 → 接近探索、答题获取分数。",
     locked: "已探索",
+    loading: "· 宇航传送中、加载太阳系地图 ·",
+    confirmDesc: "准备驱驶飞船前往 {planet}。到达后需先探察表面，完成本次任务。",
+    launchShip: "启动引擎",
+    takeoff: "重返航道",
+    cancel: "取消",
     targetPlanet: "目标行星",
     questions: [
       // 水星
