@@ -5,7 +5,7 @@ import Link from "next/link";
 import { zh } from "@/i18n/zh";
 import { GameWorld, BODIES } from "./GameWorld";
 
-type Scene = "INTRO" | "CRUISE" | "APPROACH" | "WARP" | "LANDED" | "MISSION" | "LAUNCH" | "EVENT" | "FINISHED";
+type Scene = "INTRO" | "CRUISE" | "APPROACH" | "WARP" | "TUNNEL" | "LANDING" | "LANDED" | "CLUE" | "MISSION" | "LAUNCH" | "EVENT" | "FINISHED";
 type PlanetId = "mercury" | "venus" | "earth" | "mars" | "jupiter" | "saturn" | "uranus" | "neptune";
 
 const QUESTIONS: Record<PlanetId, { q: string; options: string[]; a: number; fact: string; mission: string }> = {
@@ -36,6 +36,10 @@ export function GameClient() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [samples, setSamples] = useState<Set<string>>(new Set());
+  const [tunnelProgress, setTunnelProgress] = useState(0);
+  const [landingProgress, setLandingProgress] = useState(0);
+  const [clueProgress, setClueProgress] = useState(0);
+  const [dangerMsg, setDangerMsg] = useState<string | null>(null);
   const [energy, setEnergy] = useState(100);
   const [fuel, setFuel] = useState(100);
   const [shields, setShields] = useState(100);
@@ -102,7 +106,7 @@ export function GameClient() {
     }
   }, [scene, score, bestScore]);
 
-  // === 资源持续消耗 ===
+  // === 资源持续消耗 + 穿越/降落/线索进度跟踪 ===
   useEffect(() => {
     const t = setInterval(() => {
       if (scene === "CRUISE") {
@@ -112,6 +116,18 @@ export function GameClient() {
       if (scene === "LANDED") {
         setEnergy((e) => Math.max(0, e - 0.2));
         setOxygen((o) => Math.max(0, o - 0.15));
+      }
+      if (scene === "TUNNEL") {
+        setFuel((f) => Math.max(0, f - 0.15));
+        setShields((s) => s);
+        setTunnelProgress((p) => Math.min(1, p + 1 / 12));
+      }
+      if (scene === "LANDING") {
+        setShields((s) => s);
+        setLandingProgress((p) => Math.min(1, p + 1 / 10));
+      }
+      if (scene === "CLUE") {
+        setClueProgress((c) => c);
       }
     }, 1000);
     return () => clearInterval(t);
@@ -157,12 +173,37 @@ export function GameClient() {
 
   const handleApproachComplete = useCallback(() => {
     if (!activePlanet) return;
+    // 新流程: APPROACH -> TUNNEL -> LANDING -> CLUE -> MISSION
+    if (scene === "APPROACH") {
+      setScene("TUNNEL");
+      setTunnelProgress(0);
+      setMissionLog((l) => [...l.slice(-9), "[\u7a7f\u8d8a] \u8d70\u8fdb\u5c0f\u884c\u661f\u5e26 \u00b7 \u542f\u52a8\u8eb2\u907f\u7cfb\u7edf"]);
+      return;
+    }
+    if (scene === "TUNNEL") {
+      setScene("LANDING");
+      setLandingProgress(0);
+      const dangerKey = ({ mercury: "Lava", venus: "Lava", earth: "Sand", mars: "Sand", jupiter: "Storm", saturn: "Ice", uranus: "Ice", neptune: "Storm" } as any)[activePlanet] || "Gas";
+      setDangerMsg(zh.game.landingTitle + " \u00b7 " + ((zh.game as any)["landingDanger" + dangerKey] || ""));
+      return;
+    }
+    if (scene === "LANDING") {
+      setScene("CLUE");
+      setClueProgress(0);
+      setDangerMsg(null);
+      return;
+    }
+    if (scene === "CLUE") {
+      setScene("MISSION");
+      return;
+    }
+    // 兜底
     setScene("LANDED");
     setMissionLog((l) => [...l.slice(-9), "[\u4e0b\u964d] \u5b89\u5168\u7740\u9646" + BODIES.find((b) => b.id === activePlanet)?.name]);
     setEnergy(100);
     setFuel((f) => Math.max(0, f - 8));
     setOxygen(100);
-  }, [activePlanet]);
+  }, [activePlanet, scene]);
 
   const handleAnswer = useCallback((i: number) => {
     if (answered || !activePlanet) return;
@@ -240,6 +281,21 @@ export function GameClient() {
       }
     } else if (event.kind === "distance") {
       setDistance(event.payload?.value || 0);
+    } else if (event.kind === "tunnelHit") {
+      setShields((s) => Math.max(0, s - (event.payload?.dmg || 0)));
+      setMissionLog((l) => [...l.slice(-9), "[\u8b66\u62a5] " + zh.game.tunnelHit]);
+    } else if (event.kind === "tunnelPickup") {
+      setFuel((f) => Math.min(100, f + (event.payload?.fuel || 0)));
+      setMissionLog((l) => [...l.slice(-9), "[\u56de\u6536] " + zh.game.tunnelPickup]);
+    } else if (event.kind === "landingHit") {
+      setShields((s) => Math.max(0, s - (event.payload?.dmg || 0)));
+      setMissionLog((l) => [...l.slice(-9), "[\u8b66\u62a5] " + zh.game.landingHit]);
+    } else if (event.kind === "landingDestroy") {
+      setScore((s) => s + 30);
+      setMissionLog((l) => [...l.slice(-9), "[\u51fb\u6bc1] " + zh.game.landingDestroy]);
+    } else if (event.kind === "cluePickup") {
+      setClueProgress((c) => Math.min(3, c + 1));
+      setMissionLog((l) => [...l.slice(-9), "[\u7ebf\u7d22] " + zh.game.cluePickup]);
     }
   }, [asteroidReached, kuiperReached, crystals, probesFound]);
 
@@ -251,7 +307,7 @@ export function GameClient() {
       {/* 3D \u4e3b\u573a\u666f */}
       <div className="absolute inset-0">
         <GameWorld
-          mode={scene === "INTRO" ? "INTRO" : scene === "APPROACH" ? "APPROACH" : scene === "LAUNCH" ? "APPROACH" : "CRUISE"}
+          mode={(scene === "INTRO" ? "INTRO" : scene === "APPROACH" ? "APPROACH" : scene === "TUNNEL" ? "TUNNEL" : scene === "LANDING" ? "LANDING" : scene === "CLUE" ? "CLUE" : scene === "LAUNCH" ? "APPROACH" : "CRUISE") as any}
           targetId={activePlanet}
           onApproachComplete={handleApproachComplete}
           onPlanetClick={handlePlanetClick}
@@ -270,6 +326,28 @@ export function GameClient() {
           <div className="glass-strong px-3 py-1.5 rounded-lg">
             <div className="font-display text-sm gradient-text leading-none">{zh.game.title}</div>
           </div>
+        </div>
+        {(scene === "TUNNEL" || scene === "LANDING" || scene === "CLUE") && (
+          <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="pointer-events-auto glass-strong rounded-lg p-2.5 w-full">
+            <div className="text-[10px] text-cyan-300 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+              <span className="inline-block w-1.5 h-1 rounded-full bg-cyan-400 animate-pulse" />
+              {scene === "TUNNEL" ? zh.game.tunnelTitle : scene === "LANDING" ? zh.game.landingTitle : zh.game.clueTitle}
+              <span className="ml-auto text-white/60 font-mono">
+                {scene === "TUNNEL" ? Math.round(tunnelProgress * 100) + "%" : scene === "LANDING" ? Math.round(landingProgress * 100) + "%" : clueProgress + "/3"}
+              </span>
+            </div>
+            <div className="h-1.5 rounded-full bg-white/5 overflow-hidden mb-1.5">
+              <motion.div className="h-full" style={{ background: "linear-gradient(90deg,#22d3ee,#a855f7)", boxShadow: "0 0 8px #22d3ee" }} initial={{ width: 0 }} animate={{ width: (scene === "TUNNEL" ? tunnelProgress * 100 : scene === "LANDING" ? landingProgress * 100 : (clueProgress / 3) * 100) + "%" }} transition={{ type: "tween", duration: 0.3 }} />
+            </div>
+            <div className="text-[10px] text-white/60 leading-relaxed">{scene === "TUNNEL" ? zh.game.tunnelHint : scene === "LANDING" ? zh.game.landingHint : zh.game.clueHint}</div>
+          </motion.div>
+        )}
+        {dangerMsg && (scene === "LANDING") && (
+          <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} className="pointer-events-auto glass-strong rounded-lg p-2 w-full text-[10px] text-rose-300 border border-rose-500/30">
+            ⚠ {dangerMsg}
+          </motion.div>
+        )}
+        <div className="pointer-events-auto">
         </div>
         <div className="glass-strong rounded-lg p-2.5 w-full space-y-0.5 pointer-events-auto">
           <Resource label={zh.game.fuel} value={fuel} color="#22d3ee" />

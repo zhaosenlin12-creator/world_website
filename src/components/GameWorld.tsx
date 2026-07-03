@@ -462,7 +462,7 @@ function Comet() {
 
 // Meteors (random flashes)
 function Meteors() {
-  const COUNT = 3;
+  const COUNT = 6;
   const refs = useRef<THREE.Mesh[]>([]);
   const metaRef = useRef(Array.from({ length: COUNT }, () => ({ active: false, startTime: 0, duration: 0.8, start: new THREE.Vector3(), end: new THREE.Vector3() })));
   useFrame(() => {
@@ -501,7 +501,7 @@ function Meteors() {
   );
 }
 // Camera rig: auto-orbit during CRUISE, fly to planet during APPROACH
-type CameraMode = "INTRO" | "CRUISE" | "APPROACH" | "WARP";
+type CameraMode = "INTRO" | "CRUISE" | "APPROACH" | "WARP" | "TUNNEL" | "LANDING" | "CLUE";
 function CameraRig({ mode, targetId, onApproachComplete, startTime, warpFrom, warpTo }: { mode: CameraMode; targetId: string | null; onApproachComplete: () => void; startTime: number; warpFrom?: [number, number, number]; warpTo?: [number, number, number] }) {
   const { camera } = useThree();
   const approachStart = useRef<number | null>(null);
@@ -530,6 +530,29 @@ function CameraRig({ mode, targetId, onApproachComplete, startTime, warpFrom, wa
       const y = 14 + Math.sin(t * 0.35) * 2.5;
       targetPos.set(x, y, z);
       camera.position.lerp(targetPos, 0.035);
+      camera.lookAt(0, 0, 0);
+    } else if (mode === "TUNNEL") {
+      // 穿梭模式: 镜头跟随飞船 (在 z=0), 视角从飞船后上方
+      const baseX = 0, baseY = 0, baseZ = 0;
+      const orbitT = t * 0.2;
+      targetPos.set(
+        baseX + Math.sin(orbitT) * 0.6,
+        baseY + 1.5,
+        baseZ + 5.5
+      );
+      camera.position.lerp(targetPos, 0.08);
+      camera.lookAt(baseX, baseY, baseZ - 3);
+    } else if (mode === "LANDING") {
+      // 降落模式: 镜头从飞船后上方俯视
+      const orbitT = t * 0.15;
+      targetPos.set(Math.sin(orbitT) * 0.4, 3.5, 5.5);
+      camera.position.lerp(targetPos, 0.08);
+      camera.lookAt(0, 0.8, 0);
+    } else if (mode === "CLUE") {
+      // 线索模式: 拉远看到 3 个发光点
+      const orbitT = t * 0.1;
+      targetPos.set(Math.sin(orbitT) * 0.6, 4.5, 7.5);
+      camera.position.lerp(targetPos, 0.06);
       camera.lookAt(0, 0, 0);
     } else if (mode === "APPROACH" && targetId) {
       if (approachStart.current === null) approachStart.current = now;
@@ -805,25 +828,372 @@ function PlanetBody({ body, planetAngles, onHover, onClick, onUnhover, selected 
   return <Planet body={body} angle={angle} onHover={onHover} onClick={onClick} onUnhover={onUnhover} selected={selected === body.id} />;
 }
 
+
+// ====== TUNNEL 穿梭模式: 大量陨石迎面飞来 ======
+function Tunnel({ onComplete, onShieldHit, onFuelPickup, targetId }: { onComplete: () => void; onShieldHit: (d: number) => void; onFuelPickup: (n: number) => void; targetId: string | null }) {
+  const shipRef = useRef<THREE.Group>(null!);
+  const keysRef = useRef<Record<string, boolean>>({});
+  const startTimeRef = useRef(performance.now() / 1000);
+  const doneRef = useRef(false);
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => { keysRef.current[e.key.toLowerCase()] = true; };
+    const up = (e: KeyboardEvent) => { keysRef.current[e.key.toLowerCase()] = false; };
+    window.addEventListener('keydown', down); window.addEventListener('keyup', up);
+    return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
+  }, []);
+  const ASTEROID_COUNT = 60;
+  const meshRef = useRef<THREE.InstancedMesh>(null!);
+  const asteroids = useRef(Array.from({ length: ASTEROID_COUNT }, () => ({
+    pos: new THREE.Vector3((Math.random() - 0.5) * 30, (Math.random() - 0.5) * 18, Math.random() * 60 + 10),
+    size: 0.3 + Math.random() * 0.5, rot: 0, rotV: (Math.random() - 0.5) * 2,
+  })));
+  const dummy = useMemo(() => new THREE.Object3D(), []);
+  const FUEL_COUNT = 6;
+  const fuelRefs = useRef<THREE.Mesh[]>([]);
+  const fuels = useRef(Array.from({ length: FUEL_COUNT }, () => ({
+    pos: new THREE.Vector3((Math.random() - 0.5) * 18, (Math.random() - 0.5) * 10, Math.random() * 50 + 15),
+    collected: false,
+  })));
+  useFrame((state, delta) => {
+    const now = performance.now() / 1000;
+    const t = state.clock.getElapsedTime();
+    const elapsed = now - startTimeRef.current;
+    const p = Math.min(1, elapsed / 12);
+    if (shipRef.current) {
+      const k = keysRef.current;
+      const spd = 12;
+      let dx = 0, dy = 0;
+      if (k['w'] || k['arrowup']) dy += 1;
+      if (k['s'] || k['arrowdown']) dy -= 1;
+      if (k['a'] || k['arrowleft']) dx -= 1;
+      if (k['d'] || k['arrowright']) dx += 1;
+      if (dx !== 0 || dy !== 0) {
+        const len = Math.sqrt(dx * dx + dy * dy);
+        shipRef.current.position.x = Math.max(-14, Math.min(14, shipRef.current.position.x + (dx / len) * spd * delta));
+        shipRef.current.position.y = Math.max(-8, Math.min(8, shipRef.current.position.y + (dy / len) * spd * delta));
+      } else {
+        shipRef.current.position.x += (0 - shipRef.current.position.x) * 0.5 * delta;
+        shipRef.current.position.y += (0 - shipRef.current.position.y) * 0.5 * delta;
+      }
+      shipRef.current.position.z = 0;
+      shipRef.current.rotation.z = -dx * 0.3;
+      shipRef.current.rotation.x = dy * 0.25;
+      shipRef.current.rotation.y = t * 0.3;
+    }
+    if (meshRef.current) {
+      for (let i = 0; i < ASTEROID_COUNT; i++) {
+        const a = asteroids.current[i];
+        a.pos.z -= 22 * delta;
+        if (a.pos.z < -15) {
+          a.pos.set((Math.random() - 0.5) * 30, (Math.random() - 0.5) * 18, 40 + Math.random() * 15);
+          a.size = 0.3 + Math.random() * 0.5;
+        }
+        a.rot += a.rotV * delta;
+        dummy.position.copy(a.pos);
+        dummy.rotation.set(a.rot, a.rot * 0.5, 0);
+        dummy.scale.setScalar(a.size);
+        dummy.updateMatrix();
+        meshRef.current.setMatrixAt(i, dummy.matrix);
+        if (shipRef.current && Math.abs(a.pos.z) < 1.5) {
+          const ddx = a.pos.x - shipRef.current.position.x;
+          const ddy = a.pos.y - shipRef.current.position.y;
+          const d = Math.sqrt(ddx * ddx + ddy * ddy);
+          if (d < a.size + 0.7) { a.pos.z = -50; onShieldHit(15); }
+        }
+      }
+      meshRef.current.instanceMatrix.needsUpdate = true;
+    }
+    for (let i = 0; i < FUEL_COUNT; i++) {
+      const fm = fuels.current[i];
+      const f = fuelRefs.current[i];
+      if (!f) continue;
+      if (fm.collected) { f.visible = false; continue; }
+      f.visible = true;
+      fm.pos.z -= 14 * delta;
+      if (fm.pos.z < -10) { fm.pos.set((Math.random() - 0.5) * 18, (Math.random() - 0.5) * 10, 40 + Math.random() * 10); fm.collected = false; }
+      f.position.copy(fm.pos);
+      f.rotation.y = t * 2; f.rotation.x = t * 1.5;
+      f.scale.setScalar(1 + Math.sin(t * 4 + i) * 0.25);
+      if (shipRef.current && Math.abs(fm.pos.z) < 1.5) {
+        const ddx = fm.pos.x - shipRef.current.position.x;
+        const ddy = fm.pos.y - shipRef.current.position.y;
+        const d = Math.sqrt(ddx * ddx + ddy * ddy);
+        if (d < 1.3) { fm.collected = true; f.visible = false; onFuelPickup(8); }
+      }
+    }
+    if (p >= 1 && !doneRef.current) { doneRef.current = true; setTimeout(() => onComplete(), 400); }
+  });
+  return (
+    <group>
+      <group ref={shipRef} position={[0, 0, 0]}>
+        <mesh><coneGeometry args={[0.4, 1.2, 8]} /><meshStandardMaterial color="#e0e7ff" emissive="#a5b4fc" emissiveIntensity={0.6} metalness={0.85} roughness={0.15} /></mesh>
+        <mesh position={[0.6, 0, -0.1]} rotation={[0, 0, -0.3]}><boxGeometry args={[0.7, 0.05, 0.5]} /><meshStandardMaterial color="#94a3b8" metalness={0.7} roughness={0.25} emissive="#475569" emissiveIntensity={0.2} /></mesh>
+        <mesh position={[-0.6, 0, -0.1]} rotation={[0, 0, 0.3]}><boxGeometry args={[0.7, 0.05, 0.5]} /><meshStandardMaterial color="#94a3b8" metalness={0.7} roughness={0.25} emissive="#475569" emissiveIntensity={0.2} /></mesh>
+        <mesh position={[0, 0.25, 0.35]}><sphereGeometry args={[0.22, 12, 12]} /><meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={1.0} transparent opacity={0.9} toneMapped={false} metalness={0.2} roughness={0.1} /></mesh>
+        <mesh position={[0, 0, -0.85]} rotation={[Math.PI / 2, 0, 0]}><coneGeometry args={[0.22, 0.9, 8]} /><meshBasicMaterial color="#fbbf24" transparent opacity={0.9} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} /></mesh>
+        <mesh position={[0, 0, -1.4]} rotation={[Math.PI / 2, 0, 0]}><coneGeometry args={[0.4, 1.2, 8]} /><meshBasicMaterial color="#f97316" transparent opacity={0.4} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} /></mesh>
+        <pointLight color="#22d3ee" intensity={1.0} distance={8} decay={1.5} />
+      </group>
+      <instancedMesh ref={meshRef} args={[undefined, undefined, ASTEROID_COUNT]}>
+        <dodecahedronGeometry args={[1, 0]} />
+        <meshStandardMaterial color="#6b7280" roughness={0.95} metalness={0.1} />
+      </instancedMesh>
+      {Array.from({ length: FUEL_COUNT }).map((_, i) => (
+        <mesh key={'f' + i} ref={(el) => { if (el) fuelRefs.current[i] = el; }}>
+          <octahedronGeometry args={[0.4, 0]} />
+          <meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={1.0} toneMapped={false} />
+        </mesh>
+      ))}
+      {[-12, 0, 12].map((x) => (
+        <mesh key={'w' + x} position={[x, 0, 8]}>
+          <boxGeometry args={[0.1, 18, 70]} />
+          <meshBasicMaterial color="#a855f7" transparent opacity={0.05} toneMapped={false} />
+        </mesh>
+      ))}
+      <mesh position={[0, 0, 40]}><sphereGeometry args={[2.5, 24, 24]} /><meshBasicMaterial color="#22d3ee" transparent opacity={0.55} toneMapped={false} /></mesh>
+      <pointLight position={[0, 0, 40]} color="#22d3ee" intensity={1.5} distance={25} />
+    </group>
+  );
+}
+
+// ====== LANDING 降落挑战: 行星表面障碍 ======
+function LandingHazards({ planetId, onHit, onDestroy, onComplete }: { planetId: string | null; onHit: (d: number) => void; onDestroy: () => void; onComplete: () => void }) {
+  const shipRef = useRef<THREE.Group>(null!);
+  const keysRef = useRef<Record<string, boolean>>({});
+  const startRef = useRef(performance.now() / 1000);
+  const doneRef = useRef(false);
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => { keysRef.current[e.key.toLowerCase()] = true; };
+    const up = (e: KeyboardEvent) => { keysRef.current[e.key.toLowerCase()] = false; };
+    window.addEventListener('keydown', down); window.addEventListener('keyup', up);
+    return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
+  }, []);
+  const HAZARD_COUNT = 14;
+  const hazardRefs = useRef<THREE.Mesh[]>([]);
+  const hazards = useRef(Array.from({ length: HAZARD_COUNT }, (_, i) => ({
+    pos: new THREE.Vector3((Math.random() - 0.5) * 12, Math.random() * 4 + 2, 18 + i * 3.5),
+    color: '#94a3b8', size: 0.4 + Math.random() * 0.4, rot: 0, rotV: (Math.random() - 0.5) * 2, alive: true,
+  })));
+  const config = useMemo(() => {
+    const id = (planetId || 'earth') as string;
+    if (id === 'mercury' || id === 'venus') return { ground: '#92400e', sky: '#fb923c', hazard: '#dc2626' };
+    if (id === 'earth') return { ground: '#1e3a8a', sky: '#3b82f6', hazard: '#10b981' };
+    if (id === 'mars') return { ground: '#7c2d12', sky: '#ea580c', hazard: '#f59e0b' };
+    if (id === 'jupiter' || id === 'neptune') return { ground: '#1e1b4b', sky: '#6366f1', hazard: '#a855f7' };
+    if (id === 'saturn') return { ground: '#a16207', sky: '#fbbf24', hazard: '#fbbf24' };
+    if (id === 'uranus') return { ground: '#0e7490', sky: '#06b6d4', hazard: '#67e8f9' };
+    return { ground: '#374151', sky: '#6b7280', hazard: '#94a3b8' };
+  }, [planetId]);
+  useEffect(() => { for (const h of hazards.current) h.color = config.hazard; }, [config]);
+  useFrame((state, delta) => {
+    const now = performance.now() / 1000;
+    const t = state.clock.getElapsedTime();
+    const elapsed = now - startRef.current;
+    const p = Math.min(1, elapsed / 10);
+    if (shipRef.current) {
+      const k = keysRef.current;
+      const spd = 9;
+      let dx = 0, dy = 0;
+      if (k['a'] || k['arrowleft']) dx -= 1;
+      if (k['d'] || k['arrowright']) dx += 1;
+      if (k['w'] || k['arrowup']) dy += 1;
+      if (k['s'] || k['arrowdown']) dy -= 1;
+      if (dx !== 0 || dy !== 0) {
+        const len = Math.sqrt(dx * dx + dy * dy);
+        shipRef.current.position.x = Math.max(-7, Math.min(7, shipRef.current.position.x + (dx / len) * spd * delta));
+        shipRef.current.position.y = Math.max(0.3, Math.min(4, shipRef.current.position.y + (dy / len) * spd * delta));
+      } else {
+        shipRef.current.position.x += (0 - shipRef.current.position.x) * 0.4 * delta;
+      }
+      shipRef.current.position.z = 0;
+      shipRef.current.rotation.z = -dx * 0.3;
+      shipRef.current.rotation.y = t * 0.3;
+    }
+    for (let i = 0; i < HAZARD_COUNT; i++) {
+      const h = hazards.current[i];
+      const m = hazardRefs.current[i];
+      if (!m || !h.alive) { if (m) m.visible = false; continue; }
+      m.visible = true;
+      h.pos.z -= 9 * delta;
+      if (h.pos.z < -8 || h.pos.y < 0) {
+        h.pos.set((Math.random() - 0.5) * 12, Math.random() * 4 + 2, 20 + Math.random() * 25);
+        h.alive = true;
+      }
+      h.rot += h.rotV * delta;
+      m.position.copy(h.pos);
+      m.rotation.set(h.rot, h.rot * 0.5, 0);
+      const mat = m.material as THREE.MeshStandardMaterial;
+      if (mat) mat.color.set(h.color);
+      m.scale.setScalar(h.size * (1 + Math.sin(t * 4 + i) * 0.15));
+      if (shipRef.current && Math.abs(h.pos.z) < 1.2) {
+        const ddx = h.pos.x - shipRef.current.position.x;
+        const ddy = h.pos.y - shipRef.current.position.y;
+        const d = Math.sqrt(ddx * ddx + ddy * ddy);
+        if (d < h.size + 0.6) { h.alive = false; m.visible = false; onHit(10); }
+      }
+    }
+    if (p >= 1 && !doneRef.current) { doneRef.current = true; setTimeout(() => onComplete(), 400); }
+  });
+  const handleClickHazard = (e: any, idx: number) => {
+    e.stopPropagation();
+    const h = hazards.current[idx];
+    if (h && h.alive) {
+      h.alive = false;
+      const m = hazardRefs.current[idx];
+      if (m) m.visible = false;
+      onDestroy();
+    }
+  };
+  return (
+    <group>
+      <mesh position={[0, -2, 5]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[60, 100]} />
+        <meshStandardMaterial color={config.ground} roughness={0.9} />
+      </mesh>
+      <mesh position={[0, 15, -10]}>
+        <sphereGeometry args={[35, 32, 32]} />
+        <meshBasicMaterial color={config.sky} side={THREE.BackSide} transparent opacity={0.7} />
+      </mesh>
+      {/* 行星天空粉色 雨点 */}
+      {Array.from({ length: 200 }).map((_, i) => (
+        <mesh key={"p" + i} position={[(Math.random() - 0.5) * 30, Math.random() * 12, (Math.random() - 0.5) * 30]}>
+          <sphereGeometry args={[0.04, 4, 4]} />
+          <meshBasicMaterial color={config.hazard} transparent opacity={0.5} toneMapped={false} />
+        </mesh>
+      ))}
+      <group ref={shipRef} position={[0, 1, 0]}>
+        <mesh><coneGeometry args={[0.35, 1.0, 8]} /><meshStandardMaterial color="#e0e7ff" emissive="#a5b4fc" emissiveIntensity={0.6} metalness={0.85} roughness={0.15} /></mesh>
+        <mesh position={[0.5, 0, -0.05]} rotation={[0, 0, -0.3]}><boxGeometry args={[0.55, 0.04, 0.4]} /><meshStandardMaterial color="#94a3b8" metalness={0.7} roughness={0.25} /></mesh>
+        <mesh position={[-0.5, 0, -0.05]} rotation={[0, 0, 0.3]}><boxGeometry args={[0.55, 0.04, 0.4]} /><meshStandardMaterial color="#94a3b8" metalness={0.7} roughness={0.25} /></mesh>
+        <mesh position={[0, 0.2, 0.3]}><sphereGeometry args={[0.2, 12, 12]} /><meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={1.0} transparent opacity={0.9} toneMapped={false} /></mesh>
+        <mesh position={[0, 0, -0.65]} rotation={[Math.PI / 2, 0, 0]}><coneGeometry args={[0.18, 0.7, 8]} /><meshBasicMaterial color="#fbbf24" transparent opacity={0.9} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} /></mesh>
+        <mesh position={[0, 0, -1.1]} rotation={[Math.PI / 2, 0, 0]}><coneGeometry args={[0.32, 0.9, 8]} /><meshBasicMaterial color="#f97316" transparent opacity={0.4} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} /></mesh>
+        <pointLight color="#22d3ee" intensity={0.9} distance={6} decay={1.5} />
+      </group>
+      {Array.from({ length: HAZARD_COUNT }).map((_, i) => (
+        <mesh key={'hz' + i} ref={(el) => { if (el) hazardRefs.current[i] = el; }} onClick={(e) => handleClickHazard(e, i)}>
+          <dodecahedronGeometry args={[1, 0]} />
+          <meshStandardMaterial color={config.hazard} emissive={config.hazard} emissiveIntensity={0.6} roughness={0.6} metalness={0.2} />
+        </mesh>
+      ))}
+      <pointLight position={[0, 8, 5]} color={config.sky} intensity={1.0} distance={20} />
+    </group>
+  );
+}
+
+// ====== CLUE 线索收集: 3 个发光点 ======
+function CluePoints({ onCollect, onComplete, planetId }: { onCollect: (i: number) => void; onComplete: () => void; planetId: string | null }) {
+  const shipRef = useRef<THREE.Group>(null!);
+  const keysRef = useRef<Record<string, boolean>>({});
+  const CLUE_COUNT = 3;
+  const clueRefs = useRef<THREE.Mesh[]>([]);
+  const clues = useRef(Array.from({ length: CLUE_COUNT }, (_, i) => ({
+    pos: new THREE.Vector3(Math.cos((i / CLUE_COUNT) * Math.PI * 2) * 6, 1 + Math.random() * 2, Math.sin((i / CLUE_COUNT) * Math.PI * 2) * 6),
+    collected: false,
+  })));
+  const startRef = useRef(performance.now() / 1000);
+  const doneRef = useRef(false);
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => { keysRef.current[e.key.toLowerCase()] = true; };
+    const up = (e: KeyboardEvent) => { keysRef.current[e.key.toLowerCase()] = false; };
+    window.addEventListener('keydown', down); window.addEventListener('keyup', up);
+    return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
+  }, []);
+  useFrame((state, delta) => {
+    const t = state.clock.getElapsedTime();
+    const now = performance.now() / 1000;
+    const elapsed = now - startRef.current;
+    if (shipRef.current) {
+      const k = keysRef.current;
+      const spd = 7;
+      let dx = 0, dz = 0;
+      if (k['a'] || k['arrowleft']) dx -= 1;
+      if (k['d'] || k['arrowright']) dx += 1;
+      if (k['w'] || k['arrowup']) dz -= 1;
+      if (k['s'] || k['arrowdown']) dz += 1;
+      if (dx !== 0 || dz !== 0) {
+        const len = Math.sqrt(dx * dx + dz * dz);
+        shipRef.current.position.x = Math.max(-8, Math.min(8, shipRef.current.position.x + (dx / len) * spd * delta));
+        shipRef.current.position.z = Math.max(-8, Math.min(8, shipRef.current.position.z + (dz / len) * spd * delta));
+      } else {
+        shipRef.current.position.x += (0 - shipRef.current.position.x) * 0.3 * delta;
+        shipRef.current.position.z += (0 - shipRef.current.position.z) * 0.3 * delta;
+      }
+      shipRef.current.position.y = 1 + Math.sin(t * 1.2) * 0.3;
+      shipRef.current.rotation.y = Math.atan2(dx, -dz);
+    }
+    let collected = 0;
+    for (let i = 0; i < CLUE_COUNT; i++) {
+      const c = clues.current[i];
+      const m = clueRefs.current[i];
+      if (!m) continue;
+      if (c.collected) { m.visible = false; collected++; continue; }
+      m.visible = true;
+      m.position.copy(c.pos);
+      m.position.y = c.pos.y + Math.sin(t * 1.5 + i) * 0.4;
+      m.rotation.y = t * 1.5;
+      m.scale.setScalar(1 + Math.sin(t * 3 + i) * 0.2);
+      if (shipRef.current) {
+        const ddx = c.pos.x - shipRef.current.position.x;
+        const ddz = c.pos.z - shipRef.current.position.z;
+        const d = Math.sqrt(ddx * ddx + ddz * ddz);
+        if (d < 1.5) { c.collected = true; m.visible = false; onCollect(i); collected++; }
+      }
+    }
+    if (collected >= CLUE_COUNT && !doneRef.current) { doneRef.current = true; setTimeout(() => onComplete(), 600); }
+    else if (elapsed > 30 && !doneRef.current) { doneRef.current = true; setTimeout(() => onComplete(), 200); }
+  });
+  return (
+    <group>
+      <mesh position={[0, -0.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[30, 30]} />
+        <meshStandardMaterial color="#1f2937" roughness={0.95} />
+      </mesh>
+      <group ref={shipRef} position={[0, 1, 0]}>
+        <mesh><coneGeometry args={[0.35, 1.0, 8]} /><meshStandardMaterial color="#e0e7ff" emissive="#a5b4fc" emissiveIntensity={0.6} metalness={0.85} roughness={0.15} /></mesh>
+        <mesh position={[0.5, 0, -0.05]} rotation={[0, 0, -0.3]}><boxGeometry args={[0.55, 0.04, 0.4]} /><meshStandardMaterial color="#94a3b8" metalness={0.7} roughness={0.25} /></mesh>
+        <mesh position={[-0.5, 0, -0.05]} rotation={[0, 0, 0.3]}><boxGeometry args={[0.55, 0.04, 0.4]} /><meshStandardMaterial color="#94a3b8" metalness={0.7} roughness={0.25} /></mesh>
+        <mesh position={[0, 0.2, 0.3]}><sphereGeometry args={[0.2, 12, 12]} /><meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={1.0} transparent opacity={0.9} toneMapped={false} /></mesh>
+        <mesh position={[0, 0, -0.65]} rotation={[Math.PI / 2, 0, 0]}><coneGeometry args={[0.18, 0.7, 8]} /><meshBasicMaterial color="#fbbf24" transparent opacity={0.9} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} /></mesh>
+        <pointLight color="#22d3ee" intensity={0.8} distance={6} decay={1.5} />
+      </group>
+      {Array.from({ length: CLUE_COUNT }).map((_, i) => (
+        <group key={'c' + i}>
+          <mesh ref={(el) => { if (el) clueRefs.current[i] = el; }}
+            onClick={() => { const c = clues.current[i]; if (c && !c.collected) { c.collected = true; const m = clueRefs.current[i]; if (m) m.visible = false; onCollect(i); } }}>
+            <sphereGeometry args={[0.4, 16, 16]} />
+            <meshStandardMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={1.2} toneMapped={false} transparent opacity={0.85} />
+          </mesh>
+          <pointLight color="#fbbf24" intensity={1.0} distance={4} decay={1.5} />
+        </group>
+      ))}
+    </group>
+  );
+}
+
 function WorldScene({ mode, targetId, onApproachComplete, startTime, planetAngles, hoveredId, setHoveredId, selectedId, onPlanetClick, onWorldEvent, warpFrom, warpTo, shields = 100 }: any) {
+  const isImmersive = mode === "TUNNEL" || mode === "LANDING" || mode === "CLUE";
   return (
     <>
-      <color attach="background" args={["#02010a"]} />
-      <fog attach="fog" args={["#02010a", 70, 200]} />
-      <Starfield count={4000} radius={220} />
-      <OrbitRings />
-      <Sun shields={shields} />
-      <OrbitingBodies planetAngles={planetAngles} onHover={setHoveredId} onClick={onPlanetClick} onUnhover={() => setHoveredId(null)} selected={selectedId} />
-      <AsteroidBelt />
-      <KuiperBelt />
-      <Comet />
-      <Meteors />
-      <EnergyCrystals onCollect={(idx) => onWorldEvent && onWorldEvent({ kind: "collectCrystal", payload: { idx } })} />
-      <Probes onPick={(id) => onWorldEvent && onWorldEvent({ kind: "pickProbe", payload: { id } })} />
-      <ZoneTriggers onEnter={(zone) => onWorldEvent && onWorldEvent({ kind: zone })} />
-      <Ship />
+      <color attach="background" args={[isImmersive ? "#0a0a1a" : "#02010a"]} />
+      <fog attach="fog" args={[isImmersive ? "#0a0a1a" : "#02010a", isImmersive ? 25 : 70, isImmersive ? 90 : 200]} />
+      <Starfield count={isImmersive ? 1500 : 4000} radius={isImmersive ? 60 : 220} />
+      {!isImmersive && <OrbitRings />}
+      {!isImmersive && <Sun shields={shields} />}
+      {!isImmersive && <OrbitingBodies planetAngles={planetAngles} onHover={setHoveredId} onClick={onPlanetClick} onUnhover={() => setHoveredId(null)} selected={selectedId} />}
+      {!isImmersive && <AsteroidBelt />}
+      {!isImmersive && <KuiperBelt />}
+      {!isImmersive && <Comet />}
+      {!isImmersive && <Meteors />}
+      {!isImmersive && <EnergyCrystals onCollect={(idx) => onWorldEvent && onWorldEvent({ kind: "collectCrystal", payload: { idx } })} />}
+      {!isImmersive && <Probes onPick={(id) => onWorldEvent && onWorldEvent({ kind: "pickProbe", payload: { id } })} />}
+      {!isImmersive && <ZoneTriggers onEnter={(zone) => onWorldEvent && onWorldEvent({ kind: zone })} />}
+      {!isImmersive && <Ship />}
       <EventEffects shields={shields} />
-      <CameraRig mode={mode} targetId={targetId} onApproachComplete={onApproachComplete} startTime={startTime} warpFrom={warpFrom} warpTo={warpTo} />
+      {mode === "TUNNEL" && <Tunnel onComplete={onApproachComplete} onShieldHit={onWorldEvent ? (d) => onWorldEvent({ kind: "tunnelHit", payload: { dmg: d } }) : () => {}} onFuelPickup={onWorldEvent ? (n) => onWorldEvent({ kind: "tunnelPickup", payload: { fuel: n } }) : () => {}} targetId={targetId} />}
+        {mode === "LANDING" && <LandingHazards planetId={targetId} onHit={onWorldEvent ? (d) => onWorldEvent({ kind: "landingHit", payload: { dmg: d } }) : () => {}} onDestroy={onWorldEvent ? () => onWorldEvent({ kind: "landingDestroy" }) : () => {}} onComplete={onApproachComplete} />}
+        {mode === "CLUE" && <CluePoints onCollect={onWorldEvent ? (i) => onWorldEvent({ kind: "cluePickup", payload: { idx: i } }) : () => {}} onComplete={onApproachComplete} planetId={targetId} />}
+        <CameraRig mode={mode} targetId={targetId} onApproachComplete={onApproachComplete} startTime={startTime} warpFrom={warpFrom} warpTo={warpTo} />
     </>
   );
 }
