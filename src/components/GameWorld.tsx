@@ -115,7 +115,8 @@ function loadTex(url: string): THREE.Texture | null {
 // ============ 太阳系 (SOLAR) ============
 function Sun({ onClick }: { onClick?: () => void }) {
   const ref = useRef<THREE.Mesh>(null!);
-  const tex = useMemo(() => loadTex("/assets/textures/sun.jpg"), []);
+  // Procedural sun: 不依赖贴图, 纯发光球体 (sun.jpg 此前误用火星车图片)
+  const tex = null;
   useFrame((state) => { if (ref.current) ref.current.rotation.y = state.clock.getElapsedTime() * 0.04; });
   return (
     <group onClick={onClick}>
