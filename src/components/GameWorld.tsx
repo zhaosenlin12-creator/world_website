@@ -132,7 +132,7 @@ function Sun({ onClick }: { onClick?: () => void }) {
   );
 }
 
-function Planet({ body, angle, onClick, highlight }: { body: Body; angle: number; onClick?: () => void; highlight?: boolean }) {
+function Planet({ body, angle, onClick, onHover, highlight }: { body: Body; angle: number; onClick?: () => void; onHover?: (hover: boolean) => void; highlight?: boolean }) {
   const pRef = useRef<THREE.Mesh>(null!);
   const gRef = useRef<THREE.Group>(null!);
   const ringRef = useRef<THREE.Mesh>(null!);
@@ -150,7 +150,7 @@ function Planet({ body, angle, onClick, highlight }: { body: Body; angle: number
   });
   return (
     <group ref={gRef} position={[x, 0, z]}>
-      <mesh ref={pRef} onClick={(e) => { e.stopPropagation(); onClick && onClick(); }} onPointerOver={() => { document.body.style.cursor = "pointer"; }} onPointerOut={() => { document.body.style.cursor = "default"; }}>
+      <mesh ref={pRef} onClick={(e) => { e.stopPropagation(); onClick && onClick(); }} onPointerOver={() => { document.body.style.cursor = "pointer"; onHover && onHover(true); }} onPointerOut={() => { document.body.style.cursor = "default"; onHover && onHover(false); }}>
         <sphereGeometry args={[body.radius, 48, 48]} />
         <meshStandardMaterial map={tex || undefined} color={tex ? "#ffffff" : (body.glow || "#94a3b8")} emissive={highlight ? new THREE.Color(body.glow || "#fbbf24") : new THREE.Color("#000")} emissiveIntensity={highlight ? 0.55 : 0} roughness={0.75} metalness={0.05} />
       </mesh>
@@ -234,7 +234,7 @@ function OrbitRing({ distance }: { distance: number }) {
   );
 }
 
-function SolarSystem({ targetId, onPlanetClick }: { targetId: PlanetId | null; onPlanetClick?: (id: string) => void }) {
+function SolarSystem({ targetId, onPlanetClick, onHover }: { targetId: PlanetId | null; onPlanetClick?: (id: string) => void; onHover?: (id: string | null) => void }) {
   return (
     <group>
       <ambientLight intensity={0.35} />
@@ -250,19 +250,22 @@ function SolarSystem({ targetId, onPlanetClick }: { targetId: PlanetId | null; o
       <Sun />
       {BODIES.filter((b) => b.id !== "sun").map((b) => {
         const angle = b.initialAngle ?? Math.random() * Math.PI * 2;
-        return <Planet key={b.id} body={b} angle={angle} onClick={() => onPlanetClick && onPlanetClick(b.id as string)} highlight={targetId === b.id} />;
+        return <Planet key={b.id} body={b} angle={angle} onClick={() => onPlanetClick && onPlanetClick(b.id as string)} onHover={(h) => onHover && onHover(h ? b.id as string : null)} highlight={targetId === b.id} />;
       })}
       <Ship targetId={targetId} />
     </group>
   );
 }
 
-function SolarCamera({ targetId, mode, startTime }: { targetId: PlanetId | null; mode: string; startTime: number }) {
+function SolarCamera({ targetId, mode, startTime, hoverId }: { targetId: PlanetId | null; mode: string; startTime: number; hoverId?: PlanetId | null }) {
   const { camera } = useThree();
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (mode === "CRUISE") {
-      const a = t * 0.05;
+      // 慢速巡航: 0.05 -> 0.02 (1.2 度/秒, 让玩家能瞄准点击)
+      // hover 时暂停旋转, 让玩家稳定点击
+      const speed = hoverId ? 0 : 0.02;
+      const a = t * speed;
       const r = 28 + Math.sin(t * 0.2) * 4;
       camera.position.set(Math.cos(a) * r, 12 + Math.sin(t * 0.15) * 3, Math.sin(a) * r);
       camera.lookAt(0, 0, 0);
@@ -754,15 +757,17 @@ export const GameWorld = forwardRef<GameWorldHandle, {
   onHazard?: () => void;
   onComplete?: () => void;
   onPosition?: (z: number) => void;
-}>((function GameWorld({ scene, targetId, onPlanetClick, startTime, shields = 100, paused = false, onCollect, onHazard, onComplete, onPosition }, ref) {
+  hoverId?: PlanetId | null;
+  onHover?: (id: string | null) => void;
+}>((function GameWorld({ scene, targetId, onPlanetClick, startTime, shields = 100, paused = false, onCollect, onHazard, onComplete, onPosition, hoverId, onHover }, ref) {
   useImperativeHandle(ref, () => ({ setSelected: () => {} }));
   return (
     <Canvas dpr={[1, 1.5]} camera={{ position: [0, 2, 6], fov: 65, near: 0.1, far: 500 }} gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }} shadows={false}>
       <Suspense fallback={null}>
         {(scene === "INTRO" || scene === "SOLAR" || scene === "APPROACH") && (
           <>
-            <SolarSystem targetId={targetId} onPlanetClick={onPlanetClick} />
-            <SolarCamera targetId={targetId} mode={scene === "APPROACH" ? "APPROACH" : "CRUISE"} startTime={startTime} />
+            <SolarSystem targetId={targetId} onPlanetClick={onPlanetClick} onHover={onHover} />
+            <SolarCamera targetId={targetId} mode={scene === "APPROACH" ? "APPROACH" : "CRUISE"} startTime={startTime} hoverId={hoverId} />
           </>
         )}
         {scene === "PLAY" && targetId && (

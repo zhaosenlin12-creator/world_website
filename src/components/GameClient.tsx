@@ -83,6 +83,7 @@ export function GameClient() {
   const [combo, setCombo] = useState(0);
   const [approachStart, setApproachStart] = useState(0);
   const [playPaused, setPlayPaused] = useState(false);
+  const [previewPlanet, setPreviewPlanet] = useState<PlanetId | null>(null);
   const sound = useSound();
   const comboTimer = useRef(0);
 
@@ -129,7 +130,16 @@ export function GameClient() {
     const idx = PLANET_ORDER.indexOf(id as PlanetId);
     if (idx < 0) return;
     sound.click();
+    // 先展示行星信息卡 (用户反馈: 点击后看不到对应介绍), 用户点确认后才进入飞行
+    setPreviewPlanet(id as PlanetId);
     setActiveIdx(idx);
+    log("[选中] " + BODIES.find((b) => b.id === id)?.name + " · 等待发射");
+  }, [scene, sound, log]);
+
+  const handleLaunch = useCallback(() => {
+    if (!previewPlanet) return;
+    const id = previewPlanet;
+    setPreviewPlanet(null);
     setApproachStart(Date.now());
     setScene("APPROACH");
     log("[接近] 飞向 " + BODIES.find((b) => b.id === id)?.name);
@@ -138,7 +148,12 @@ export function GameClient() {
       setPlayPaused(false);
       log("[着陆] " + BODIES.find((b) => b.id === id)?.name + " 表面已到达");
     }, 2600);
-  }, [scene, sound, log]);
+  }, [previewPlanet, log]);
+
+  const handleCancelPreview = useCallback(() => {
+    setPreviewPlanet(null);
+    log("[取消] 返回太阳系");
+  }, [log]);
 
   const handleCollect = useCallback((kind: string) => {
     setCollectedItems((c) => c + 1);
@@ -293,6 +308,8 @@ export function GameClient() {
             onHazard={handleHazard}
             onComplete={handleComplete}
             onPosition={handlePosition}
+            hoverId={hoverId}
+            onHover={(id) => setHoverId(id as PlanetId | null)}
           />
         </div>
       )}
@@ -407,6 +424,47 @@ export function GameClient() {
             </motion.div>
           </motion.div>
         )}
+      </AnimatePresence>
+
+      {/* PLANET PREVIEW 选中提示 - 显示行星信息卡 */}
+      <AnimatePresence>
+        {scene === "SOLAR" && previewPlanet && (() => {
+          const previewBody = BODIES.find((b) => b.id === previewPlanet);
+          if (!previewBody) return null;
+          return (
+            <motion.div key="preview" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-40 flex items-center justify-center bg-black/30 backdrop-blur-sm pointer-events-auto">
+              <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 10 }} className="glass-strong rounded-3xl p-7 max-w-md mx-4 pointer-events-auto">
+                <div className="text-center mb-4">
+                  <div className="text-[10px] text-cyan-300/80 uppercase tracking-widest mb-1">{"已选中目标"}</div>
+                  <div className="font-display text-3xl gradient-text mb-1" style={{ color: previewBody.glow }}>{previewBody.name}</div>
+                  <div className="text-[10px] text-white/50">{"距离太阳 "}{previewBody.distance}{" AU"}</div>
+                </div>
+                <div className="relative h-32 mb-4 rounded-2xl overflow-hidden bg-black/40 flex items-center justify-center">
+                  <img src={previewBody.texture} alt={previewBody.name} className="w-24 h-24 rounded-full object-cover" style={{ boxShadow: "0 0 30px " + (previewBody.glow || "#fff") }} />
+                </div>
+                <div className="text-sm text-white/85 leading-relaxed mb-5">
+                  {(() => {
+                    const facts: Record<string, string> = {
+                      mercury: "太阳系最小的行星, 表面布满陨石坑, 白天 430℃ 夜晚 -180℃。",
+                      venus: "太阳系最热的行星, 表面 462℃, 大气 96% 二氧化碳。",
+                      earth: "已知唯一孕育生命的家园, 71% 被液态水覆盖。",
+                      mars: "红色星球, 拥有太阳系最高的山 — 奥林匹斯山 (22 km)。",
+                      jupiter: "太阳系最大行星, 大红斑已持续 350 多年的风暴。",
+                      saturn: "以壮观的环系著称, 环由数十亿块冰碎片组成。",
+                      uranus: "太阳系最冷的行星, 98° 倾角使它“侧身”自转。",
+                      neptune: "风速最快, 超过 2100 km/h, 距太阳最远的行星。"
+                    };
+                    return facts[previewPlanet] || "一颗独特的太阳系行星。";
+                  })()}
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={handleCancelPreview} className="btn-ghost flex-1">{"返回"}</button>
+                  <button onClick={handleLaunch} className="btn-primary flex-1" style={{ background: previewBody.glow }}>{"发射 →"}</button>
+                </div>
+              </motion.div>
+            </motion.div>
+          );
+        })()}
       </AnimatePresence>
 
       {/* APPROACH 接近提示 */}
