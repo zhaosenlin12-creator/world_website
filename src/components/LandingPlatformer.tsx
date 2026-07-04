@@ -399,7 +399,7 @@ export default function LandingPlatformer({ active, accent, groundColor, onColle
   return (
     <AnimatePresence>
       {active && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-40 flex items-center justify-center pointer-events-auto" style={{ background: "radial-gradient(circle at center, rgba(2,1,10,0.7), rgba(2,1,10,0.95))", backdropFilter: "blur(6px)" }}>
+        <motion.div data-testid="landing-2d" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-40 flex items-center justify-center pointer-events-auto" style={{ background: "radial-gradient(circle at center, rgba(2,1,10,0.7), rgba(2,1,10,0.95))", backdropFilter: "blur(6px)" }}>
           <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} transition={{ duration: 0.4 }} className="relative w-full h-full max-w-[1200px] max-h-[96vh] flex items-center justify-center p-3">
             <div className="relative" style={{ width: "min(95vw, 92vh)", height: "min(95vw, 92vh)", maxWidth: 1080, maxHeight: 1080 }}>
               <canvas ref={canvasRef} width={W} height={H} className="w-full h-full rounded-3xl border border-cyan-400/40 shadow-2xl" style={{ display: "block" }} />
