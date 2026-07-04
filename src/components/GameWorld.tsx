@@ -301,25 +301,31 @@ function TargetPlanet({ body, getPlayerZ }: { body: Body; getPlayerZ: () => numb
   useFrame((state) => {
     if (!groupRef.current) return;
     const pz = getPlayerZ();
-    let radius, atmosRadius, atmosOpacity, dist;
+    let radius, atmosRadius, atmosOpacity, dist, glowOpacity;
     if (pz > -80) {
+      // WARP: 远处小行星, 4 -> 7
       const kk = Math.max(0, Math.min(1, -pz / 80));
       radius = 4 + kk * 3;
       atmosRadius = radius * 1.08;
-      atmosOpacity = 0.1;
+      atmosOpacity = 0.1 + kk * 0.05;
       dist = -110;
+      glowOpacity = 0.05;
     } else if (pz > -150) {
+      // APPROACH: 行星持续放大, 7 -> 28
       const k = (-pz - 80) / 70;
       radius = 7 + k * 21;
       atmosRadius = radius * 1.06;
-      atmosOpacity = 0.15 + k * 0.25;
-      dist = -110;
+      atmosOpacity = 0.15 + k * 0.3;
+      dist = -110 + k * 30; // 拉近
+      glowOpacity = 0.1 + k * 0.3;
     } else {
+      // ENTRY: 行星几乎占满屏幕, 28 -> 100
       const k = Math.min(1, (-pz - 150) / 50);
-      radius = 28 + k * 52;
-      atmosRadius = radius * 1.05;
-      atmosOpacity = 0.4 + k * 0.5;
-      dist = -80 + k * 50;
+      radius = 28 + k * 72;
+      atmosRadius = radius * 1.04;
+      atmosOpacity = 0.45 + k * 0.4;
+      dist = -80 + k * 60;
+      glowOpacity = 0.4 + k * 0.5;
     }
     groupRef.current.position.set(0, 0, dist);
     meshRef.current.scale.setScalar(radius / 4);
