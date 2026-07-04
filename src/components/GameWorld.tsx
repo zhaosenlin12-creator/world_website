@@ -411,6 +411,20 @@ function EnergyOrb({ position, color }: { position: [number, number, number]; co
   );
 }
 
+// 跟随相机: 玩家飞向 -z, 相机在玩家后上方, 强跟随
+function FollowCamera({ targetRef }: { targetRef: React.MutableRefObject<THREE.Group | null> }) {
+  const { camera } = useThree();
+  useFrame(() => {
+    if (targetRef.current) {
+      const p = targetRef.current.position;
+      // 相机在玩家后 6m, 上 3m, 看向玩家前方 8m
+      camera.position.lerp(new THREE.Vector3(p.x * 0.3, p.y + 3, p.z + 6), 0.15);
+      camera.lookAt(p.x * 0.5, p.y, p.z - 8);
+    }
+  });
+  return null;
+}
+
 const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number, z: number) => void; getHazardsAt: (z: number) => { x: number; y: number; z: number; hit: boolean }[]; getOrbsAt: (z: number) => { x: number; y: number; z: number; collected: boolean }[]; paused: boolean; onHazardHit: () => void; onOrbCollect: () => void }>(function ShipPlayer({ onPositionUpdate, getHazardsAt, getOrbsAt, paused, onHazardHit, onOrbCollect }, ref) {
   const innerRef = useRef<THREE.Group | null>(null);
   useImperativeHandle(ref, () => innerRef.current as THREE.Group, []);
@@ -608,6 +622,7 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
         onHazardHit={() => { shakeRef.current = 1; onHazard(); }}
         onOrbCollect={() => onCollect("crystal")}
       />
+      <FollowCamera targetRef={playerRef} />
     </group>
   );
 }
