@@ -8,8 +8,16 @@ import LandingPlatformer from "./LandingPlatformer";
 
 type PlanetId = "mercury" | "venus" | "earth" | "mars" | "jupiter" | "saturn" | "uranus" | "neptune";
 type Scene = "INTRO" | "SOLAR" | "APPROACH" | "PLAY" | "FINISHED";
+type StageKey = "WARP" | "APPROACH" | "ENTRY" | "ATMOSPHERE" | "LANDING";
 
 const PLANET_ORDER: PlanetId[] = ["mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"];
+const STAGE_TEXT: Record<StageKey, string> = {
+  WARP: "跃迁推进",
+  APPROACH: "引力接近",
+  ENTRY: "轨道切入",
+  ATMOSPHERE: "大气层穿越",
+  LANDING: "终端着陆"
+};
 
 const QUESTIONS: Record<PlanetId, { q: string; options: string[]; a: number; fact: string }> = {
   mercury: { q: "水星的一太阳日约多长？", options: ["176 地球日", "88 地球日", "365 地球日", "58 地球日"], a: 1, fact: "水星是太阳系中轨道周期最短的行星，只需 88 地球日即绕太阳一圈。" },
@@ -70,7 +78,7 @@ export function GameClient() {
   const [lives, setLives] = useState(3);
   const [collectedItems, setCollectedItems] = useState(0);
   const [distance, setDistance] = useState(0);
-  const [stageLabel, setStageLabel] = useState<string>('WARP');
+  const [stageLabel, setStageLabel] = useState<StageKey>("WARP");
   const [showQ, setShowQ] = useState(false);
   const [answered, setAnswered] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -132,15 +140,14 @@ export function GameClient() {
     const idx = PLANET_ORDER.indexOf(id as PlanetId);
     if (idx < 0) return;
     sound.click();
-    // 点击直接进入超光速跳迁, 不卡预览卡
     setActiveIdx(idx);
     setApproachStart(Date.now());
     setScene("APPROACH");
-    log("[接近] 飞向 " + BODIES.find((b) => b.id === id)?.name);
+    log("[航线] 正在飞向 " + BODIES.find((b) => b.id === id)?.name);
     setTimeout(() => {
       setScene("PLAY");
       setPlayPaused(false);
-      log("[着陆] " + BODIES.find((b) => b.id === id)?.name + " 表面已到达");
+      log("[接入] 已进入 " + BODIES.find((b) => b.id === id)?.name + " 近地着陆窗口");
     }, 2600);
   }, [scene, sound, log]);
 
@@ -183,11 +190,11 @@ export function GameClient() {
     setTimeout(() => setFlashRed(false), 250);
   }, [log, sound]);
 
-  const handleLandingStart = useCallback(() => { setPlayPaused(true); setLanding2D(true); if (typeof window !== "undefined") (window as any).__landingPlanetId = activePlanet; log("[穿越] 大气层 · 切入表面着降"); }, [activePlanet, log]);
-  const handleLandingComplete = useCallback(() => { setLanding2D(false); setPlayPaused(true); log("[完成] 行星表面成功着陆 " + BODIES.find((b) => b.id === activePlanet)?.name); sound.win(); setTimeout(() => setShowQ(true), 500); }, [activePlanet, log, sound]);
+  const handleLandingStart = useCallback(() => { setPlayPaused(true); setLanding2D(true); if (typeof window !== "undefined") (window as any).__landingPlanetId = activePlanet; log("[穿越] 大气层穿越完成，切入地表着陆程序"); }, [activePlanet, log]);
+  const handleLandingComplete = useCallback(() => { setLanding2D(false); setPlayPaused(true); log("[着陆] 已安全降落至 " + BODIES.find((b) => b.id === activePlanet)?.name + " 地表"); sound.win(); setTimeout(() => setShowQ(true), 500); }, [activePlanet, log, sound]);
   const handleComplete = useCallback(() => {
     if (scene !== "PLAY") return;
-    log("[完成] 着陆航线到达 " + BODIES.find((b) => b.id === activePlanet)?.name);
+    log("[完成] 已抵达 " + BODIES.find((b) => b.id === activePlanet)?.name + " 着陆航线终点");
     sound.win();
     setPlayPaused(true);
     setTimeout(() => setShowQ(true), 700);
@@ -319,7 +326,6 @@ export function GameClient() {
         </div>
       )}
 
-      {/* LANDING 2D ?????? */}
       <LandingPlatformer
         active={landing2D}
         accent={body?.accent || body?.glow || "#22d3ee"}
@@ -328,8 +334,6 @@ export function GameClient() {
         onHazard={() => handleHazard()}
         onComplete={handleLandingComplete}
       />
-
-      {/* ??? */}
 
       {/* 顶部栏 */}
       {scene !== "INTRO" && (
@@ -347,7 +351,7 @@ export function GameClient() {
             <>
               <div className="pointer-events-auto glass-strong rounded-lg px-3 py-1.5 flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
-                <span className="text-[10px] text-orange-300 uppercase tracking-widest font-mono">{stageLabel}</span>
+                <span className="text-[10px] text-orange-300 tracking-[0.28em]">{STAGE_TEXT[stageLabel]}</span>
                 <span className="text-white/40 text-[10px]">/ 5 阶段</span>
               </div>
               <div className="pointer-events-auto glass-strong rounded-xl p-3 space-y-1.5">
@@ -366,7 +370,7 @@ export function GameClient() {
                   <span className="font-mono">{Math.round(distance)} m</span>
                 </div>
                 {combo > 1 && (
-                  <div className="text-amber-300 text-[10px] font-bold animate-pulse">COMBO ×{combo}</div>
+                  <div className="text-amber-300 text-[10px] font-bold animate-pulse">连击 ×{combo}</div>
                 )}
               </div>
 
