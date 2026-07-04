@@ -287,26 +287,59 @@ function SolarCamera({ targetId, mode, startTime }: { targetId: PlanetId | null;
 // 行星关卡 (PLAY) - 飞行躲避 + 行星接近 + 大气层着陆
 // ============================================================
 
-// 行星前方巨大球体 (玩家朝它飞去)
-function TargetPlanet({ body, travelZ }: { body: Body; travelZ: number }) {
-  const ref = useRef<THREE.Mesh>(null!);
+// 行星: 4 阶段动态放大 (WARP 远处 4 半径 -> APPROACH 28 -> ENTRY 80 -> 充满画面)
+function TargetPlanet({ body, getPlayerZ }: { body: Body; getPlayerZ: () => number }) {
+  const groupRef = useRef<THREE.Group>(null!);
+  const meshRef = useRef<THREE.Mesh>(null!);
+  const atmosRef = useRef<THREE.Mesh>(null!);
+  const ringRef = useRef<THREE.Mesh>(null!);
   const tex = useMemo(() => loadTex(body.texture), [body.texture]);
-  // 行星位置 = (0, 0, travelZ) — 玩家在 z=0 出发, 行星在 travelZ 处
-  // 随着 travelZ 增大 (向 -∞), 行星固定在 -120 看起来越来越近
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const pz = getPlayerZ();
+    let radius, atmosRadius, atmosOpacity, dist;
+    if (pz > -80) {
+      const kk = Math.max(0, Math.min(1, -pz / 80));
+      radius = 4 + kk * 3;
+      atmosRadius = radius * 1.08;
+      atmosOpacity = 0.1;
+      dist = -110;
+    } else if (pz > -150) {
+      const k = (-pz - 80) / 70;
+      radius = 7 + k * 21;
+      atmosRadius = radius * 1.06;
+      atmosOpacity = 0.15 + k * 0.25;
+      dist = -110;
+    } else {
+      const k = Math.min(1, (-pz - 150) / 50);
+      radius = 28 + k * 52;
+      atmosRadius = radius * 1.05;
+      atmosOpacity = 0.4 + k * 0.5;
+      dist = -80 + k * 50;
+    }
+    groupRef.current.position.set(0, 0, dist);
+    meshRef.current.scale.setScalar(radius / 4);
+    atmosRef.current.scale.setScalar(atmosRadius / 4);
+    (atmosRef.current.material as THREE.MeshBasicMaterial).opacity = atmosOpacity;
+    if (ringRef.current) {
+      ringRef.current.scale.setScalar(radius / 4);
+      ringRef.current.rotation.z = state.clock.getElapsedTime() * 0.05;
+    }
+    meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.04;
+  });
   return (
-    <group position={[0, 0, -120]}>
-      <mesh ref={ref}>
-        <sphereGeometry args={[45, 48, 48]} />
+    <group ref={groupRef} position={[0, 0, -110]}>
+      <mesh ref={meshRef}>
+        <sphereGeometry args={[4, 48, 48]} />
         <meshStandardMaterial map={tex || undefined} color={tex ? "#ffffff" : (body.glow || "#475569")} emissive={new THREE.Color(body.glow || "#000")} emissiveIntensity={0.08} roughness={0.9} metalness={0} />
       </mesh>
-      {/* 大气层光晕 */}
-      <mesh>
-        <sphereGeometry args={[48, 32, 32]} />
+      <mesh ref={atmosRef}>
+        <sphereGeometry args={[4, 32, 32]} />
         <meshBasicMaterial color={body.accent || body.glow || "#22d3ee"} transparent opacity={0.15} side={THREE.BackSide} depthWrite={false} />
       </mesh>
       {body.hasRing && (
-        <mesh rotation={[Math.PI / 2.4, 0, 0]}>
-          <ringGeometry args={[55, 75, 64]} />
+        <mesh ref={ringRef} rotation={[Math.PI / 2.4, 0, 0]}>
+          <ringGeometry args={[5, 7, 64]} />
           <meshStandardMaterial color={body.ringColor || "#e7c98a"} side={THREE.DoubleSide} transparent opacity={0.7} roughness={0.6} metalness={0.3} />
         </mesh>
       )}
@@ -314,6 +347,26 @@ function TargetPlanet({ body, travelZ }: { body: Body; travelZ: number }) {
   );
 }
 
+// 大气层进入火球 (玩家在 z<-150 时显示)
+function AtmosphericFire({ color, getPlayerZ }: { color: string; getPlayerZ: () => number }) {
+  const groupRef = useRef<THREE.Group>(null!);
+  const innerRef = useRef<THREE.Mesh>(null!);
+  useFrame(() => {
+    if (!groupRef.current) return;
+    const pz = getPlayerZ();
+    const k = Math.max(0, Math.min(1, (-pz - 150) / 50));
+    groupRef.current.scale.setScalar(0.8 + k * 1.2);
+    (innerRef.current.material as THREE.MeshBasicMaterial).opacity = 0.3 + k * 0.6;
+  });
+  return (
+    <group ref={groupRef} position={[0, 0, 0]}>
+      <mesh ref={innerRef}>
+        <sphereGeometry args={[1.2, 24, 24]} />
+        <meshBasicMaterial color={color} transparent opacity={0.3} side={THREE.BackSide} depthWrite={false} blending={THREE.AdditiveBlending} />
+      </mesh>
+    </group>
+  );
+}
 // 陨石 / 太空碎片 (WARP 隧道)
 function Meteor({ position, scale, speed }: { position: [number, number, number]; scale: number; speed: number }) {
   const ref = useRef<THREE.Mesh>(null!);
@@ -396,8 +449,10 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
     velRef.current.y = Math.max(-10, Math.min(10, velRef.current.y));
     innerRef.current.position.x = Math.max(-7, Math.min(7, innerRef.current.position.x + velRef.current.x * delta));
     innerRef.current.position.y = Math.max(-5, Math.min(5, innerRef.current.position.y + velRef.current.y * delta));
-    // 自动向行星推进
-    innerRef.current.position.z -= 14 * delta;
+    // 自动向行星推进 (按 z 阶段加速: WARP 11, APPROACH 14, ENTRY 18)
+    const curZ = innerRef.current.position.z;
+    const auto = curZ > -80 ? 11 : curZ > -150 ? 14 : 18;
+    innerRef.current.position.z -= auto * delta;
     // 倾斜
     if (Math.abs(velRef.current.x) > 0.5) innerRef.current.rotation.z -= velRef.current.x * delta * 0.5;
     else innerRef.current.rotation.z *= 0.85;
@@ -464,32 +519,35 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
   const body = BODIES.find((b) => b.id === planetId) as Body;
   const playerRef = useRef<THREE.Group | null>(null);
   const hazardsRef = useRef<{ x: number; y: number; z: number; hit: boolean }[]>([]);
-  const orbsRef = useRef<{ x: number; y: number; z: number; collected: boolean; kind: string }[]>([]);
+  const orbsRef = useRef<{ x: number; y: number; z: number; collected: boolean }[]>([]);
   const completedRef = useRef(false);
   const lastHazardCheck = useRef(0);
 
-  // 程序化陨石带 + 能量球 (WARP 隧道)
-  const initialHazards = useMemo(() => {
-    const arr: { x: number; y: number; z: number; hit: boolean }[] = [];
-    for (let i = 0; i < 80; i++) {
-      arr.push({ x: -6 + Math.random() * 12, y: -4 + Math.random() * 8, z: -i * 4 - 5, hit: false });
-    }
+  // 3 阶段陨石带 + 能量球
+  const allHazards = useMemo(() => {
+    const arr: { x: number; y: number; z: number; hit: boolean; stage: number }[] = [];
+    for (let i = 0; i < 14; i++) arr.push({ x: -6 + Math.random() * 12, y: -4 + Math.random() * 8, z: -i * 6 - 4, hit: false, stage: 1 });
+    for (let i = 0; i < 22; i++) arr.push({ x: -5.5 + Math.random() * 11, y: -3.5 + Math.random() * 7, z: -82 - i * 3.1, hit: false, stage: 2 });
+    for (let i = 0; i < 18; i++) arr.push({ x: -4 + Math.random() * 8, y: -3 + Math.random() * 6, z: -152 - i * 2.7, hit: false, stage: 3 });
     return arr;
   }, [planetId]);
 
-  const initialOrbs = useMemo(() => {
-    const arr: { x: number; y: number; z: number; collected: boolean; kind: string }[] = [];
-    for (let i = 0; i < 40; i++) {
-      arr.push({ x: -5 + Math.random() * 10, y: -3.5 + Math.random() * 7, z: -i * 8 - 8, collected: false, kind: body.collectible || "crystal" });
-    }
+  const allOrbs = useMemo(() => {
+    const arr: { x: number; y: number; z: number; collected: boolean }[] = [];
+    for (let i = 0; i < 10; i++) arr.push({ x: -5 + Math.random() * 10, y: -3 + Math.random() * 6, z: -i * 8 - 6, collected: false });
+    for (let i = 0; i < 16; i++) arr.push({ x: -4.5 + Math.random() * 9, y: -3 + Math.random() * 6, z: -84 - i * 4.1, collected: false });
+    for (let i = 0; i < 6; i++) arr.push({ x: -3 + Math.random() * 6, y: -2.5 + Math.random() * 5, z: -154 - i * 7.5, collected: false });
     return arr;
-  }, [body.collectible, planetId]);
+  }, [planetId]);
+
+  const playerZRef = useRef(0);
+  const shakeRef = useRef(0);
 
   useEffect(() => {
-    hazardsRef.current = initialHazards.map((h) => ({ ...h, hit: false }));
-    orbsRef.current = initialOrbs.map((o) => ({ ...o, collected: false }));
+    hazardsRef.current = allHazards.map((h) => ({ ...h, hit: false }));
+    orbsRef.current = allOrbs.map((o) => ({ ...o, collected: false }));
     completedRef.current = false;
-  }, [initialHazards, initialOrbs]);
+  }, [allHazards, allOrbs]);
 
   const getHazardsAt = useCallback((z: number) => {
     return hazardsRef.current.filter((h) => Math.abs(h.z - z) < 1.0 && !h.hit);
@@ -504,11 +562,17 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
     if (paused) return;
     if (completedRef.current) return;
     const p = playerRef.current.position;
+    playerZRef.current = p.z;
     onPosition(p.z);
-    // 到达行星 (-120 z) → 任务完成
     if (p.z < -200) {
       completedRef.current = true;
       onComplete();
+    }
+    if (shakeRef.current > 0) {
+      shakeRef.current = Math.max(0, shakeRef.current - delta * 4);
+      const ss = shakeRef.current;
+      p.x += (Math.random() - 0.5) * ss * 0.3;
+      p.y += (Math.random() - 0.5) * ss * 0.3;
     }
   });
 
@@ -530,17 +594,20 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
       <StreamStars count={300} color={accent} />
       <StreamStars count={200} color="#ffffff" />
       {/* 远景行星 (会越来越大) */}
-      <TargetPlanet body={body} travelZ={0} />
+      <TargetPlanet body={body} getPlayerZ={() => playerZRef.current} />
       {/* 陨石带 + 能量球 (固定在 z 段, 随 player 前进靠近) */}
-      {initialHazards.map((h, i) => (
-        <Meteor key={"h" + i} position={[h.x, h.y, h.z]} scale={0.5 + Math.random() * 0.6} speed={0} />
-      ))}
-      {initialOrbs.map((o, i) => (
-        <EnergyOrb key={"o" + i} position={[o.x, o.y, o.z]} color={accent} />
-      ))}
-      <ShipPlayer ref={playerRef} onPositionUpdate={(x, y, z) => onPosition(z)} getHazardsAt={getHazardsAt} getOrbsAt={getOrbsAt} paused={paused}
-        onHazardHit={() => onHazard()}
-        onOrbCollect={() => onCollect("crystal")} />
+      {allHazards.map((h, i) => <Meteor key={"h" + i} position={[h.x, h.y, h.z]} scale={0.5 + Math.random() * 0.5} speed={0} />)}
+      {allOrbs.map((o, i) => <EnergyOrb key={"o" + i} position={[o.x, o.y, o.z]} color={accent} />)}
+      <AtmosphericFire color={accent} getPlayerZ={() => playerZRef.current} />
+      <ShipPlayer
+        ref={playerRef}
+        onPositionUpdate={(x, y, z) => { playerZRef.current = z; onPosition(z); }}
+        getHazardsAt={getHazardsAt}
+        getOrbsAt={getOrbsAt}
+        paused={paused}
+        onHazardHit={() => { shakeRef.current = 1; onHazard(); }}
+        onOrbCollect={() => onCollect("crystal")}
+      />
     </group>
   );
 }
@@ -585,3 +652,4 @@ export const GameWorld = forwardRef<GameWorldHandle, {
     </Canvas>
   );
 }));
+
