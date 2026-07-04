@@ -1,10 +1,21 @@
-import { NextResponse } from "next/server";
-import { allStories } from "@/lib/articles";
+﻿import { NextResponse } from "next/server";
+import { zh } from "@/i18n/zh";
+
 export const dynamic = "force-dynamic";
+
 export async function GET() {
-  const items = allStories().slice(0, 30).map((a) => ({
-    url: a.url, slug: a.slug, title: a.title, description: a.description,
-    hero: a.hero, body: a.body.slice(0, 1), images: a.images.slice(0, 1)
+  const items = (zh.stories as any).items || [];
+  const mapped = items.map((it: any) => ({
+    url: "https://science.nasa.gov/" + it.slug + "/",
+    slug: it.slug,
+    title: it.title,
+    description: it.desc,
+    hero: it.image,
+    body: [it.desc],
+    headings: [],
+    images: [{ src: it.image, alt: it.title }],
+    accent: it.accent,
+    tag: it.tag
   }));
-  return NextResponse.json(items);
+  return NextResponse.json(mapped);
 }

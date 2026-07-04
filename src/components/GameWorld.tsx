@@ -18,6 +18,7 @@ export type Body = {
   hasRing?: boolean;
   ringInner?: number;
   ringOuter?: number;
+  ringColor?: string;
   initialAngle?: number;
   biome?: "green" | "sand" | "cloud" | "ice" | "lava" | "crystal" | "gas" | "void";
   collectible?: "star" | "crystal" | "ankh" | "ruby" | "apple";
@@ -63,14 +64,14 @@ function Stars({ count = 800, radius = 80 }: { count?: number; radius?: number }
   );
 }
 
-// 流动星空 (跑酷场景专用, 粒子向玩家扑面)
-function StreamStars({ count = 300, color = "#ffffff" }: { count?: number; color?: string }) {
+// 高速流星空 (玩家往前飞时的扑面感)
+function StreamStars({ count = 200, color = "#ffffff" }: { count?: number; color?: string }) {
   const ref = useRef<THREE.Points>(null!);
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      arr[i * 3] = (Math.random() - 0.5) * 60;
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 30 + 4;
+      arr[i * 3] = (Math.random() - 0.5) * 80;
+      arr[i * 3 + 1] = (Math.random() - 0.5) * 40;
       arr[i * 3 + 2] = -Math.random() * 200;
     }
     return arr;
@@ -80,8 +81,8 @@ function StreamStars({ count = 300, color = "#ffffff" }: { count?: number; color
     const pos = ref.current.geometry.attributes.position as THREE.BufferAttribute;
     const arr = pos.array as Float32Array;
     for (let i = 0; i < count; i++) {
-      arr[i * 3 + 2] += 60 * delta;
-      if (arr[i * 3 + 2] > 20) arr[i * 3 + 2] -= 200;
+      arr[i * 3 + 2] += 80 * delta;
+      if (arr[i * 3 + 2] > 30) arr[i * 3 + 2] -= 200;
     }
     pos.needsUpdate = true;
   });
@@ -90,7 +91,7 @@ function StreamStars({ count = 300, color = "#ffffff" }: { count?: number; color
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
       </bufferGeometry>
-      <pointsMaterial color={color} size={0.18} sizeAttenuation transparent opacity={0.7} depthWrite={false} />
+      <pointsMaterial color={color} size={0.18} sizeAttenuation transparent opacity={0.75} depthWrite={false} />
     </points>
   );
 }
@@ -267,7 +268,6 @@ function SolarCamera({ targetId, mode, startTime }: { targetId: PlanetId | null;
         const ang = (target.initialAngle ?? 0);
         const tx = Math.cos(ang) * target.distance;
         const tz = Math.sin(ang) * target.distance;
-        // 相机: 从环绕位置平滑推进到行星表面
         const dist = 20 - k * 16;
         const cx = tx + Math.cos(t * 0.4 + 1) * dist * 0.2;
         const cy = 4 - k * 3;
@@ -284,84 +284,81 @@ function SolarCamera({ targetId, mode, startTime }: { targetId: PlanetId | null;
 }
 
 // ============================================================
-// 行星表面跑酷关卡 (PLAY)
+// 行星关卡 (PLAY) - 飞行躲避 + 行星接近 + 大气层着陆
 // ============================================================
 
-// 漂浮的能量平台 — 倒角盒子 + 玻璃质感 + 行星色发光
-function CrystalPlatform({ position, scale, color, accent, glow }: { position: [number, number, number]; scale: [number, number, number]; color: string; accent: string; glow: number }) {
+// 行星前方巨大球体 (玩家朝它飞去)
+function TargetPlanet({ body, travelZ }: { body: Body; travelZ: number }) {
+  const ref = useRef<THREE.Mesh>(null!);
+  const tex = useMemo(() => loadTex(body.texture), [body.texture]);
+  // 行星位置 = (0, 0, travelZ) — 玩家在 z=0 出发, 行星在 travelZ 处
+  // 随着 travelZ 增大 (向 -∞), 行星固定在 -120 看起来越来越近
   return (
-    <group position={position} scale={scale}>
-      <mesh receiveShadow castShadow>
-        <boxGeometry args={[1, 0.3, 1]} />
-        <meshStandardMaterial color={color} emissive={new THREE.Color(accent)} emissiveIntensity={glow} metalness={0.6} roughness={0.25} transparent opacity={0.95} />
+    <group position={[0, 0, -120]}>
+      <mesh ref={ref}>
+        <sphereGeometry args={[45, 48, 48]} />
+        <meshStandardMaterial map={tex || undefined} color={tex ? "#ffffff" : (body.glow || "#475569")} emissive={new THREE.Color(body.glow || "#000")} emissiveIntensity={0.08} roughness={0.9} metalness={0} />
       </mesh>
-      <mesh position={[0, -0.25, 0]}>
-        <boxGeometry args={[0.7, 0.08, 0.7]} />
-        <meshBasicMaterial color={accent} transparent opacity={0.6} toneMapped={false} />
+      {/* 大气层光晕 */}
+      <mesh>
+        <sphereGeometry args={[48, 32, 32]} />
+        <meshBasicMaterial color={body.accent || body.glow || "#22d3ee"} transparent opacity={0.15} side={THREE.BackSide} depthWrite={false} />
       </mesh>
-      <pointLight color={accent} intensity={0.4} distance={3.5} decay={1.8} />
+      {body.hasRing && (
+        <mesh rotation={[Math.PI / 2.4, 0, 0]}>
+          <ringGeometry args={[55, 75, 64]} />
+          <meshStandardMaterial color={body.ringColor || "#e7c98a"} side={THREE.DoubleSide} transparent opacity={0.7} roughness={0.6} metalness={0.3} />
+        </mesh>
+      )}
     </group>
   );
 }
 
-// 太空陨石 — 不规则八面体 + 旋转 + 灰色
-function Asteroid({ position, scale }: { position: [number, number, number]; scale: number }) {
+// 陨石 / 太空碎片 (WARP 隧道)
+function Meteor({ position, scale, speed }: { position: [number, number, number]; scale: number; speed: number }) {
   const ref = useRef<THREE.Mesh>(null!);
   useFrame((state, delta) => {
     if (ref.current) {
-      ref.current.rotation.x += delta * 0.4;
-      ref.current.rotation.y += delta * 0.3;
-      ref.current.position.y = position[1] + Math.sin(state.clock.getElapsedTime() * 1.2) * 0.18;
+      ref.current.rotation.x += delta * 0.6;
+      ref.current.rotation.y += delta * 0.5;
+      ref.current.position.z += speed * delta;
+      if (ref.current.position.z > 15) ref.current.position.z = -160;
     }
   });
   return (
-    <group position={position}>
-      <mesh ref={ref} castShadow>
-        <dodecahedronGeometry args={[scale, 0]} />
-        <meshStandardMaterial color="#94a3b8" emissive="#dc2626" emissiveIntensity={0.35} roughness={0.85} metalness={0.2} flatShading />
-      </mesh>
-      <pointLight color="#dc2626" intensity={0.3} distance={2.5} />
-    </group>
+    <mesh ref={ref} position={position} castShadow>
+      <dodecahedronGeometry args={[scale, 0]} />
+      <meshStandardMaterial color="#94a3b8" emissive="#fb923c" emissiveIntensity={0.4} roughness={0.85} metalness={0.2} flatShading />
+    </mesh>
   );
 }
 
-function Collectible({ position, kind, onCollect }: { position: [number, number, number]; kind: string; onCollect: () => void }) {
-  const cRef = useRef<THREE.Mesh>(null!);
-  const haloRef = useRef<THREE.Mesh>(null!);
-  const colorMap: Record<string, string> = { star: "#fbbf24", crystal: "#22d3ee", ankh: "#a855f7", ruby: "#dc2626", apple: "#10b981" };
-  useFrame((state) => {
-    if (cRef.current) { cRef.current.rotation.y = state.clock.getElapsedTime() * 2; cRef.current.position.y = position[1] + Math.sin(state.clock.getElapsedTime() * 3) * 0.25; }
-    if (haloRef.current) { haloRef.current.rotation.z = state.clock.getElapsedTime() * 0.5; haloRef.current.scale.setScalar(1 + Math.sin(state.clock.getElapsedTime() * 4) * 0.15); }
+// 能量球 (WARP 中可收集补给)
+function EnergyOrb({ position, color }: { position: [number, number, number]; color: string }) {
+  const ref = useRef<THREE.Group>(null!);
+  useFrame((state, delta) => {
+    if (ref.current) {
+      ref.current.rotation.y = state.clock.getElapsedTime() * 1.5;
+      ref.current.position.z += 35 * delta;
+      if (ref.current.position.z > 15) ref.current.position.z = -160;
+    }
   });
   return (
-    <group position={position}>
-      <mesh ref={haloRef}>
-        <ringGeometry args={[0.55, 0.75, 24]} />
-        <meshBasicMaterial color={colorMap[kind]} transparent opacity={0.45} side={THREE.DoubleSide} toneMapped={false} />
-      </mesh>
-      <mesh ref={cRef} onClick={(e) => { e.stopPropagation(); onCollect(); }}>
-        <octahedronGeometry args={[0.45, 0]} />
-        <meshStandardMaterial color={colorMap[kind]} emissive={colorMap[kind]} emissiveIntensity={1.8} toneMapped={false} transparent opacity={0.95} />
-      </mesh>
-      <pointLight color={colorMap[kind]} intensity={0.6} distance={3.5} />
-    </group>
-  );
-}
-
-// 行星地平线 (巨大的弧形, 玩家在低空掠过)
-function PlanetHorizon({ body, z }: { body: Body; z: number }) {
-  const tex = useMemo(() => loadTex(body.texture), [body.texture]);
-  return (
-    <group position={[0, -8, z]}>
+    <group ref={ref} position={position}>
       <mesh>
-        <sphereGeometry args={[80, 32, 32]} />
-        <meshStandardMaterial map={tex || undefined} color={tex ? "#ffffff" : (body.glow || "#475569")} roughness={0.95} metalness={0} side={THREE.FrontSide} emissive={new THREE.Color(body.glow || "#000")} emissiveIntensity={0.05} />
+        <octahedronGeometry args={[0.45, 0]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.8} toneMapped={false} />
       </mesh>
+      <mesh>
+        <ringGeometry args={[0.6, 0.8, 24]} />
+        <meshBasicMaterial color={color} transparent opacity={0.4} side={THREE.DoubleSide} toneMapped={false} />
+      </mesh>
+      <pointLight color={color} intensity={0.5} distance={3} />
     </group>
   );
 }
 
-const Player = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number, z: number) => void; onStateChange: (s: { grounded: boolean; dead: boolean }) => void; getBlocksAt: (z: number) => { x: number; y: number; w: number; h: number; d: number; top: number }[]; paused: boolean }>(function Player({ onPositionUpdate, onStateChange, getBlocksAt, paused }, ref) {
+const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number, z: number) => void; getHazardsAt: (z: number) => { x: number; y: number; z: number; hit: boolean }[]; getOrbsAt: (z: number) => { x: number; y: number; z: number; collected: boolean }[]; paused: boolean; onHazardHit: () => void; onOrbCollect: () => void }>(function ShipPlayer({ onPositionUpdate, getHazardsAt, getOrbsAt, paused, onHazardHit, onOrbCollect }, ref) {
   const innerRef = useRef<THREE.Group | null>(null);
   useImperativeHandle(ref, () => innerRef.current as THREE.Group, []);
   const flameRef = useRef<THREE.Mesh>(null!);
@@ -369,81 +366,45 @@ const Player = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number
   const trailRef = useRef<THREE.Mesh>(null!);
   const keysRef = useRef<Record<string, boolean>>({});
   const velRef = useRef({ x: 0, y: 0 });
-  const groundedRef = useRef(false);
   const lastReportRef = useRef(0);
-  const deadRef = useRef(false);
-  const lastJump = useRef(0);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       const k = e.key.toLowerCase();
       keysRef.current[k] = true;
-      if (paused || deadRef.current) return;
-      const now = performance.now();
-      if ((e.code === "Space" || k === "w" || k === "arrowup") && groundedRef.current && (now - lastJump.current) > 220) {
-        velRef.current.y = 8.5;
-        groundedRef.current = false;
-        lastJump.current = now;
-      }
     };
     const up = (e: KeyboardEvent) => { keysRef.current[e.key.toLowerCase()] = false; };
     window.addEventListener("keydown", down); window.addEventListener("keyup", up);
     return () => { window.removeEventListener("keydown", down); window.removeEventListener("keyup", up); };
-  }, [paused]);
+  }, []);
 
   useFrame((state, delta) => {
     if (!innerRef.current) return;
-    if (paused) { onStateChange({ grounded: true, dead: false }); return; }
-    if (deadRef.current) {
-      innerRef.current.position.y -= 4 * delta;
-      onStateChange({ grounded: false, dead: true });
-      if (innerRef.current.position.y < -10) {
-        deadRef.current = false;
-        innerRef.current.position.set(0, 1.5, 0);
-        velRef.current.x = 0; velRef.current.y = 0;
-      }
-      return;
-    }
+    if (paused) return;
     const t = state.clock.getElapsedTime();
     const k = keysRef.current;
-    // 横向 WASD
-    const speed = 7;
-    if (k["a"] || k["arrowleft"]) velRef.current.x = -speed;
-    else if (k["d"] || k["arrowright"]) velRef.current.x = speed;
-    else velRef.current.x *= 0.7;
-    innerRef.current.position.x = Math.max(-6, Math.min(6, innerRef.current.position.x + velRef.current.x * delta));
-    // 自动向前推进 (z 负方向)
-    innerRef.current.position.z -= 9 * delta;
-    // 重力 + 跳跃
-    velRef.current.y -= 18 * delta;
-    innerRef.current.position.y += velRef.current.y * delta;
-    // 兜底地板 - 绝对安全 (玩家 y 永远不低于 0.45)
-    if (innerRef.current.position.y < 0.45) { innerRef.current.position.y = 0.45; velRef.current.y = 0; groundedRef.current = true; }
-    // 落地检测
-    const blocks = getBlocksAt(innerRef.current.position.z);
-    const px = innerRef.current.position.x;
-    let onBlock = false;
-    for (const b of blocks) {
-      if (Math.abs(px - b.x) < b.w / 2 + 0.4) {
-        if (innerRef.current.position.y <= b.top && velRef.current.y <= 0) {
-          innerRef.current.position.y = b.top;
-          velRef.current.y = 0;
-          onBlock = true;
-        }
-      }
-    }
-    groundedRef.current = onBlock;
-    // 死亡
-    if (innerRef.current.position.y < -8) {
-      deadRef.current = true;
-      onStateChange({ grounded: false, dead: true });
-    }
+    // 4 向飞行 (无重力, 阻尼小)
+    const accel = 18;
+    if (k["a"] || k["arrowleft"]) velRef.current.x -= accel * delta;
+    else if (k["d"] || k["arrowright"]) velRef.current.x += accel * delta;
+    else velRef.current.x *= 0.92;
+    if (k["w"] || k["arrowup"]) velRef.current.y += accel * delta;
+    else if (k["s"] || k["arrowdown"]) velRef.current.y -= accel * delta;
+    else velRef.current.y *= 0.92;
+    // 限速
+    velRef.current.x = Math.max(-12, Math.min(12, velRef.current.x));
+    velRef.current.y = Math.max(-10, Math.min(10, velRef.current.y));
+    innerRef.current.position.x = Math.max(-7, Math.min(7, innerRef.current.position.x + velRef.current.x * delta));
+    innerRef.current.position.y = Math.max(-5, Math.min(5, innerRef.current.position.y + velRef.current.y * delta));
+    // 自动向行星推进
+    innerRef.current.position.z -= 14 * delta;
     // 倾斜
-    if (Math.abs(velRef.current.x) > 0.5) innerRef.current.rotation.z -= velRef.current.x * delta * 0.4;
+    if (Math.abs(velRef.current.x) > 0.5) innerRef.current.rotation.z -= velRef.current.x * delta * 0.5;
     else innerRef.current.rotation.z *= 0.85;
-    // 火焰动画
+    innerRef.current.rotation.x = velRef.current.y * delta * 0.4;
+    // 火焰
     if (flameRef.current) {
-      const fs = 1 + Math.sin(t * 22) * 0.3;
+      const fs = 1 + Math.sin(t * 24) * 0.3;
       flameRef.current.scale.set(fs, fs * 1.8, fs);
     }
     if (flame2Ref.current) {
@@ -453,7 +414,23 @@ const Player = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number
     if (trailRef.current) {
       trailRef.current.scale.z = 1 + Math.sin(t * 12) * 0.15;
     }
-    onStateChange({ grounded: groundedRef.current, dead: false });
+    // 碰撞检测
+    const hz = getHazardsAt(innerRef.current.position.z);
+    for (const h of hz) {
+      if (h.hit) continue;
+      const dx = Math.abs(innerRef.current.position.x - h.x);
+      const dy = Math.abs(innerRef.current.position.y - h.y);
+      const dz = Math.abs(innerRef.current.position.z - h.z);
+      if (dz < 1.0 && dx < 1.2 && dy < 1.2) { h.hit = true; onHazardHit(); }
+    }
+    const oz = getOrbsAt(innerRef.current.position.z);
+    for (const o of oz) {
+      if (o.collected) continue;
+      const dx = Math.abs(innerRef.current.position.x - o.x);
+      const dy = Math.abs(innerRef.current.position.y - o.y);
+      const dz = Math.abs(innerRef.current.position.z - o.z);
+      if (dz < 1.5 && dx < 1.2 && dy < 1.2) { o.collected = true; onOrbCollect(); }
+    }
     if (t - lastReportRef.current > 0.05) {
       lastReportRef.current = t;
       onPositionUpdate(innerRef.current.position.x, innerRef.current.position.y, innerRef.current.position.z);
@@ -461,22 +438,19 @@ const Player = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number
   });
 
   return (
-    <group ref={innerRef} position={[0, 1.5, 0]}>
+    <group ref={innerRef} position={[0, 0, 0]}>
       <mesh castShadow>
-        <sphereGeometry args={[0.4, 16, 16]} />
+        <sphereGeometry args={[0.42, 16, 16]} />
         <meshStandardMaterial color="#e0e7ff" emissive="#a5b4fc" emissiveIntensity={0.6} metalness={0.85} roughness={0.15} />
       </mesh>
-      {/* 主火焰 */}
       <mesh position={[0, 0, -0.6]} rotation={[Math.PI / 2, 0, 0]} ref={flameRef}>
         <coneGeometry args={[0.22, 0.9, 10]} />
         <meshBasicMaterial color="#22d3ee" transparent opacity={0.9} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      {/* 侧翼火焰 */}
       <mesh position={[0.15, 0.15, -0.5]} rotation={[Math.PI / 2, 0.2, 0]} ref={flame2Ref}>
         <coneGeometry args={[0.1, 0.5, 6]} />
         <meshBasicMaterial color="#a855f7" transparent opacity={0.8} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      {/* 尾迹 */}
       <mesh position={[0, 0, -1.2]} rotation={[Math.PI / 2, 0, 0]} ref={trailRef}>
         <coneGeometry args={[0.12, 1.2, 8]} />
         <meshBasicMaterial color="#22d3ee" transparent opacity={0.3} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
@@ -486,104 +460,55 @@ const Player = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number
   );
 });
 
-// 第三人称跟随相机 — 距离更近 + 倾斜感
-function FollowCamera({ targetRef }: { targetRef: React.MutableRefObject<THREE.Group | null> }) {
-  const { camera } = useThree();
-  useFrame((state, delta) => {
-    if (targetRef.current) {
-      const p = targetRef.current.position;
-      // 相机在飞船后上方, 强跟随
-      const ox = p.x * 0.35;
-      const oy = p.y + 2.4;
-      const oz = p.z + 5.5;
-      camera.position.lerp(new THREE.Vector3(ox, oy, oz), 0.18);
-      // 看向飞船前方, 给前进感
-      camera.lookAt(p.x * 0.5, p.y + 0.2, p.z - 8);
-    }
-  });
-  return null;
-}
-
 function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }: { planetId: PlanetId; paused: boolean; onCollect: (kind: string) => void; onHazard: () => void; onComplete: () => void; onPosition: (z: number) => void }) {
   const body = BODIES.find((b) => b.id === planetId) as Body;
   const playerRef = useRef<THREE.Group | null>(null);
-  const blocksRef = useRef<{ x: number; y: number; z: number; w: number; h: number; d: number; top: number }[]>([]);
   const hazardsRef = useRef<{ x: number; y: number; z: number; hit: boolean }[]>([]);
+  const orbsRef = useRef<{ x: number; y: number; z: number; collected: boolean; kind: string }[]>([]);
+  const completedRef = useRef(false);
   const lastHazardCheck = useRef(0);
 
-  // 程序化关卡 — 50 段, 4m 间距, 难度递增
-  const segments = useMemo(() => {
-    const segs: { z: number; blocks: { x: number; y: number; w: number; h: number }[]; hazards: { x: number; y: number }[]; collectibles: { x: number; y: number; kind: string }[] }[] = [];
-    const collectibleKinds = ["star", "crystal", "ankh", "ruby", "apple"];
-    for (let i = 0; i < 50; i++) {
-      const z = -i * 4;
-      const blocks: { x: number; y: number; w: number; h: number }[] = [];
-      const hazards: { x: number; y: number }[] = [];
-      const collectibles: { x: number; y: number; kind: string }[] = [];
-      const difficulty = Math.min(1, i / 30);
-      if (i < 5) {
-        // 起点 5 段: 宽平台跑道
-        for (let k = -3; k <= 3; k++) blocks.push({ x: k * 1.4, y: 0, w: 1.3, h: 0.3 });
-      } else if (i % 7 === 0) {
-        // 每 7 段: 4 块安全带
-        for (let k = -1; k <= 2; k++) blocks.push({ x: k * 1.6, y: 0, w: 1.5, h: 0.3 });
-      } else {
-        // 中段: 2-5 块, 高度变化
-        const n = 2 + Math.floor(Math.random() * 4);
-        for (let k = 0; k < n; k++) {
-          blocks.push({
-            x: -4 + Math.random() * 8,
-            y: Math.random() * (1 + difficulty * 2),
-            w: 1.0 + Math.random() * 0.6,
-            h: 0.3
-          });
-        }
-        // 危险陨石
-        const hCount = 1 + Math.floor(Math.random() * 2 + difficulty);
-        for (let k = 0; k < hCount; k++) {
-          hazards.push({ x: -4 + Math.random() * 8, y: 1.0 + Math.random() * 1.5 });
-        }
-      }
-      // 收集物
-      const cCount = 1 + Math.floor(Math.random() * 2);
-      for (let c = 0; c < cCount; c++) {
-        const kind = c === 0 ? (body.collectible || "crystal") : collectibleKinds[Math.floor(Math.random() * collectibleKinds.length)];
-        collectibles.push({ x: -4.5 + Math.random() * 9, y: 1.5 + Math.random() * 1.5, kind });
-      }
-      segs.push({ z, blocks, hazards, collectibles });
+  // 程序化陨石带 + 能量球 (WARP 隧道)
+  const initialHazards = useMemo(() => {
+    const arr: { x: number; y: number; z: number; hit: boolean }[] = [];
+    for (let i = 0; i < 80; i++) {
+      arr.push({ x: -6 + Math.random() * 12, y: -4 + Math.random() * 8, z: -i * 4 - 5, hit: false });
     }
-    return segs;
+    return arr;
+  }, [planetId]);
+
+  const initialOrbs = useMemo(() => {
+    const arr: { x: number; y: number; z: number; collected: boolean; kind: string }[] = [];
+    for (let i = 0; i < 40; i++) {
+      arr.push({ x: -5 + Math.random() * 10, y: -3.5 + Math.random() * 7, z: -i * 8 - 8, collected: false, kind: body.collectible || "crystal" });
+    }
+    return arr;
   }, [body.collectible, planetId]);
 
   useEffect(() => {
-    const allBlocks: { x: number; y: number; z: number; w: number; h: number; d: number; top: number }[] = [];
-    segments.forEach((seg) => seg.blocks.forEach((b) => allBlocks.push({ x: b.x, y: b.y, z: seg.z, w: b.w, h: b.h, d: 1.2, top: b.y + b.h / 2 + 0.3 })));
-    blocksRef.current = allBlocks;
-    const allHazards: { x: number; y: number; z: number; hit: boolean }[] = [];
-    segments.forEach((seg) => seg.hazards.forEach((h) => allHazards.push({ x: h.x, y: h.y, z: seg.z, hit: false })));
-    hazardsRef.current = allHazards;
-  }, [segments]);
+    hazardsRef.current = initialHazards.map((h) => ({ ...h, hit: false }));
+    orbsRef.current = initialOrbs.map((o) => ({ ...o, collected: false }));
+    completedRef.current = false;
+  }, [initialHazards, initialOrbs]);
 
-  const getBlocksAt = useCallback((z: number) => {
-    const segZ = Math.round(-z / 4) * 4;
-    return blocksRef.current.filter((b) => Math.abs(b.z - segZ) < 1.5);
+  const getHazardsAt = useCallback((z: number) => {
+    return hazardsRef.current.filter((h) => Math.abs(h.z - z) < 1.0 && !h.hit);
+  }, []);
+
+  const getOrbsAt = useCallback((z: number) => {
+    return orbsRef.current.filter((o) => Math.abs(o.z - z) < 1.5 && !o.collected);
   }, []);
 
   useFrame((state, delta) => {
     if (!playerRef.current) return;
+    if (paused) return;
+    if (completedRef.current) return;
     const p = playerRef.current.position;
     onPosition(p.z);
-    if (p.z < -195) onComplete();
-    if (state.clock.getElapsedTime() - lastHazardCheck.current > 0.08) {
-      lastHazardCheck.current = state.clock.getElapsedTime();
-      for (const h of hazardsRef.current) {
-        if (h.hit) continue;
-        const dz = Math.abs(p.z - h.z);
-        if (dz < 0.7 && Math.abs(p.x - h.x) < 0.8 && Math.abs(p.y - h.y) < 0.8) {
-          h.hit = true;
-          onHazard();
-        }
-      }
+    // 到达行星 (-120 z) → 任务完成
+    if (p.z < -200) {
+      completedRef.current = true;
+      onComplete();
     }
   });
 
@@ -592,47 +517,30 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
 
   return (
     <group>
-      {/* 环境光: 行星色调弱光 */}
-      <ambientLight intensity={0.4} color={body.glow || "#a5b4fc"} />
-      <directionalLight position={[5, 12, 8]} intensity={0.9} color="#ffffff" castShadow />
-      {/* 行星反射光: 远下方 (从地平线反射上来) */}
-      <pointLight position={[0, -6, -8]} intensity={0.8} color={body.glow || "#fbbf24"} distance={40} decay={1.2} />
-      <pointLight position={[0, 4, -20]} intensity={0.6} color={accent} distance={30} />
-      {/* 天幕 */}
+      <ambientLight intensity={0.5} color={accent} />
+      <directionalLight position={[5, 12, 8]} intensity={0.9} color="#ffffff" />
+      <pointLight position={[0, 0, -100]} intensity={3} color={accent} distance={50} />
+      <pointLight position={[0, 6, -120]} intensity={4} color={body.glow || "#fbbf24"} distance={40} />
+      {/* 太空背景 */}
       <mesh renderOrder={-2}>
-        <sphereGeometry args={[100, 24, 24]} />
+        <sphereGeometry args={[200, 24, 24]} />
         <meshBasicMaterial color={body.sky || "#02010a"} side={THREE.BackSide} depthWrite={false} />
       </mesh>
-      {/* 流动星空 + 远景行星地平线 */}
-      <Stars count={400} radius={70} />
-      <StreamStars count={200} color={accent} />
-      <PlanetHorizon body={body} z={-80} />
-      <PlanetHorizon body={body} z={-180} />
-      {/* 关卡内容 */}
-      {segments.map((seg, i) => (
-        <group key={"s" + i} position={[0, 0, seg.z]}>
-          {seg.blocks.map((b, j) => (
-            <CrystalPlatform key={"b" + i + "_" + j} position={[b.x, b.y, 0]} scale={[b.w, b.h * 1.5, 1.2]} color={ground} accent={accent} glow={0.4} />
-          ))}
-          {seg.hazards.map((h, j) => (
-            <Asteroid key={"h" + i + "_" + j} position={[h.x, h.y, 0]} scale={0.4 + Math.random() * 0.35} />
-          ))}
-          {seg.collectibles.map((c, j) => (
-            <Collectible key={"c" + i + "_" + j} position={[c.x, c.y, 0]} kind={c.kind} onCollect={() => onCollect(c.kind)} />
-          ))}
-          {i === 49 && (
-            <group position={[0, 3, 0]}>
-              <mesh>
-                <sphereGeometry args={[2.2, 24, 24]} />
-                <meshStandardMaterial color={accent} emissive={accent} emissiveIntensity={2.5} toneMapped={false} />
-              </mesh>
-              <pointLight color={accent} intensity={4} distance={20} />
-            </group>
-          )}
-        </group>
+      <Stars count={600} radius={90} />
+      <StreamStars count={300} color={accent} />
+      <StreamStars count={200} color="#ffffff" />
+      {/* 远景行星 (会越来越大) */}
+      <TargetPlanet body={body} travelZ={0} />
+      {/* 陨石带 + 能量球 (固定在 z 段, 随 player 前进靠近) */}
+      {initialHazards.map((h, i) => (
+        <Meteor key={"h" + i} position={[h.x, h.y, h.z]} scale={0.5 + Math.random() * 0.6} speed={0} />
       ))}
-      <Player ref={playerRef} onPositionUpdate={() => {}} onStateChange={() => {}} getBlocksAt={getBlocksAt} paused={paused} />
-      <FollowCamera targetRef={playerRef} />
+      {initialOrbs.map((o, i) => (
+        <EnergyOrb key={"o" + i} position={[o.x, o.y, o.z]} color={accent} />
+      ))}
+      <ShipPlayer ref={playerRef} onPositionUpdate={(x, y, z) => onPosition(z)} getHazardsAt={getHazardsAt} getOrbsAt={getOrbsAt} paused={paused}
+        onHazardHit={() => onHazard()}
+        onOrbCollect={() => onCollect("crystal")} />
     </group>
   );
 }
@@ -655,7 +563,7 @@ export const GameWorld = forwardRef<GameWorldHandle, {
 }>((function GameWorld({ scene, targetId, onPlanetClick, startTime, shields = 100, paused = false, onCollect, onHazard, onComplete, onPosition }, ref) {
   useImperativeHandle(ref, () => ({ setSelected: () => {} }));
   return (
-    <Canvas dpr={[1, 1.5]} camera={{ position: [0, 4, 8], fov: 65, near: 0.1, far: 400 }} gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }} shadows={false}>
+    <Canvas dpr={[1, 1.5]} camera={{ position: [0, 2, 6], fov: 65, near: 0.1, far: 500 }} gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }} shadows={false}>
       <Suspense fallback={null}>
         {(scene === "INTRO" || scene === "SOLAR" || scene === "APPROACH") && (
           <>
@@ -677,5 +585,3 @@ export const GameWorld = forwardRef<GameWorldHandle, {
     </Canvas>
   );
 }));
-
-
