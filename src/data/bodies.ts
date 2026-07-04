@@ -513,7 +513,7 @@ export const SCENE = {
   sunSize: 4.2,
   bodyScale: 1.9,
   orbitScale: 1.0,
-  distance: (au: number) => 8.5 + Math.log(1 + Math.max(au, 0.05)) * 6.4
+  distance: (au: number) => 7.0 + Math.sqrt(Math.max(au, 0.05)) * 8.5
 };
 
 export const PLANET_LIST: SolarBody[] = BODIES.filter((b) => b.kind === "planet");

@@ -139,12 +139,15 @@ function Planet({ body, angle, onClick, highlight }: { body: Body; angle: number
   const ringRef = useRef<THREE.Mesh>(null!);
   const tex = useMemo(() => loadTex(body.texture), [body.texture]);
   const ringTex = useMemo(() => body.hasRing ? loadTex("/assets/textures/saturn_ring.jpg") : null, [body.hasRing]);
+  // ????: ref ????? (?? prop ????????)
+  const angRef = useRef<number>(angle);
   const x = Math.cos(angle) * body.distance;
   const z = Math.sin(angle) * body.distance;
   useFrame((state, delta) => {
     if (pRef.current) pRef.current.rotation.y += body.rotation * delta * 60;
     if (gRef.current) {
-      const a = angle + body.speed * delta;
+      angRef.current += body.speed * delta;
+      const a = angRef.current;
       gRef.current.position.set(Math.cos(a) * body.distance, 0, Math.sin(a) * body.distance);
     }
     if (ringRef.current) ringRef.current.rotation.z += delta * 0.05;

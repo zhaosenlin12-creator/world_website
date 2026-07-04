@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { zh } from "@/i18n/zh";
 import { GameWorld, BODIES } from "./GameWorld";
+import LandingPlatformer from "./LandingPlatformer";
 
 type PlanetId = "mercury" | "venus" | "earth" | "mars" | "jupiter" | "saturn" | "uranus" | "neptune";
 type Scene = "INTRO" | "SOLAR" | "APPROACH" | "PLAY" | "FINISHED";
@@ -83,6 +84,7 @@ export function GameClient() {
   const [combo, setCombo] = useState(0);
   const [approachStart, setApproachStart] = useState(0);
   const [playPaused, setPlayPaused] = useState(false);
+  const [landing2D, setLanding2D] = useState(false);
   const sound = useSound();
   const comboTimer = useRef(0);
 
@@ -180,6 +182,7 @@ export function GameClient() {
     setTimeout(() => setFlashRed(false), 250);
   }, [log, sound]);
 
+  const handleLandingComplete = useCallback(() => { setLanding2D(false); setPlayPaused(true); log("[完成] 行星表面成功着陆 " + BODIES.find((b) => b.id === activePlanet)?.name); sound.win(); setTimeout(() => setShowQ(true), 500); }, [activePlanet, log, sound]);
   const handleComplete = useCallback(() => {
     if (scene !== "PLAY") return;
     log("[完成] 着陆航线到达 " + BODIES.find((b) => b.id === activePlanet)?.name);
@@ -247,7 +250,14 @@ export function GameClient() {
     else if (z > -260) setStageLabel('ENTRY');
     else if (z > -320) setStageLabel('ATMOSPHERE');
     else setStageLabel('LANDING');
-  }, []);
+    if (z < -300 && !landing2D) {
+      setLanding2D(true);
+      setPlayPaused(true);
+      if (typeof window !== "undefined") {
+        (window as any).__landingPlanetId = activePlanet;
+      }
+    }
+  }, [landing2D, activePlanet]);
 
   const body = BODIES.find((b) => b.id === activePlanet);
   const isPerfect = samples.size === 8;
@@ -311,6 +321,18 @@ export function GameClient() {
           />
         </div>
       )}
+
+      {/* LANDING 2D ?????? */}
+      <LandingPlatformer
+        active={landing2D}
+        accent={body?.accent || body?.glow || "#22d3ee"}
+        groundColor={body?.ground || "#0e3b5c"}
+        onCollect={() => handleCollect("crystal")}
+        onHazard={() => handleHazard()}
+        onComplete={handleLandingComplete}
+      />
+
+      {/* ??? */}
 
       {/* 顶部栏 */}
       {scene !== "INTRO" && (
