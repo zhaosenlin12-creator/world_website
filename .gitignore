@@ -20,3 +20,6 @@ tsconfig.tsbuildinfo
 marblequest_20230124-205102_archive/
 marblequest_20230124-205102_archive.zip
 marblequest_*.zip
+
+dev*.log
+build*.log

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useRef, useEffect, useMemo, useCallback, forwardRef, useImperativeHandle, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
@@ -452,6 +452,7 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
   const keysRef = useRef<Record<string, boolean>>({});
   const velRef = useRef({ x: 0, y: 0 });
   const lastReportRef = useRef(0);
+  const lastHazardTRef = useRef(0); // 撞击节流, 避免终点前连续叮叮响
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -499,15 +500,26 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
     if (trailRef.current) {
       trailRef.current.scale.z = 1 + Math.sin(t * 12) * 0.15 + speed * 0.05;
     }
-    // 碰撞 (球形, r=0.7)
+    // 碰撞 (球形, r=0.7) + 终点守卫 + 节流: 避免终点前后连击产生连续叮叮响
     const px = innerRef.current.position;
-    const hazards = getHazards();
-    for (const h of hazards) {
-      if (h.hit) continue;
-      const dx = Math.abs(px.x - h.x);
-      const dy = Math.abs(px.y - h.y);
-      const dz = Math.abs(px.z - h.z);
-      if (dz < 1.0 && dx < 0.9 && dy < 0.9) { h.hit = true; hitCountRef.current++; onHazardHit(); }
+    // 已过终点 (z < -200) 不再触发撞击, 防止 onComplete 异步刷新 paused 期间连续命中
+    if (px.z > -200) {
+      const hazards = getHazards();
+      for (const h of hazards) {
+        if (h.hit) continue;
+        const dx = Math.abs(px.x - h.x);
+        const dy = Math.abs(px.y - h.y);
+        const dz = Math.abs(px.z - h.z);
+        if (dz < 1.0 && dx < 0.9 && dy < 0.9) {
+          h.hit = true;
+          hitCountRef.current++;
+          // 撞击节流 220ms: 防止密集 hazard 区快速连击
+          if (t - lastHazardTRef.current > 0.22) {
+            lastHazardTRef.current = t;
+            onHazardHit();
+          }
+        }
+      }
     }
     if (t - lastReportRef.current > 0.05) {
       lastReportRef.current = t;
