@@ -61,7 +61,7 @@ function useSound() {
 
 export function GameClient() {
   const [webglOK, setWebglOK] = useState(true);
-  const [scene, setScene] = useState<Scene>("INTRO");
+    const [scene, setScene] = useState<Scene>("INTRO");
   const [activeIdx, setActiveIdx] = useState(0);
   const activePlanet = PLANET_ORDER[activeIdx];
   const [score, setScore] = useState(0);
@@ -95,6 +95,7 @@ export function GameClient() {
       const gl = c.getContext("webgl2") || c.getContext("webgl");
       if (!gl) setWebglOK(false);
     } catch (e) { setWebglOK(false); }
+    try { const params = new URLSearchParams(window.location.search); const p = params.get("planet"); if (p && ["mercury","venus","earth","mars","jupiter","saturn","uranus","neptune"].includes(p)) { const idx = ["mercury","venus","earth","mars","jupiter","saturn","uranus","neptune"].indexOf(p); setActiveIdx(idx); setScene("PLAY"); setPlayPaused(false); if (typeof window !== "undefined") (window as any).__landingPlanetId = p; } } catch (e) {}
   }, []);
 
   useEffect(() => {
@@ -182,6 +183,7 @@ export function GameClient() {
     setTimeout(() => setFlashRed(false), 250);
   }, [log, sound]);
 
+  const handleLandingStart = useCallback(() => { setPlayPaused(true); setLanding2D(true); if (typeof window !== "undefined") (window as any).__landingPlanetId = activePlanet; log("[穿越] 大气层 · 切入表面着降"); }, [activePlanet, log]);
   const handleLandingComplete = useCallback(() => { setLanding2D(false); setPlayPaused(true); log("[完成] 行星表面成功着陆 " + BODIES.find((b) => b.id === activePlanet)?.name); sound.win(); setTimeout(() => setShowQ(true), 500); }, [activePlanet, log, sound]);
   const handleComplete = useCallback(() => {
     if (scene !== "PLAY") return;
@@ -250,15 +252,7 @@ export function GameClient() {
     else if (z > -260) setStageLabel('ENTRY');
     else if (z > -320) setStageLabel('ATMOSPHERE');
     else setStageLabel('LANDING');
-    if (z < -300 && !landing2D && scene === "PLAY") {
-      // ShipPlayer z ?? -310 ??, ???? 2D ???? (????? LandingPlatformer ??)
-      setPlayPaused(true);
-      setLanding2D(true);
-      if (typeof window !== "undefined") {
-        (window as any).__landingPlanetId = activePlanet;
-      }
-      log("[穿越] 大气层 · 切入表面着降");
-    }
+    // landing2D 触发已移至 GameWorld.onLandingStart (R3F 内部 z<-300 另起, 避免闭包同步问题)
   }, [landing2D, activePlanet]);
 
   const body = BODIES.find((b) => b.id === activePlanet);
@@ -319,6 +313,7 @@ export function GameClient() {
             onHazard={handleHazard}
             onComplete={handleComplete}
             onPosition={handlePosition}
+            onLandingStart={handleLandingStart}
 
           />
         </div>

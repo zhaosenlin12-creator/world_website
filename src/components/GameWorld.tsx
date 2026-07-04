@@ -493,11 +493,11 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
     velRef.current.y = Math.max(-7, Math.min(7, velRef.current.y));
     innerRef.current.position.x = Math.max(-6, Math.min(6, innerRef.current.position.x + velRef.current.x * delta));
     innerRef.current.position.y = Math.max(-4, Math.min(4, innerRef.current.position.y + velRef.current.y * delta));
-    // 高速前进 (超过 -310 锁住, 避免 onComplete 抢跑 2D 跳跃)
-    if (innerRef.current.position.z > -310) {
+    // 高速前进 (z 超过 -300 触发 onLandingStart, 继续飞到 -380 锁住, 避免占用 GPU)
+    if (innerRef.current.position.z > -380) {
       innerRef.current.position.z -= speed * delta;
     } else {
-      innerRef.current.position.z = -310;
+      innerRef.current.position.z = -380;
     }
     // 倾斜 (roll + pitch)
     const rollTarget = -velRef.current.x * 0.05;
@@ -628,12 +628,13 @@ function Shockwave({ active }: { active: number }) {
   );
 }
 
-function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }: { planetId: PlanetId; paused: boolean; onCollect: (kind: string) => void; onHazard: () => void; onComplete: () => void; onPosition: (z: number) => void }) {
+function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition, onLandingStart }: { planetId: PlanetId; paused: boolean; onCollect: (kind: string) => void; onHazard: () => void; onComplete: () => void; onPosition: (z: number) => void; onLandingStart?: () => void }) {
   const body = BODIES.find((b) => b.id === planetId) as Body;
   const playerRef = useRef<THREE.Group | null>(null);
   const playerZRef = useRef(0);
   const shakeRef = useRef(0);
   const completedRef = useRef(false);
+  const landingTriggeredRef = useRef(false);
   const cameraShakeRef = useRef(0);
   const speedRef = useRef(18); // 当前阶段速度, 给相机 FOV 用
 
@@ -719,6 +720,7 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
     hazardsRef.current = allHazards.map((h) => ({ ...h, hit: false }));
     orbsRef.current = allOrbs.map((o) => ({ ...o, collected: false }));
     completedRef.current = false;
+    landingTriggeredRef.current = false;
     shakeRef.current = 0;
   }, [allHazards, allOrbs]);
 
@@ -746,6 +748,7 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
     const p = playerRef.current.position;
     playerZRef.current = p.z;
     onPosition(p.z);
+    if (p.z < -300 && !landingTriggeredRef.current && onLandingStart) { landingTriggeredRef.current = true; onLandingStart(); }
     if (p.z < -400 && !paused && !completedRef.current) {
       completedRef.current = true;
       onComplete();
@@ -807,7 +810,8 @@ export const GameWorld = forwardRef<GameWorldHandle, {
   onHazard?: () => void;
   onComplete?: () => void;
   onPosition?: (z: number) => void;
-}>((function GameWorld({ scene, targetId, onPlanetClick, startTime, shields = 100, paused = false, onCollect, onHazard, onComplete, onPosition }, ref) {
+  onLandingStart?: () => void;
+}>((function GameWorld({ scene, targetId, onPlanetClick, startTime, shields = 100, paused = false, onCollect, onHazard, onComplete, onPosition, onLandingStart }, ref) {
   useImperativeHandle(ref, () => ({ setSelected: () => {} }));
   return (
     <Canvas dpr={[1, 1.5]} camera={{ position: [0, 2, 6], fov: 65, near: 0.1, far: 500 }} gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }} shadows={false}>
@@ -826,6 +830,7 @@ export const GameWorld = forwardRef<GameWorldHandle, {
             onHazard={() => onHazard && onHazard()}
             onComplete={() => onComplete && onComplete()}
             onPosition={(z) => onPosition && onPosition(z)}
+            onLandingStart={() => onLandingStart && onLandingStart()}
           />
         )}
       </Suspense>
