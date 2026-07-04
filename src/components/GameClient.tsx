@@ -76,7 +76,7 @@ export function GameClient() {
   const [samples, setSamples] = useState<Set<PlanetId>>(new Set());
   const [newRecord, setNewRecord] = useState(false);
   const [missionLog, setMissionLog] = useState<string[]>(["[任务] 探索太阳系全部 8 颗行星"]);
-  const [hint] = useState<string>("WASD / 方向键 驾驶 · 空格跳跃 · 收集能量样本");
+  const [hint] = useState<string>("WASD / 方向键 操控 · 躲避陨石 · 收集能量样本");
   const [flashRed, setFlashRed] = useState(false);
   const [flashGreen, setFlashGreen] = useState(false);
   const [floatScore, setFloatScore] = useState<{ id: number; x: number; y: number; text: string; color: string }[]>([]);
