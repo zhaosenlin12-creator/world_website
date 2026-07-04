@@ -48,16 +48,23 @@ const BODIES: Body[] = [
   { id: "neptune", name: "海王星", texture: "/assets/textures/neptune.webp", radius: 0.95, distance: 44,   speed: 0.035,  tilt: 0.5,  rotation: 0.55, glow: "#1d4ed8" }
 ];
 
-// 单个行星
+// 单个行星: 独立公转 (每颗行星有独立的角速度, 距离越远越慢)
 function Planet({ body, onClick }: { body: Body; onClick?: (id: string) => void }) {
   const meshRef = useRef<THREE.Mesh>(null!);
-  const groupRef = useRef<THREE.Group>(null!);
+  const orbitRef = useRef<THREE.Group>(null!);
   const atmosphereRef = useRef<THREE.Mesh>(null!);
   const ringRef = useRef<THREE.Mesh>(null!);
   const [hovered, setHovered] = useState(false);
   const texture = useTexture(body.texture);
+  const angleRef = useRef(Math.random() * Math.PI * 2);
+  // 角速度: 距离太阳越远公转越慢, 符合开普勒第三定律
+  const orbitSpeed = useMemo(() => 0.4 / Math.sqrt(Math.max(body.distance, 1)), [body.distance]);
 
   useFrame((_, delta) => {
+    if (orbitRef.current) {
+      angleRef.current += orbitSpeed * delta;
+      orbitRef.current.rotation.y = angleRef.current;
+    }
     if (meshRef.current) meshRef.current.rotation.y += body.rotation * delta;
     if (atmosphereRef.current) {
       const s = 1 + Math.sin(performance.now() * 0.0015) * 0.02;
@@ -67,7 +74,8 @@ function Planet({ body, onClick }: { body: Body; onClick?: (id: string) => void 
   });
 
   return (
-    <group ref={groupRef} position={[body.distance, 0, 0]}>
+    <group ref={orbitRef}>
+    <group position={[body.distance, 0, 0]}>
       <mesh
         ref={meshRef}
         onPointerOver={(e) => { e.stopPropagation(); setHovered(true); document.body.style.cursor = "pointer"; }}
@@ -98,6 +106,7 @@ function Planet({ body, onClick }: { body: Body; onClick?: (id: string) => void 
           <meshBasicMaterial color="#fde68a" transparent opacity={0.55} side={THREE.DoubleSide} blending={THREE.AdditiveBlending} depthWrite={false} />
         </mesh>
       )}
+    </group>
     </group>
   );
 }
@@ -141,17 +150,12 @@ function Sun() {
 }
 
 // 公转
+// 公转: 每颗行星独立公转, 速度与距离成反比 (符合开普勒第三定律)
 function OrbitSystem({ onPlanetClick }: { onPlanetClick: (id: string) => void }) {
-  const groupRef = useRef<THREE.Group>(null!);
-  useFrame((_, delta) => {
-    if (groupRef.current) groupRef.current.rotation.y += 0.02 * delta;
-  });
   return (
-    <group ref={groupRef}>
+    <group>
       {BODIES.filter((b) => !b.emissive).map((b) => (
-        <group key={b.id} rotation={[0, Math.random() * Math.PI * 2, 0]}>
-          <Planet body={b} onClick={onPlanetClick} />
-        </group>
+        <Planet key={b.id} body={b} onClick={onPlanetClick} />
       ))}
     </group>
   );

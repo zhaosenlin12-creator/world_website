@@ -313,29 +313,37 @@ function TargetPlanet({ body, getPlayerZ }: { body: Body; getPlayerZ: () => numb
       dist = -110;
       glowOpacity = 0.05;
     } else if (pz > -150) {
-      // APPROACH: 行星持续放大, 7 -> 28
+      // APPROACH: 7 -> 28
       const k = (-pz - 80) / 70;
       radius = 7 + k * 21;
       atmosRadius = radius * 1.06;
       atmosOpacity = 0.15 + k * 0.3;
-      dist = -110 + k * 30; // 拉近
+      dist = -110 + k * 30;
       glowOpacity = 0.1 + k * 0.3;
+    } else if (pz > -260) {
+      // ENTRY: 28 -> 60
+      const k = (-pz - 150) / 110;
+      radius = 28 + k * 32;
+      atmosRadius = radius * 1.05;
+      atmosOpacity = 0.45 + k * 0.25;
+      dist = -80 + k * 40;
+      glowOpacity = 0.4 + k * 0.3;
+    } else if (pz > -320) {
+      // ATMOSPHERE: 60 -> 100
+      const k = (-pz - 260) / 60;
+      radius = 60 + k * 40;
+      atmosRadius = radius * 1.03;
+      atmosOpacity = 0.7 + k * 0.2;
+      dist = -40 + k * 30;
+      glowOpacity = 0.7 + k * 0.2;
     } else {
-      // ENTRY: 行星几乎占满屏幕, 28 -> 100
-      const k = Math.min(1, (-pz - 150) / 50);
-      radius = 28 + k * 72;
-      atmosRadius = radius * 1.04;
-      atmosOpacity = 0.45 + k * 0.4;
-      dist = -80 + k * 60;
-      glowOpacity = 0.4 + k * 0.5;
-    }
-    groupRef.current.position.set(0, 0, dist);
-    meshRef.current.scale.setScalar(radius / 4);
-    atmosRef.current.scale.setScalar(atmosRadius / 4);
-    (atmosRef.current.material as THREE.MeshBasicMaterial).opacity = atmosOpacity;
-    if (ringRef.current) {
-      ringRef.current.scale.setScalar(radius / 4);
-      ringRef.current.rotation.z = state.clock.getElapsedTime() * 0.05;
+      // LANDING: 100 -> 200
+      const k = Math.min(1, (-pz - 320) / 80);
+      radius = 100 + k * 100;
+      atmosRadius = radius * 1.02;
+      atmosOpacity = 0.85 + k * 0.1;
+      dist = -10 + k * 5;
+      glowOpacity = 0.85 + k * 0.1;
     }
     meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.04;
   });
@@ -504,7 +512,7 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
     // 碰撞 (球形, r=0.7) + 终点守卫 + 节流: 避免终点前后连击产生连续叮叮响
     const px = innerRef.current.position;
     // 已过终点 (z < -200) 不再触发撞击, 防止 onComplete 异步刷新 paused 期间连续命中
-    if (px.z > -200) {
+    if (px.z > -400) {
       const hazards = getHazards();
       for (const h of hazards) {
         if (h.hit) continue;
@@ -651,6 +659,18 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
       const lane = i % 3;
       arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1, z, hit: false, size: 0.4 + Math.random() * 0.25, lane });
     }
+        // ATMOSPHERE (z -260 ~ -320) - 6 棰? 澶ф皵灞傛诞绉? 蹇
+    for (let i = 0; i < 6; i++) {
+      const z = -268 - i * 9;
+      const lane = i % 3;
+      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.4, z, hit: false, size: 0.5 + Math.random() * 0.3, lane });
+    }
+    // LANDING (z -320 ~ -400) - 5 棰? 闂磋窛闀? 钀藉湴鍓
+    for (let i = 0; i < 5; i++) {
+      const z = -330 - i * 14;
+      const lane = i % 3;
+      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 0.8, z, hit: false, size: 0.5 + Math.random() * 0.25, lane });
+    }
     return arr;
   }, [planetId]);
 
@@ -672,6 +692,16 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
       const lane = (i + 1) % 3;
       arr.push({ x: -3 + lane * 3, y: 0, z: -152 - i * 8, collected: false });
     }
+        // ATMOSPHERE
+    for (let i = 0; i < 5; i++) {
+      const lane = (i + 1) % 3;
+      arr.push({ x: -3 + lane * 3, y: 0, z: -272 - i * 10, collected: false });
+    }
+    // LANDING
+    for (let i = 0; i < 3; i++) {
+      const lane = (i + 1) % 3;
+      arr.push({ x: -3 + lane * 3, y: 0, z: -340 - i * 18, collected: false });
+    }
     return arr;
   }, [planetId]);
 
@@ -690,9 +720,11 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
   // 速度按阶段: WARP 18, APPROACH 26, ENTRY 34 (提升穿越感)
   const playerSpeed = useCallback(() => {
     const z = playerZRef.current;
-    if (z > -80) return 12;
-    if (z > -150) return 18;
-    return 22;
+    if (z > -100) return 10;
+    if (z > -180) return 14;
+    if (z > -260) return 18;
+    if (z > -320) return 24;
+    return 30;
   }, []);
 
   // 同步当前速度到 speedRef, 给相机用
@@ -707,7 +739,7 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
     const p = playerRef.current.position;
     playerZRef.current = p.z;
     onPosition(p.z);
-    if (p.z < -200) {
+    if (p.z < -400) {
       completedRef.current = true;
       onComplete();
     }
