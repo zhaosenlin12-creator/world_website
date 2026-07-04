@@ -69,6 +69,7 @@ export function GameClient() {
   const [lives, setLives] = useState(3);
   const [collectedItems, setCollectedItems] = useState(0);
   const [distance, setDistance] = useState(0);
+  const [stageLabel, setStageLabel] = useState<string>('WARP');
   const [showQ, setShowQ] = useState(false);
   const [answered, setAnswered] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -241,6 +242,11 @@ export function GameClient() {
 
   const handlePosition = useCallback((z: number) => {
     setDistance(Math.max(0, 0 - z));
+    if (z > -100) setStageLabel('WARP');
+    else if (z > -180) setStageLabel('APPROACH');
+    else if (z > -260) setStageLabel('ENTRY');
+    else if (z > -320) setStageLabel('ATMOSPHERE');
+    else setStageLabel('LANDING');
   }, []);
 
   const body = BODIES.find((b) => b.id === activePlanet);
@@ -250,6 +256,14 @@ export function GameClient() {
     <div className="relative w-full h-screen overflow-hidden bg-[#02010a] select-none">
       <AnimatePresence>
         {flashRed && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.4 }} exit={{ opacity: 0 }} className="absolute inset-0 z-40 pointer-events-none bg-rose-500" />}
+        {(stageLabel === 'ATMOSPHERE' || stageLabel === 'LANDING') && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: stageLabel === 'LANDING' ? 0.35 : 0.22 }}
+            className="absolute inset-0 z-30 pointer-events-none"
+            style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(255,140,40,0.5) 90%, rgba(255,80,0,0.7) 100%)' }}
+          />
+        )}
         {flashGreen && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.25 }} exit={{ opacity: 0 }} className="absolute inset-0 z-40 pointer-events-none bg-emerald-400" />}
       </AnimatePresence>
 
@@ -312,6 +326,11 @@ export function GameClient() {
 
           {scene === "PLAY" && (
             <>
+              <div className="pointer-events-auto glass-strong rounded-lg px-3 py-1.5 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
+                <span className="text-[10px] text-orange-300 uppercase tracking-widest font-mono">{stageLabel}</span>
+                <span className="text-white/40 text-[10px]">/ 5 阶段</span>
+              </div>
               <div className="pointer-events-auto glass-strong rounded-xl p-3 space-y-1.5">
                 <div className="flex items-center justify-between mb-0.5">
                   <div className="text-[10px] text-cyan-300 uppercase tracking-widest">{zh.game.score}</div>
