@@ -493,8 +493,12 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
     velRef.current.y = Math.max(-7, Math.min(7, velRef.current.y));
     innerRef.current.position.x = Math.max(-6, Math.min(6, innerRef.current.position.x + velRef.current.x * delta));
     innerRef.current.position.y = Math.max(-4, Math.min(4, innerRef.current.position.y + velRef.current.y * delta));
-    // 高速前进
-    innerRef.current.position.z -= speed * delta;
+    // 高速前进 (超过 -310 锁住, 避免 onComplete 抢跑 2D 跳跃)
+    if (innerRef.current.position.z > -310) {
+      innerRef.current.position.z -= speed * delta;
+    } else {
+      innerRef.current.position.z = -310;
+    }
     // 倾斜 (roll + pitch)
     const rollTarget = -velRef.current.x * 0.05;
     innerRef.current.rotation.z += (rollTarget - innerRef.current.rotation.z) * 0.15;
@@ -742,7 +746,7 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
     const p = playerRef.current.position;
     playerZRef.current = p.z;
     onPosition(p.z);
-    if (p.z < -400) {
+    if (p.z < -400 && !paused && !completedRef.current) {
       completedRef.current = true;
       onComplete();
     }
