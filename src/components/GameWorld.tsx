@@ -167,7 +167,7 @@ function Planet({ body, angle, onClick, highlight }: { body: Body; angle: number
           <meshStandardMaterial map={ringTex || undefined} color={ringTex ? "#ffffff" : "#e7c98a"} side={THREE.DoubleSide} transparent opacity={0.85} roughness={0.6} metalness={0.3} />
         </mesh>
       )}
-      {body.id !== "sun" && <pointLight color={body.glow || "#ffffff"} intensity={0.25} distance={body.radius * 8} decay={2} />}
+      
     </group>
   );
 }
@@ -263,8 +263,8 @@ function SolarCamera({ targetId, mode, startTime }: { targetId: PlanetId | null;
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (mode === "CRUISE") {
-      // 简单持续旋转: 行星自然运动, hover 不暂停, 点击直接跳转
-      const a = t * 0.02;
+      // 持续旋转: 相机绕中心公转, 行星自然公转
+      const a = t * 0.06;
       const r = 28 + Math.sin(t * 0.2) * 4;
       camera.position.set(Math.cos(a) * r, 12 + Math.sin(t * 0.15) * 3, Math.sin(a) * r);
       camera.lookAt(0, 0, 0);
@@ -438,7 +438,7 @@ function EnergyOrb({ position, color, getPlayer, onCollect }: { position: [numbe
         <icosahedronGeometry args={[0.4, 0]} />
         <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2.0} toneMapped={false} metalness={0.5} roughness={0.2} />
       </mesh>
-      <pointLight color={color} intensity={0.7} distance={4} />
+      
     </group>
   );
 }
@@ -690,9 +690,9 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
   // 速度按阶段: WARP 18, APPROACH 26, ENTRY 34 (提升穿越感)
   const playerSpeed = useCallback(() => {
     const z = playerZRef.current;
-    if (z > -80) return 18;
-    if (z > -150) return 26;
-    return 34;
+    if (z > -80) return 12;
+    if (z > -150) return 18;
+    return 22;
   }, []);
 
   // 同步当前速度到 speedRef, 给相机用
@@ -730,8 +730,8 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
         <sphereGeometry args={[200, 24, 24]} />
         <meshBasicMaterial color={body.sky || "#02010a"} side={THREE.BackSide} depthWrite={false} />
       </mesh>
-      <Stars count={400} radius={80} />
-      <WarpStars count={500} speed={baseSpeed * 9} />
+      <Stars count={250} radius={80} />
+      <WarpStars count={300} speed={baseSpeed * 6} />
       <TargetPlanet body={body} getPlayerZ={() => playerZRef.current} />
       {allHazards.map((h, i) => <Meteor key={"h" + i} position={[h.x, h.y, h.z]} scale={h.size} />)}
       {allOrbs.map((o, i) => (
