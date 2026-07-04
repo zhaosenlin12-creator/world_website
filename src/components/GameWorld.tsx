@@ -257,15 +257,45 @@ function SolarSystem({ targetId, onPlanetClick, onHover }: { targetId: PlanetId 
   );
 }
 
-function SolarCamera({ targetId, mode, startTime, hoverId }: { targetId: PlanetId | null; mode: string; startTime: number; hoverId?: PlanetId | null }) {
+function SolarCamera({ targetId, mode, startTime, hoverId, lockCamera }: { targetId: PlanetId | null; mode: string; startTime: number; hoverId?: PlanetId | null; lockCamera?: boolean }) {
   const { camera } = useThree();
+  // 锁定机制: 锁定时相机角度冻结在 savedAngle, 解锁后从 savedAngle 继续匀速旋转 (无缝衔接)
+  const baseSpeed = 0.02;
+  const savedAngleRef = useRef<number | null>(null);
+  const savedTRef = useRef<number>(0);
+  const wasLockedRef = useRef(false);
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (mode === "CRUISE") {
-      // 慢速巡航: 0.05 -> 0.02 (1.2 度/秒, 让玩家能瞄准点击)
-      // hover 时暂停旋转, 让玩家稳定点击
-      const speed = hoverId ? 0 : 0.02;
-      const a = t * speed;
+      // 锁定条件: 预览卡打开 OR 鼠标 hover 行星
+      const lock = lockCamera || !!hoverId;
+      if (lock && !wasLockedRef.current) {
+        // 进入锁定: 保存当前角度 (基于未锁定的虚拟累计 t)
+        const virtualT = savedAngleRef.current === null
+          ? t
+          : savedTRef.current + (t - savedTRef.current);
+        savedAngleRef.current = virtualT * baseSpeed;
+        wasLockedRef.current = true;
+      } else if (!lock && wasLockedRef.current) {
+        // 解锁: 重新对齐 savedT, 让下次虚拟 t 继续从 savedAngle 出发
+        // 虚拟 t = savedT + (t - savedT) = t, 所以 a = t * baseSpeed
+        // 要让 a 仍然 = savedAngle, 需要虚拟 t = savedAngle / baseSpeed
+        // 重新设置 savedT 使得: savedT + (nowT - savedT) = savedAngle / baseSpeed
+        // 实际就是 savedT = savedAngle / baseSpeed (用 nowT 替换 = 当前 t)
+        // 后续虚拟 t = savedT + (t - savedT) = savedT + (t - savedAngle/baseSpeed)
+        // 所以 savedT 设为 savedAngle / baseSpeed (即虚拟 t 的"起点")
+        savedTRef.current = savedAngleRef.current !== null ? savedAngleRef.current / baseSpeed : t;
+        wasLockedRef.current = false;
+      }
+      let a: number;
+      if (lock && savedAngleRef.current !== null) {
+        a = savedAngleRef.current;
+      } else if (savedAngleRef.current !== null) {
+        const virtualT = savedTRef.current + (t - savedTRef.current);
+        a = virtualT * baseSpeed;
+      } else {
+        a = t * baseSpeed;
+      }
       const r = 28 + Math.sin(t * 0.2) * 4;
       camera.position.set(Math.cos(a) * r, 12 + Math.sin(t * 0.15) * 3, Math.sin(a) * r);
       camera.lookAt(0, 0, 0);
@@ -759,7 +789,8 @@ export const GameWorld = forwardRef<GameWorldHandle, {
   onPosition?: (z: number) => void;
   hoverId?: PlanetId | null;
   onHover?: (id: string | null) => void;
-}>((function GameWorld({ scene, targetId, onPlanetClick, startTime, shields = 100, paused = false, onCollect, onHazard, onComplete, onPosition, hoverId, onHover }, ref) {
+  lockCamera?: boolean;
+}>((function GameWorld({ scene, targetId, onPlanetClick, startTime, shields = 100, paused = false, onCollect, onHazard, onComplete, onPosition, hoverId, onHover, lockCamera }, ref) {
   useImperativeHandle(ref, () => ({ setSelected: () => {} }));
   return (
     <Canvas dpr={[1, 1.5]} camera={{ position: [0, 2, 6], fov: 65, near: 0.1, far: 500 }} gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }} shadows={false}>
@@ -767,7 +798,7 @@ export const GameWorld = forwardRef<GameWorldHandle, {
         {(scene === "INTRO" || scene === "SOLAR" || scene === "APPROACH") && (
           <>
             <SolarSystem targetId={targetId} onPlanetClick={onPlanetClick} onHover={onHover} />
-            <SolarCamera targetId={targetId} mode={scene === "APPROACH" ? "APPROACH" : "CRUISE"} startTime={startTime} hoverId={hoverId} />
+            <SolarCamera targetId={targetId} mode={scene === "APPROACH" ? "APPROACH" : "CRUISE"} startTime={startTime} hoverId={hoverId} lockCamera={lockCamera} />
           </>
         )}
         {scene === "PLAY" && targetId && (

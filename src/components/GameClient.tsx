@@ -308,7 +308,8 @@ export function GameClient() {
             onHazard={handleHazard}
             onComplete={handleComplete}
             onPosition={handlePosition}
-            hoverId={hoverId}
+            hoverId={previewPlanet || hoverId}
+            lockCamera={!!previewPlanet}
             onHover={(id) => setHoverId(id as PlanetId | null)}
           />
         </div>
