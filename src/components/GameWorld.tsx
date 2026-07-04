@@ -380,27 +380,37 @@ function Meteor({ position, scale }: { position: [number, number, number]; scale
   );
 }
 
-// 能量球: 旋转光环 + 吸入动画
+// 能量球: 多层光环 + 内核旋转 + 接近时发光 + 收集时弹缩
 function EnergyOrb({ position, color, getPlayer, onCollect }: { position: [number, number, number]; color: string; getPlayer: () => THREE.Vector3 | null; onCollect: () => void }) {
   const groupRef = useRef<THREE.Group>(null!);
-  const haloRef = useRef<THREE.Mesh>(null!);
+  const halo1Ref = useRef<THREE.Mesh>(null!);
+  const halo2Ref = useRef<THREE.Mesh>(null!);
   const innerRef = useRef<THREE.Mesh>(null!);
   const collected = useRef(false);
   useFrame((state) => {
     if (!groupRef.current || collected.current) return;
-    groupRef.current.rotation.y = state.clock.getElapsedTime() * 1.5;
-    if (haloRef.current) {
-      haloRef.current.rotation.z = state.clock.getElapsedTime() * 0.8;
-      haloRef.current.scale.setScalar(1 + Math.sin(state.clock.getElapsedTime() * 3) * 0.12);
+    const t = state.clock.getElapsedTime();
+    groupRef.current.rotation.y = t * 1.5;
+    if (halo1Ref.current) {
+      halo1Ref.current.rotation.z = t * 0.8;
+      halo1Ref.current.scale.setScalar(1 + Math.sin(t * 3) * 0.12);
     }
-    // 玩家距离 < 2.5 时吸入并消失
+    if (halo2Ref.current) {
+      halo2Ref.current.rotation.z = -t * 1.2;
+      halo2Ref.current.scale.setScalar(0.9 + Math.sin(t * 2 + 1) * 0.08);
+    }
+    if (innerRef.current) {
+      innerRef.current.rotation.x = t * 1.2;
+      innerRef.current.rotation.y = t * 0.9;
+    }
+    // 玩家距离 < 2.4 时吸入
     const p = getPlayer();
     if (p) {
       const dx = p.x - position[0];
       const dy = p.y - position[1];
       const dz = p.z - position[2];
       const d = Math.hypot(dx, dy, dz);
-      if (d < 2.2) {
+      if (d < 2.4) {
         collected.current = true;
         onCollect();
       }
@@ -408,15 +418,19 @@ function EnergyOrb({ position, color, getPlayer, onCollect }: { position: [numbe
   });
   return (
     <group ref={groupRef} position={position} visible={!collected.current}>
-      <mesh ref={haloRef}>
-        <ringGeometry args={[0.55, 0.75, 24]} />
-        <meshBasicMaterial color={color} transparent opacity={0.5} side={THREE.DoubleSide} toneMapped={false} />
+      <mesh ref={halo1Ref}>
+        <ringGeometry args={[0.55, 0.78, 32]} />
+        <meshBasicMaterial color={color} transparent opacity={0.55} side={THREE.DoubleSide} toneMapped={false} blending={THREE.AdditiveBlending} />
+      </mesh>
+      <mesh ref={halo2Ref}>
+        <ringGeometry args={[0.95, 1.05, 32]} />
+        <meshBasicMaterial color={color} transparent opacity={0.3} side={THREE.DoubleSide} toneMapped={false} blending={THREE.AdditiveBlending} />
       </mesh>
       <mesh ref={innerRef}>
-        <octahedronGeometry args={[0.45, 0]} />
-        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1.8} toneMapped={false} />
+        <icosahedronGeometry args={[0.4, 0]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={2.0} toneMapped={false} metalness={0.5} roughness={0.2} />
       </mesh>
-      <pointLight color={color} intensity={0.6} distance={3.5} />
+      <pointLight color={color} intensity={0.7} distance={4} />
     </group>
   );
 }
@@ -588,28 +602,34 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
   const cameraShakeRef = useRef(0);
   const speedRef = useRef(18); // 当前阶段速度, 给相机 FOV 用
 
-  // 简化的"跑酷赛道" - 3 lane 陨石, 间距大, 难度渐进
-  // lane 中心 x: -3, 0, 3
+  // 多样化障碍布局: 单陨石 / 陨石对 / 错位三连, 玩家需灵活穿梭
   const allHazards = useMemo(() => {
     const arr: { x: number; y: number; z: number; hit: boolean; size: number; lane: number }[] = [];
-    // WARP (z 0 ~ -80) - 稀疏, 6 段
-    const warpCount = 6;
-    for (let i = 0; i < warpCount; i++) {
-      const z = -10 - i * 12;
-      const lane = i % 3; // lane 0/1/2
-      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.5, z, hit: false, size: 0.5 + Math.random() * 0.3, lane });
+    // WARP (z 0 ~ -80) - 7 颗, 间距大, 随机 lane
+    for (let i = 0; i < 7; i++) {
+      const z = -12 - i * 10;
+      const lane = Math.floor(Math.random() * 3);
+      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.4, z, hit: false, size: 0.5 + Math.random() * 0.25, lane });
     }
-    // APPROACH (z -80 ~ -150) - 中等, 12 段 (留 lane 间隙)
-    for (let i = 0; i < 12; i++) {
-      const z = -90 - i * 5;
+    // APPROACH (z -80 ~ -150) - 9 颗, 有时双陨石并排
+    for (let i = 0; i < 9; i++) {
+      const z = -88 - i * 7;
+      const isPair = i % 3 === 1;
+      if (isPair) {
+        const lanes = [0, 2];
+        for (const lane of lanes) {
+          arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.5, z, hit: false, size: 0.5 + Math.random() * 0.3, lane });
+        }
+      } else {
+        const lane = Math.floor(Math.random() * 3);
+        arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.8, z, hit: false, size: 0.5 + Math.random() * 0.35, lane });
+      }
+    }
+    // ENTRY (z -150 ~ -200) - 5 颗, 间距大, 飞向大气层
+    for (let i = 0; i < 5; i++) {
+      const z = -158 - i * 8;
       const lane = i % 3;
-      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 2, z, hit: false, size: 0.5 + Math.random() * 0.4, lane });
-    }
-    // ENTRY (z -150 ~ -200) - 适度, 6 段, 间距大, lane 错开
-    for (let i = 0; i < 6; i++) {
-      const z = -158 - i * 7;
-      const lane = (i * 2) % 3;
-      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.2, z, hit: false, size: 0.4 + Math.random() * 0.25, lane });
+      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1, z, hit: false, size: 0.4 + Math.random() * 0.25, lane });
     }
     return arr;
   }, [planetId]);
