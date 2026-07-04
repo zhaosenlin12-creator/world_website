@@ -46,9 +46,8 @@ export function StoriesIndex({ initial }: { initial: Article[] }) {
               <motion.article
                 key={a.url}
                 initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.4, delay: (i % 6) * 0.05 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: Math.min(i, 12) * 0.04 }}
                 className="group"
               >
                 <a
@@ -62,7 +61,12 @@ export function StoriesIndex({ initial }: { initial: Article[] }) {
                     {a.hero ? (
                       <img src={a.hero} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
                     ) : (
-                      <div className="w-full h-full bg-stars" />
+                      <div className="w-full h-full relative" style={{ background: "linear-gradient(135deg, " + accent + "33 0%, " + accent + "11 50%, #000 100%)" }}>
+                        <div className="absolute inset-0 bg-stars opacity-60" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-6xl font-display font-bold tracking-tight" style={{ color: accent, textShadow: "0 0 30px " + accent + "88" }}>{a.title.charAt(0)}</div>
+                        </div>
+                      </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     {a.tag && (

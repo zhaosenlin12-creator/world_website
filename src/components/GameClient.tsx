@@ -250,12 +250,13 @@ export function GameClient() {
     else if (z > -260) setStageLabel('ENTRY');
     else if (z > -320) setStageLabel('ATMOSPHERE');
     else setStageLabel('LANDING');
-    if (z < -300 && !landing2D) {
-      setLanding2D(true);
+    if (z < -300 && !landing2D && scene === "PLAY") {
       setPlayPaused(true);
       if (typeof window !== "undefined") {
         (window as any).__landingPlanetId = activePlanet;
       }
+      log("[穿越] 大气层加烧 · 切入表面着降");
+      setTimeout(() => setLanding2D(true), 600);
     }
   }, [landing2D, activePlanet]);
 
