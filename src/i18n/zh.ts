@@ -352,7 +352,22 @@ export const zh = {
     eyebrow: "文章与新闻",
     title: "来自太阳系的故事",
     desc: "精选自 NASA 科学任务理事会——发现、任务更新以及头条背后的科学。",
-    searchPlaceholder: "搜索故事…"
+    searchPlaceholder: "搜索故事…",
+    readMore: "在 NASA 站点阅读",
+    items: [
+      { slug: "sun", tag: "恒星", title: "太阳:46 亿岁的核聚变熔炉", desc: "每秒钟,太阳把 600 万吨氢聚变成氦。它照耀了恐龙、人类,也将照耀未来数十亿年。", image: "/assets/textures/sun.jpg", accent: "#fbbf24" },
+      { slug: "mercury", tag: "行星", title: "水星:疾驰的使者", desc: "一个水星日长达 176 个地球日,是它公转周期的两倍。MESSENGER 与 BepiColombo 已揭开它的铁核秘密。", image: "/assets/textures/mercury.jpg", accent: "#a8a29e" },
+      { slug: "venus", tag: "行星", title: "金星:地球的地狱双胞胎", desc: "表面温度 462℃,气压是地球 92 倍。它反向自转,太阳从西方升起。", image: "/assets/textures/venus.jpg", accent: "#fb923c" },
+      { slug: "earth", tag: "家园", title: "地球:宇宙中的蓝色弹珠", desc: "已知唯一孕育生命的星球。71% 表面被液态水覆盖,磁场保护生命免受太阳风侵袭。", image: "/assets/textures/earth.jpg", accent: "#3b82f6" },
+      { slug: "moon", tag: "卫星", title: "月球:潮汐的舞者", desc: "每年以 3.8 厘米的速度远离地球。阿波罗留下的激光反射器至今仍在测量地月距离。", image: "/assets/textures/moon.jpg", accent: "#cbd5e1" },
+      { slug: "mars", tag: "行星", title: "火星:人类下一片疆土", desc: "奥林匹斯山高 22 公里,是珠穆朗玛峰的近 3 倍。Perseverance 正在寻找古代生命的痕迹。", image: "/assets/textures/mars.jpg", accent: "#dc2626" },
+      { slug: "jupiter", tag: "气巨星", title: "木星:行星之王与它的 95 颗卫星", desc: "质量是其他所有行星之和的两倍多。大红斑是一场持续 350 年的反气旋风暴。", image: "/assets/textures/jupiter.jpg", accent: "#fbbf24" },
+      { slug: "saturn", tag: "气巨星", title: "土星:太阳系的宝石", desc: "环系由数十亿块冰碎片组成,厚度仅约 10 米。泰坦是太阳系唯一拥有浓密大气的卫星。", image: "/assets/textures/saturn.jpg", accent: "#fde68a" },
+      { slug: "uranus", tag: "冰巨星", title: "天王星:侧身自转的冰世界", desc: "98° 倾角让它像球在轨道上滚动。可能源于一次远古撞击。最冷大气低至 -224℃。", image: "/assets/textures/uranus.jpg", accent: "#22d3ee" },
+      { slug: "neptune", tag: "冰巨星", title: "海王星:太阳系最快的风", desc: "风速超过 2100 km/h。第一颗通过数学计算预测发现的行星(1846 年)。", image: "/assets/textures/neptune.webp", accent: "#3b82f6" },
+      { slug: "kuiper", tag: "边疆", title: "柯伊伯带:冰封的甜甜圈", desc: "海王星轨道之外的冰质天体区域。冥王星、阋神星、鸟神星都住在这里。", image: "/assets/textures/pluto.jpg", accent: "#a78bfa" },
+      { slug: "asteroid-belt", tag: "小行星", title: "小行星带:未完成的行星", desc: "位于火星与木星之间,总质量仅为月球的 4%。木星的引力阻止了它聚合成行星。", image: "/assets/textures/ceres.jpg", accent: "#94a3b8" }
+    ]
   },
   // Footer
   footer: {

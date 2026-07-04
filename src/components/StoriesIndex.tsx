@@ -1,9 +1,19 @@
-"use client";
+﻿"use client";
 import { zh } from "@/i18n/zh";
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 
-interface Article { url: string; slug: string; title: string; description: string; hero: string | null; body: string[]; images: { src: string; alt: string }[] }
+interface Article {
+  url: string;
+  slug: string;
+  title: string;
+  description: string;
+  hero: string | null;
+  body: string[];
+  images: { src: string; alt: string }[];
+  accent?: string;
+  tag?: string;
+}
 
 export function StoriesIndex({ initial }: { initial: Article[] }) {
   const [q, setQ] = useState("");
@@ -30,36 +40,54 @@ export function StoriesIndex({ initial }: { initial: Article[] }) {
           />
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filtered.map((a, i) => (
-            <motion.article
-              key={a.url}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.4, delay: (i % 6) * 0.05 }}
-              className="group"
-            >
-              <a href={a.url} target="_blank" rel="noopener noreferrer" className="block relative h-full rounded-2xl overflow-hidden border border-white/10 bg-black/30 backdrop-blur-sm transition-all duration-500 group-hover:scale-[1.02] group-hover:border-white/30 group-hover:shadow-[0_0_40px_rgba(168,85,247,0.2)]">
-                <div className="aspect-[16/10] relative overflow-hidden bg-gradient-to-br from-indigo-900/40 to-purple-900/30">
-                  {a.hero ? (
-                    <img src={a.hero} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  ) : (
-                    <div className="w-full h-full bg-stars" />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                </div>
-                <div className="p-5">
-                  <div className="text-[10px] uppercase tracking-widest text-purple-300/80 mb-2">{(a.slug || "").split("/")[0] || "精选"}</div>
-                  <h2 className="font-display text-lg leading-snug">{a.title}</h2>
-                  <p className="text-sm text-white/65 mt-2 line-clamp-3">{a.description || (a.body[0] || "").slice(0, 200)}</p>
-                  <div className="mt-4 text-xs text-purple-300 group-hover:text-white transition">在 NASA.gov 上阅读 →</div>
-                </div>
-              </a>
-            </motion.article>
-          ))}
+          {filtered.map((a, i) => {
+            const accent = a.accent || "#a855f7";
+            return (
+              <motion.article
+                key={a.url}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.4, delay: (i % 6) * 0.05 }}
+                className="group"
+              >
+                <a
+                  href={a.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block relative h-full rounded-2xl overflow-hidden border border-white/10 bg-black/30 backdrop-blur-sm transition-all duration-500 group-hover:scale-[1.02] group-hover:border-white/30"
+                  style={{ boxShadow: "inset 0 1px 0 " + accent + "22" }}
+                >
+                  <div className="aspect-[16/10] relative overflow-hidden">
+                    {a.hero ? (
+                      <img src={a.hero} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                    ) : (
+                      <div className="w-full h-full bg-stars" />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    {a.tag && (
+                      <div
+                        className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-medium tracking-wider uppercase"
+                        style={{ background: accent + "33", color: accent, border: "1px solid " + accent + "55" }}
+                      >
+                        {a.tag}
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-5">
+                    <h2 className="font-display text-lg leading-snug text-white">{a.title}</h2>
+                    <p className="text-sm text-white/65 mt-2 line-clamp-3">{a.description || (a.body[0] || "").slice(0, 200)}</p>
+                    <div className="mt-4 text-xs group-hover:text-white transition" style={{ color: accent }}>
+                      {zh.stories.readMore} →
+                    </div>
+                  </div>
+                </a>
+              </motion.article>
+            );
+          })}
         </div>
         {filtered.length === 0 && (
-          <div className="text-center text-white/50 py-20">未找到匹配 “{q}” 的故事。</div>
+          <div className="text-center text-white/50 py-20">未找到匹配 "{q}" 的故事。</div>
         )}
       </div>
     </div>

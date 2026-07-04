@@ -417,12 +417,14 @@ const Player = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number
     // 重力 + 跳跃
     velRef.current.y -= 18 * delta;
     innerRef.current.position.y += velRef.current.y * delta;
+    // 兜底地板 - 绝对安全 (玩家 y 永远不低于 0.45)
+    if (innerRef.current.position.y < 0.45) { innerRef.current.position.y = 0.45; velRef.current.y = 0; groundedRef.current = true; }
     // 落地检测
     const blocks = getBlocksAt(innerRef.current.position.z);
     const px = innerRef.current.position.x;
     let onBlock = false;
     for (const b of blocks) {
-      if (Math.abs(px - b.x) < b.w / 2 + 0.3) {
+      if (Math.abs(px - b.x) < b.w / 2 + 0.4) {
         if (innerRef.current.position.y <= b.top && velRef.current.y <= 0) {
           innerRef.current.position.y = b.top;
           velRef.current.y = 0;
@@ -564,7 +566,7 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition }
 
   const getBlocksAt = useCallback((z: number) => {
     const segZ = Math.round(-z / 4) * 4;
-    return blocksRef.current.filter((b) => Math.abs(b.z - segZ) < 0.5);
+    return blocksRef.current.filter((b) => Math.abs(b.z - segZ) < 1.5);
   }, []);
 
   useFrame((state, delta) => {
@@ -675,3 +677,5 @@ export const GameWorld = forwardRef<GameWorldHandle, {
     </Canvas>
   );
 }));
+
+
