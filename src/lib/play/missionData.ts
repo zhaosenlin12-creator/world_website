@@ -33,6 +33,29 @@ export type MissionQuiz = {
   fact: string;
 };
 
+export type MissionType =
+  | "thermalSurvey"
+  | "atmosphericDrill"
+  | "orbitalScan"
+  | "dustCrossing"
+  | "gravitySlingshot"
+  | "ringTraversal"
+  | "rollLanding"
+  | "windRun";
+
+export type EnvironmentTuning = {
+  atmosphereColor: string;
+  fogDensity: number;
+  gravity: number;
+  hazardSpeed: number;
+  tilt: number;
+  rolling: boolean;
+  wind: number;
+  primarySample: string;
+  missionType: MissionType;
+  hint: string;
+};
+
 export type MissionDefinition = {
   title: string;
   codename: string;
@@ -47,6 +70,7 @@ export type MissionDefinition = {
   surfaceNodes: SurfaceNode[];
   surfaceHazards: SurfaceHazard[];
   quiz: MissionQuiz;
+  environment: EnvironmentTuning;
 };
 
 export const PLANET_ORDER: PlanetId[] = [
@@ -90,6 +114,18 @@ export const missionData: Record<PlanetId, MissionDefinition> = {
       { id: "h1", label: "辐射锋面", x: 34, y: 26, radius: 7, amplitude: 12, speed: 0.9, axis: "x" },
       { id: "h2", label: "熔蚀喷发", x: 70, y: 74, radius: 6, amplitude: 10, speed: 1.1, axis: "y" },
     ],
+      environment: {
+        atmosphereColor: "#fb923c",
+        fogDensity: 0.012,
+        gravity: 0.38,
+        hazardSpeed: 1.6,
+        tilt: 0,
+        rolling: false,
+        wind: 0,
+        primarySample: "水星极地冰芯样本",
+        missionType: "thermalSurvey",
+        hint: "保持飞船与最近陨石带保持垂直间距，靠近时触发热测绘窗口。"
+      },
     quiz: {
       question: "水星绕太阳一圈约需要多久？",
       options: ["58 地球日", "88 地球日", "176 地球日", "365 地球日"],
@@ -117,6 +153,18 @@ export const missionData: Record<PlanetId, MissionDefinition> = {
       { id: "h1", label: "酸雾团", x: 35, y: 68, radius: 6, amplitude: 14, speed: 1.2, axis: "x" },
       { id: "h2", label: "热浪剪切", x: 72, y: 36, radius: 7, amplitude: 9, speed: 0.85, axis: "y" },
     ],
+      environment: {
+        atmosphereColor: "#facc15",
+        fogDensity: 0.032,
+        gravity: 0.9,
+        hazardSpeed: 0.7,
+        tilt: 0,
+        rolling: false,
+        wind: 1.4,
+        primarySample: "硫酸云化学微粒样本",
+        missionType: "atmosphericDrill",
+        hint: "穿越厚云层时护盾会被酸雾侵蚀，主动寻找酸云缝隙。"
+      },
     quiz: {
       question: "下面哪项不适用于金星？",
       options: ["太阳系最热行星", "拥有厚厚二氧化碳大气", "位于地球轨道之外", "自转方向与多数行星相反"],
@@ -144,6 +192,18 @@ export const missionData: Record<PlanetId, MissionDefinition> = {
       { id: "h1", label: "高空风切", x: 38, y: 40, radius: 6, amplitude: 10, speed: 0.8, axis: "x" },
       { id: "h2", label: "电离层扰动", x: 68, y: 72, radius: 7, amplitude: 12, speed: 0.95, axis: "y" },
     ],
+      environment: {
+        atmosphereColor: "#67e8f9",
+        fogDensity: 0.006,
+        gravity: 1,
+        hazardSpeed: 0.85,
+        tilt: 0,
+        rolling: false,
+        wind: 0.4,
+        primarySample: "近地轨道等离子样本",
+        missionType: "orbitalScan",
+        hint: "跟随 4 颗引导卫星跳跃点切换轨道，分批回收信号塔。"
+      },
     quiz: {
       question: "地球大气中氧气的体积分数大约是多少？",
       options: ["21%", "35%", "58%", "78%"],
@@ -171,6 +231,18 @@ export const missionData: Record<PlanetId, MissionDefinition> = {
       { id: "h1", label: "横向沙暴", x: 32, y: 52, radius: 8, amplitude: 16, speed: 1.15, axis: "x" },
       { id: "h2", label: "落石区", x: 68, y: 34, radius: 7, amplitude: 12, speed: 0.9, axis: "y" },
     ],
+      environment: {
+        atmosphereColor: "#fb7185",
+        fogDensity: 0.022,
+        gravity: 0.38,
+        hazardSpeed: 0.9,
+        tilt: 0,
+        rolling: false,
+        wind: 0.8,
+        primarySample: "奥林匹斯山熔岩管化石样本",
+        missionType: "dustCrossing",
+        hint: "沙尘暴会随机降能见度，沿火山口信标前进。"
+      },
     quiz: {
       question: "奥林匹斯山在火星上代表什么？",
       options: ["古代河流", "太阳系最高的山", "火星第一基地", "最大撞击坑"],
@@ -198,6 +270,18 @@ export const missionData: Record<PlanetId, MissionDefinition> = {
       { id: "h1", label: "云暴回卷", x: 34, y: 30, radius: 8, amplitude: 12, speed: 0.92, axis: "y" },
       { id: "h2", label: "乱流带", x: 72, y: 66, radius: 7, amplitude: 18, speed: 1.05, axis: "x" },
     ],
+      environment: {
+        atmosphereColor: "#fbbf24",
+        fogDensity: 0.018,
+        gravity: 2.2,
+        hazardSpeed: 1.1,
+        tilt: 0,
+        rolling: true,
+        wind: 2.4,
+        primarySample: "大红斑深层气旋样本",
+        missionType: "gravitySlingshot",
+        hint: "借力大红斑的引力漩涡完成 2 次环绕跳跃。"
+      },
     quiz: {
       question: "木星的大红斑本质上是什么？",
       options: ["新生行星核心", "持续数百年的巨型风暴", "木星最大卫星", "金属海洋入口"],
@@ -225,6 +309,18 @@ export const missionData: Record<PlanetId, MissionDefinition> = {
       { id: "h1", label: "碎冰漂移", x: 36, y: 54, radius: 7, amplitude: 14, speed: 0.82, axis: "x" },
       { id: "h2", label: "冷凝乱流", x: 70, y: 28, radius: 6, amplitude: 10, speed: 1.08, axis: "y" },
     ],
+      environment: {
+        atmosphereColor: "#fde68a",
+        fogDensity: 0.014,
+        gravity: 1.1,
+        hazardSpeed: 1,
+        tilt: 0,
+        rolling: false,
+        wind: 0.6,
+        primarySample: "土星环冰质碎屑样本",
+        missionType: "ringTraversal",
+        hint: "穿过环带的窄间隙窗口拾取冰样本，注意粒子侵蚀护盾。"
+      },
     quiz: {
       question: "土星环主要由什么组成？",
       options: ["气体与云层", "冰与岩石碎片", "液态甲烷", "金属薄片"],
@@ -252,6 +348,18 @@ export const missionData: Record<PlanetId, MissionDefinition> = {
       { id: "h1", label: "冰晶雨", x: 38, y: 34, radius: 6, amplitude: 12, speed: 1.02, axis: "y" },
       { id: "h2", label: "侧轴乱流", x: 68, y: 66, radius: 7, amplitude: 16, speed: 0.88, axis: "x" },
     ],
+      environment: {
+        atmosphereColor: "#22d3ee",
+        fogDensity: 0.012,
+        gravity: 0.92,
+        hazardSpeed: 1.05,
+        tilt: 1.4,
+        rolling: true,
+        wind: 1.2,
+        primarySample: "冰巨星甲烷晶体样本",
+        missionType: "rollLanding",
+        hint: "侧向引力使飞船持续滚动，依靠左右推进抵消倾角。"
+      },
     quiz: {
       question: "天王星最独特的自转特征是什么？",
       options: ["没有自转", "约 98° 倾角侧身自转", "与太阳同步自转", "每天反复翻滚"],
@@ -279,6 +387,18 @@ export const missionData: Record<PlanetId, MissionDefinition> = {
       { id: "h1", label: "黑斑风墙", x: 34, y: 36, radius: 8, amplitude: 14, speed: 1.15, axis: "y" },
       { id: "h2", label: "极寒碎流", x: 72, y: 70, radius: 7, amplitude: 18, speed: 0.96, axis: "x" },
     ],
+      environment: {
+        atmosphereColor: "#3b82f6",
+        fogDensity: 0.024,
+        gravity: 1.12,
+        hazardSpeed: 1.6,
+        tilt: 0,
+        rolling: false,
+        wind: 3.2,
+        primarySample: "极地超音速暴风样本",
+        missionType: "windRun",
+        hint: "逆风带的强劲气流会推偏航线，提前按反方向键修正。"
+      },
     quiz: {
       question: "海王星的大黑斑是什么类型的现象？",
       options: ["巨型火山口", "反气旋风暴", "永恒极夜阴影", "卫星投影"],

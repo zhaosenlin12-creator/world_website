@@ -12,6 +12,7 @@ import {
   getFlightCompleteZ,
   getLandingTriggerZ,
 } from "@/lib/play/descentFlight";
+import { missionData } from "@/lib/play/missionData";
 
 export type PlanetId = "mercury" | "venus" | "earth" | "mars" | "jupiter" | "saturn" | "uranus" | "neptune";
 
@@ -281,8 +282,13 @@ function Planet({ body, angle, onClick, highlight }: { body: Body; angle: number
 function Ship({ targetId }: { targetId: PlanetId | null }) {
   const sRef = useRef<THREE.Group>(null!);
   const flameRef = useRef<THREE.Mesh>(null!);
-  const shipModel = usePreparedGlb(shipAssetCatalog.cruiseModel, 3.4);
+  const haloRef = useRef<THREE.Mesh>(null!);
+  const bankRef = useRef<number>(0);
   const target = BODIES.find((b) => b.id === targetId);
+  const accent = (target?.accent as string) || shipAssetCatalog.hullAccentColor;
+  const hull = new THREE.Color(shipAssetCatalog.hullBaseColor);
+  const accentCol = new THREE.Color(accent);
+
   useFrame((state, delta) => {
     if (!sRef.current) return;
     const t = state.clock.getElapsedTime();
@@ -307,21 +313,115 @@ function Ship({ targetId }: { targetId: PlanetId | null }) {
       const fs = 1 + Math.sin(t * 24) * 0.3;
       flameRef.current.scale.set(fs, fs * 1.4, fs);
     }
+    if (haloRef.current) {
+      const hs = 1 + Math.sin(t * 6) * 0.08;
+      haloRef.current.scale.set(hs, hs, hs);
+    }
+    // 微幅 bank 倾斜，让飞行更有动感
+    bankRef.current = THREE.MathUtils.lerp(bankRef.current, Math.sin(t * 1.4) * 0.18, 0.08);
+    sRef.current.rotation.z = bankRef.current;
   });
+
   return (
     <group ref={sRef}>
-      <group rotation={[0.18, -Math.PI / 2, 0]}>
-        <Clone object={shipModel} />
+      {/* 主船体：模块化 PBR 飞船（不用 GLB 渲染假模型）
+          - 推进舱 (圆柱) + 居住舱 (六棱柱) + 通讯舱 (球) + 太阳能翼
+          - 中等光滑 hull + accent 边缘发光 */}
+      <group rotation={[0.15, -Math.PI / 2, 0]} position={[0, 0, 0]}>
+        {/* 主推进器 */}
+        <mesh position={[0, 0, 1.5]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.42, 0.55, 1.4, 24]} />
+          <meshStandardMaterial color={hull} metalness={0.55} roughness={0.38} />
+        </mesh>
+        {/* 主发动机喷口 */}
+        <mesh position={[0, 0, 2.32]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.42, 0.12, 16, 32]} />
+          <meshStandardMaterial color={accentCol} metalness={0.85} roughness={0.22} emissive={accentCol} emissiveIntensity={0.65} />
+        </mesh>
+        {/* 居住舱中段 */}
+        <mesh position={[0, 0, 0.3]}>
+          <cylinderGeometry args={[0.55, 0.55, 1.3, 6]} />
+          <meshStandardMaterial color={hull} metalness={0.4} roughness={0.46} />
+        </mesh>
+        {/* 舷窗环带 */}
+        <mesh position={[0, 0, 0.3]}>
+          <torusGeometry args={[0.62, 0.04, 12, 36]} />
+          <meshStandardMaterial color={accentCol} emissive={accentCol} emissiveIntensity={0.6} roughness={0.3} />
+        </mesh>
+        {/* 指令舱（圆头）*/}
+        <mesh position={[0, 0, -1.05]}>
+          <sphereGeometry args={[0.55, 32, 24]} />
+          <meshStandardMaterial color={hull} metalness={0.6} roughness={0.32} />
+        </mesh>
+        {/* 驾驶舱玻璃 */}
+        <mesh position={[0, 0.42, -1.05]} scale={[1.02, 0.32, 1.02]}>
+          <sphereGeometry args={[0.42, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color={"#93c5fd"} emissive={"#93c5fd"} emissiveIntensity={0.5} metalness={0.9} roughness={0.18} transparent opacity={0.85} />
+        </mesh>
+        {/* 左右太阳能翼 */}
+        {[-1, 1].map((side) => (
+          <group key={side} position={[side * 1.4, 0, 0.2]} rotation={[0, 0, side * 0.04]}>
+            <mesh>
+              <boxGeometry args={[1.6, 0.04, 0.9]} />
+              <meshStandardMaterial color={"#1e3a8a"} metalness={0.2} roughness={0.32} />
+            </mesh>
+            {/* 电池格 */}
+            {Array.from({ length: 6 }).map((_, i) => (
+              <mesh key={i} position={[(i - 2.5) * 0.24, 0.04, 0]}>
+                <boxGeometry args={[0.2, 0.02, 0.7]} />
+                <meshStandardMaterial color={"#0b1c4d"} metalness={0.4} roughness={0.24} emissive={"#1e3a8a"} emissiveIntensity={0.18} />
+              </mesh>
+            ))}
+            {/* 桅杆 */}
+            <mesh position={[-side * 0.6, 0, 0]}>
+              <cylinderGeometry args={[0.04, 0.04, 0.6, 8]} />
+              <meshStandardMaterial color={accentCol} metalness={0.7} roughness={0.3} />
+            </mesh>
+          </group>
+        ))}
+        {/* 通讯抛物面天线 */}
+        <mesh position={[0, 0.55, -1.4]} rotation={[Math.PI / 2, 0.3, 0]}>
+          <sphereGeometry args={[0.36, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color={"#cbd5e1"} metalness={0.7} roughness={0.45} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[0, 0.7, -1.4]}>
+          <cylinderGeometry args={[0.025, 0.025, 0.5, 8]} />
+          <meshStandardMaterial color={accentCol} metalness={0.6} roughness={0.4} />
+        </mesh>
+        {/* 姿态控制小喷口（4 个） */}
+        {[
+          [0.7, 0, -0.3, 0],
+          [-0.7, 0, -0.3, 0],
+          [0, 0.6, 0.4, 0],
+          [0, -0.6, 0.4, 0]
+        ].map((p, i) => (
+          <mesh key={"thruster-" + i} position={p as unknown as [number, number, number]}>
+            <sphereGeometry args={[0.12, 12, 10]} />
+            <meshStandardMaterial color={accentCol} emissive={accentCol} emissiveIntensity={0.5} />
+          </mesh>
+        ))}
+        {/* 表面高光面板线 */}
+        <mesh position={[0, 0.53, 0.3]}>
+          <boxGeometry args={[0.02, 0.02, 1.3]} />
+          <meshStandardMaterial color={accentCol} emissive={accentCol} emissiveIntensity={0.8} />
+        </mesh>
       </group>
-      <mesh position={[0, -0.03, -1.48]} rotation={[Math.PI / 2, 0, 0]} ref={flameRef}>
-        <coneGeometry args={[0.28, 1.38, 12]} />
-        <meshBasicMaterial color={shipAssetCatalog.engineGlow} transparent opacity={0.8} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+
+      {/* 核心引擎火焰（多层 blending） */}
+      <mesh position={[0, 0, 1.0]} rotation={[Math.PI / 2, 0, 0]} ref={flameRef}>
+        <coneGeometry args={[0.34, 1.6, 14]} />
+        <meshBasicMaterial color={shipAssetCatalog.engineGlow} transparent opacity={0.85} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      <mesh position={[0, -0.04, -2.16]} rotation={[Math.PI / 2, 0, 0]}>
-        <coneGeometry args={[0.16, 2.5, 10]} />
-        <meshBasicMaterial color="#38bdf8" transparent opacity={0.18} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+      <mesh position={[0, 0, 1.7]} rotation={[Math.PI / 2, 0, 0]} ref={haloRef}>
+        <coneGeometry args={[0.22, 1.0, 12]} />
+        <meshBasicMaterial color={"#bae6fd"} transparent opacity={0.45} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      <pointLight color={shipAssetCatalog.engineGlow} intensity={0.95} distance={5.2} decay={1.4} />
+      <mesh position={[0, 0, 2.32]} rotation={[Math.PI / 2, 0, 0]}>
+        <coneGeometry args={[0.12, 0.5, 8]} />
+        <meshBasicMaterial color={"#ffffff"} transparent opacity={0.35} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+
+      <pointLight color={shipAssetCatalog.engineGlow} intensity={1.05} distance={6} decay={1.4} />
     </group>
   );
 }
@@ -456,7 +556,7 @@ function TargetPlanet({ body, getPlayerZ }: { body: Body; getPlayerZ: () => numb
 }
 
 // 闄ㄧ煶: 鑷浆 + 鐏劙灏捐抗 (鎷栧熬)
-function Meteor({ position, scale }: { position: [number, number, number]; scale: number }) {
+function Meteor({ position, scale, kind = "asteroid" }: { position: [number, number, number]; scale: number; kind?: "asteroid" | "debris" | "crystal" }) {
   const ref = useRef<THREE.Group>(null!);
   const trailRef = useRef<THREE.Mesh>(null!);
   const asteroidModel = usePreparedGlb(shipAssetCatalog.hazardModel, 1);
@@ -548,7 +648,7 @@ function EnergyOrb({ position, color, getPlayer, onCollect }: { position: [numbe
   );
 }
 
-const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number, z: number) => void; getPlayer: () => THREE.Vector3 | null; paused: boolean; onHazardHit: () => void; getHazards: () => { x: number; y: number; z: number; hit: boolean }[]; speed: number }>(function ShipPlayer({ onPositionUpdate, getPlayer, paused, onHazardHit, getHazards, speed }, ref) {
+const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number, z: number) => void; getPlayer: () => THREE.Vector3 | null; paused: boolean; onHazardHit: () => void; getHazards: () => { x: number; y: number; z: number; hit: boolean }[]; speed: number; envTilt?: number; envWind?: number }>(function ShipPlayer({ onPositionUpdate, getPlayer, paused, onHazardHit, getHazards, speed, envTilt = 0, envWind = 0 }, ref) {
   const innerRef = useRef<THREE.Group | null>(null);
   useImperativeHandle(ref, () => innerRef.current as THREE.Group, []);
   const flameRef = useRef<THREE.Mesh>(null!);
@@ -586,8 +686,12 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
     else velRef.current.y *= 0.92;
     velRef.current.x = Math.max(-9, Math.min(9, velRef.current.x));
     velRef.current.y = Math.max(-7, Math.min(7, velRef.current.y));
-    innerRef.current.position.x = Math.max(-6, Math.min(6, innerRef.current.position.x + velRef.current.x * delta));
+    // 行星环境的 wind 推动飞船偏移 + tilt 倾斜
+    const windX = Math.sin(state.clock.getElapsedTime() * 0.6) * envWind * 0.45;
+    innerRef.current.position.x = Math.max(-6, Math.min(6, innerRef.current.position.x + velRef.current.x * delta + windX * delta));
     innerRef.current.position.y = Math.max(-4, Math.min(4, innerRef.current.position.y + velRef.current.y * delta));
+    // roll 持续叠加 tilt
+    innerRef.current.rotation.z += envTilt * delta * 0.6;
     // 楂橀€熷墠杩?(z 瓒呰繃 -300 瑙﹀彂 onLandingStart, 缁х画椋炲埌 -380 閿佷綇, 閬垮厤鍗犵敤 GPU)
     if (innerRef.current.position.z > getFlightCompleteZ() - 20) {
       innerRef.current.position.z -= speed * delta;
@@ -741,6 +845,10 @@ function Shockwave({ active }: { active: number }) {
 
 function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition, onLandingStart }: { planetId: PlanetId; paused: boolean; onCollect: (kind: string) => void; onHazard: () => void; onComplete: () => void; onPosition: (z: number) => void; onLandingStart?: () => void }) {
   const body = BODIES.find((b) => b.id === planetId) as Body;
+  const env = missionData[planetId]?.environment;
+  const envColor = env?.atmosphereColor ?? body.accent ?? "#22d3ee";
+  const envTilt = env?.tilt ?? 0;
+  const envWind = env?.wind ?? 0;
   const playerRef = useRef<THREE.Group | null>(null);
   const playerZRef = useRef(0);
   const shakeRef = useRef(0);
@@ -798,29 +906,36 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition, 
 
   const accent = body.accent || body.glow || "#22d3ee";
   const baseSpeed = playerSpeed();
+  const envMissionspeed = (env?.hazardSpeed ?? 1) * baseSpeed;
 
   return (
     <group>
-      <ambientLight intensity={0.4} color={accent} />
-      <directionalLight position={[5, 12, 8]} intensity={0.9} color="#ffffff" />
-      <pointLight position={[0, 0, -100]} intensity={2.5} color={accent} distance={50} />
-      <pointLight position={[0, 6, -120]} intensity={3.5} color={body.glow || "#fbbf24"} distance={40} />
+      <ambientLight intensity={0.42} color={envColor} />
+      <directionalLight position={[5, 12, 8]} intensity={0.95} color="#ffffff" />
+      <pointLight position={[0, 0, -100]} intensity={2.5} color={envColor} distance={60} />
+      <pointLight position={[0, 6, -120]} intensity={3.2} color={envColor} distance={50} />
+      <fog attach="fog" args={[envColor, 38, 220]} />
       <mesh renderOrder={-2}>
-        <sphereGeometry args={[200, 24, 24]} />
+        <sphereGeometry args={[220, 32, 32]} />
         <meshBasicMaterial color={body.sky || "#02010a"} side={THREE.BackSide} depthWrite={false} />
       </mesh>
-      <Stars count={250} radius={80} />
-      <WarpStars count={360} speed={baseSpeed * 7} />
-      <NearFieldParticles count={96} speed={baseSpeed * 1.7} color={accent} />
+      <Stars count={220} radius={80} />
+      <WarpStars count={Math.max(160, Math.min(360, Math.round(280 * (env?.hazardSpeed ?? 1))))} speed={envMissionspeed * 4.6} />
+      <NearFieldParticles count={Math.max(40, Math.round(60 + 32 * (env?.wind ?? 0.4)))} speed={envMissionspeed * 1.4} color={envColor} />
+      <EnvEffects env={env} />
       <TargetPlanet body={body} getPlayerZ={() => playerZRef.current} />
-      {allHazards.map((h, i) => <Meteor key={"h" + i} position={[h.x, h.y, h.z]} scale={h.size} />)}
+      {allHazards.map((h, i) => (
+        <Meteor key={"h" + i} position={[h.x, h.y, h.z]} scale={h.size} kind={(["asteroid","debris","crystal"] as const)[i % 3]} />
+      ))}
       {allOrbs.map((o, i) => (
-        <EnergyOrb key={"o" + i} position={[o.x, o.y, o.z]} color={accent}
+        <EnergyOrb key={"o" + i} position={[o.x, o.y, o.z]} color={envColor}
           getPlayer={getPlayer}
           onCollect={() => onCollect("crystal")} />
       ))}
       <ShipPlayer
         ref={playerRef}
+        envTilt={envTilt}
+        envWind={envWind}
         onPositionUpdate={(x, y, z) => { playerZRef.current = z; onPosition(z); }}
         getPlayer={getPlayer}
         getHazards={() => hazardsRef.current}
@@ -831,6 +946,128 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition, 
       <FollowCamera targetRef={playerRef} shakeRef={shakeRef} speedRef={speedRef} />
     </group>
   );
+}
+
+function EnvEffects({ env }: { env: import("@/lib/play/missionData").EnvironmentTuning | undefined }) {
+  const dustPoints = useMemo(() => {
+    const arr: Array<[number, number, number]> = [];
+    for (let i = 0; i < 220; i++) {
+      arr.push([(Math.random() - 0.5) * 60, (Math.random() - 0.5) * 24, -40 - Math.random() * 180]);
+    }
+    return arr;
+  }, []);
+  const ringDebris = useMemo(() => {
+    const arr: Array<[number, number, number]> = [];
+    for (let i = 0; i < 180; i++) {
+      arr.push([(Math.random() - 0.5) * 28, (Math.random() - 0.5) * 4, -60 - Math.random() * 120]);
+    }
+    return arr;
+  }, []);
+  const spotRef = useRef<THREE.Mesh>(null!);
+  useFrame((state) => {
+    if (spotRef.current && env?.missionType === "gravitySlingshot") {
+      spotRef.current.rotation.z = state.clock.getElapsedTime() * 0.8;
+    }
+  });
+  if (!env) return null;
+  if (env.missionType === "dustCrossing") {
+    return (
+      <>
+        {dustPoints.map((p, i) => (
+          <mesh key={"dust-" + i} position={p}>
+            <sphereGeometry args={[0.04 + (i % 7) * 0.012, 6, 6]} />
+            <meshBasicMaterial color={"#fb923c"} transparent opacity={0.22} depthWrite={false} />
+          </mesh>
+        ))}
+      </>
+    );
+  }
+  if (env.missionType === "ringTraversal") {
+    return (
+      <>
+        {ringDebris.map((p, i) => (
+          <mesh key={"ring-" + i} position={p}>
+            <icosahedronGeometry args={[0.05 + (i % 6) * 0.018, 0]} />
+            <meshStandardMaterial color={"#fde68a"} emissive={"#fde68a"} emissiveIntensity={0.45} transparent opacity={0.85} />
+          </mesh>
+        ))}
+      </>
+    );
+  }
+  if (env.missionType === "atmosphericDrill") {
+    return (
+      <>
+        {[-40, -70, -110, -150].map((z, i) => (
+          <mesh key={"vapor-" + i} position={[0, -2, z]}>
+            <planeGeometry args={[60, 6]} />
+            <meshBasicMaterial color={"#65a30d"} transparent opacity={0.14} depthWrite={false} />
+          </mesh>
+        ))}
+      </>
+    );
+  }
+  if (env.missionType === "gravitySlingshot") {
+    return (
+      <mesh ref={spotRef} position={[0, 0, -160]}>
+        <ringGeometry args={[8, 14, 64]} />
+        <meshBasicMaterial color={"#fbbf24"} transparent opacity={0.16} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
+      </mesh>
+    );
+  }
+  if (env.missionType === "windRun") {
+    return (
+      <>
+        {[-30, -65, -110, -150, -190].map((z, i) => (
+          <mesh key={"wind-" + i} position={[0, 0, z]}>
+            <planeGeometry args={[64, 0.4]} />
+            <meshBasicMaterial color={"#60a5fa"} transparent opacity={0.2} depthWrite={false} />
+          </mesh>
+        ))}
+      </>
+    );
+  }
+  if (env.missionType === "thermalSurvey") {
+    return (
+      <>
+        {[-40, -90, -140].map((z, i) => (
+          <mesh key={"heat-" + i} position={[0, 0, z]}>
+            <planeGeometry args={[50, 12]} />
+            <meshBasicMaterial color={"#fb923c"} transparent opacity={0.18} depthWrite={false} />
+          </mesh>
+        ))}
+      </>
+    );
+  }
+  if (env.missionType === "orbitalScan") {
+    return (
+      <>
+        {[-50, -90, -140, -190].map((z, i) => (
+          <group key={"satellite-" + i} position={[Math.sin(i) * 6, Math.cos(i) * 3, z]}>
+            <mesh>
+              <boxGeometry args={[0.6, 0.18, 0.32]} />
+              <meshStandardMaterial color={"#94a3b8"} metalness={0.4} roughness={0.5} />
+            </mesh>
+            <mesh position={[0.5, 0, 0]}>
+              <cylinderGeometry args={[0.04, 0.04, 1, 8]} />
+              <meshStandardMaterial color={"#fb923c"} emissive={"#fb923c"} emissiveIntensity={0.5} />
+            </mesh>
+            <pointLight color={"#38bdf8"} intensity={0.6} distance={4} decay={2} />
+          </group>
+        ))}
+      </>
+    );
+  }
+  if (env.missionType === "rollLanding") {
+    return (
+      <group rotation={[env.tilt, 0, 0]}>
+        <mesh position={[0, 8, -130]}>
+          <torusGeometry args={[18, 0.06, 8, 64]} />
+          <meshBasicMaterial color={"#22d3ee"} transparent opacity={0.22} toneMapped={false} />
+        </mesh>
+      </group>
+    );
+  }
+  return null;
 }
 
 useGLTF.preload(shipAssetCatalog.cruiseModel);

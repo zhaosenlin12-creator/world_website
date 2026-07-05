@@ -154,11 +154,14 @@ html { scroll-behavior: smooth; }
 }
 
 .console-grid {
+  /* default = 全屏隐藏。仅在父级挂 .console-grid-on 时显示，控制范围 */
+  display: none;
   background-image:
-    linear-gradient(rgba(34,211,238,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34,211,238,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(34,211,238,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,211,238,0.05) 1px, transparent 1px);
   background-size: 22px 22px;
 }
+.console-grid-on .console-grid { display: block; }
 
 .neon-bar {
   position: relative;

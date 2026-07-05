@@ -3,6 +3,18 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type { MissionDefinition } from "@/lib/play/missionData";
 
+
+const MISSION_TYPE_LABEL: Record<string, string> = {
+  thermalSurvey: "热测绘样本",
+  atmosphericDrill: "气压钻探",
+  orbitalScan: "轨道扫描",
+  dustCrossing: "沙尘穿越",
+  gravitySlingshot: "引力借力",
+  ringTraversal: "环带穿越",
+  rollLanding: "侧向倾斜下降",
+  windRun: "极速风场"
+};
+
 const STAGES = [
   { id: "APPROACH", title: "飞行接近", desc: "3D 空间驾驶飞船，躲避陨石与能量场。" },
   { id: "DESCENT", title: "大气穿越", desc: "穿越大气层并切换到降落通道。" },
@@ -83,7 +95,22 @@ export default function MissionConsole({ open, planetName, planetDistance, accen
                   <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
                     <div className="console-eyebrow text-amber-200/85">任务概要</div>
                     <p className="mt-3 text-sm leading-7 text-white/76">{mission.summary}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
+                    {mission.environment ? (
+                        <div className="mt-4 rounded-2xl border px-4 py-3 text-xs" style={{ borderColor: (mission.environment.atmosphereColor || accent) + "66", background: (mission.environment.atmosphereColor || accent) + "10" }}>
+                          <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.28em] text-white/55">
+                            <span>{MISSION_TYPE_LABEL[mission.environment.missionType]}</span>
+                            <span className="font-mono text-cyan-200">{Math.round(mission.environment.fogDensity * 100)}% 雾</span>
+                          </div>
+                          <div className="mt-2 text-sm leading-6 text-white/82">{mission.environment.hint}</div>
+                          <div className="mt-3 flex flex-wrap items-center gap-2 text-[10px] text-white/55">
+                            <span className="rounded-full border border-emerald-300/30 bg-emerald-500/10 px-2 py-0.5 text-emerald-200">主样本 · {mission.environment.primarySample}</span>
+                            <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5">重力 ×{mission.environment.gravity.toFixed(2)}</span>
+                            <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5">风速 {mission.environment.wind.toFixed(2)}</span>
+                            <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5">危速 ×{mission.environment.hazardSpeed.toFixed(2)}</span>
+                          </div>
+                        </div>
+                      ) : null}
+                      <div className="mt-4 flex flex-wrap gap-2">
                       {mission.highlights.map((item) => (
                         <span key={item} className="rounded-full border border-white/10 bg-black/18 px-3 py-1 text-xs text-white/72">
                           {item}
