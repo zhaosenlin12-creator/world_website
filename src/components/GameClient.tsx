@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -17,8 +17,13 @@ import { GameWorld, BODIES } from "./GameWorld";
 import LandingPlatformer from "./LandingPlatformer";
 import SurfaceMission from "./SurfaceMission";
 import AudioSubtitle from "./play/AudioSubtitle";
-import MissionBriefing from "./play/MissionBriefing";
-import PlayHud from "./play/PlayHud";
+import MissionConsole from "./play/MissionConsole";
+import PauseOverlay from "./play/PauseOverlay";
+import PlayBriefingIntro from "./play/PlayBriefingIntro";
+import PlayFinishCard from "./play/PlayFinishCard";
+import PlayOpsConsole from "./play/PlayOpsConsole";
+import StageTicker from "./play/StageTicker";
+import { usePlayHotkeys } from "@/hooks/usePlayHotkeys";
 
 type Scene =
   | "INTRO"
@@ -139,6 +144,9 @@ export function GameClient() {
   const [playPaused, setPlayPaused] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [lastVoiceText, setLastVoiceText] = useState("");
+  const [pauseMenuOpen, setPauseMenuOpen] = useState(false);
+  const [startedAt, setStartedAt] = useState<number>(() => Date.now());
+  const [hazardsAvoided, setHazardsAvoided] = useState(0);
   const [localDebugEnabled, setLocalDebugEnabled] = useState(false);
   const sound = useSound();
   const voice = useMissionVoice(voiceEnabled);
@@ -296,6 +304,8 @@ export function GameClient() {
     if (!pendingPlanet) return;
     clearQueuedTimeouts();
     setApproachStart(Date.now());
+    setStartedAt(Date.now());
+    setPauseMenuOpen(false);
     setAnswered(false);
     setSelectedAnswer(null);
     setCollectedItems(0);
@@ -323,6 +333,7 @@ export function GameClient() {
     const points = kind === "sample" ? 120 : 50 + Math.min(combo, 5) * 10;
     setCollectedItems((value) => value + 1);
     setCombo((value) => value + 1);
+    setHazardsAvoided((value) => value + 1);
     if (comboTimer.current) window.clearTimeout(comboTimer.current);
     comboTimer.current = window.setTimeout(() => setCombo(0), 1800);
     setScore((value) => value + points);
@@ -451,6 +462,9 @@ export function GameClient() {
 
   const handleRestart = useCallback(() => {
     clearQueuedTimeouts();
+    setPauseMenuOpen(false);
+    setStartedAt(Date.now());
+    setHazardsAvoided(0);
     setScene("INTRO");
     setActiveIdx(0);
     setPendingPlanet(null);
@@ -477,6 +491,25 @@ export function GameClient() {
     setDistance(Math.max(0, -z));
     setStageLabel(getFlightStage(z));
   }, []);
+
+  // 绑定键盘拦截
+  usePlayHotkeys(
+    useMemo(
+      () => ({
+        onPauseToggle: () => {
+          setPauseMenuOpen((value) => {
+            const next = !value;
+            setPlayPaused(next);
+            return next;
+          });
+        },
+        onRestart: () => handleRestart()
+      }),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      []
+    ),
+    scene !== "INTRO"
+  );
 
   const routeItems = useMemo(() => PLANET_ORDER.map((planetId, index) => {
     const planetBody = BODIES.find((item) => item.id === planetId);
@@ -600,7 +633,7 @@ export function GameClient() {
             targetId={activePlanet}
             onPlanetClick={handlePlanetClick}
             startTime={approachStart}
-            paused={playPaused || landing2D}
+            paused={playPaused || landing2D || pauseMenuOpen}
             onCollect={handleCollect}
             onHazard={handleHazard}
             onComplete={handleFlightComplete}
@@ -635,7 +668,7 @@ export function GameClient() {
         onVoiceCue={(cue) => handleLandingVoiceCue(cue === "sample" ? "sample" : "hazardWarning")}
       />
 
-      <PlayHud
+      <PlayOpsConsole
         scene={scene}
         title={zh.game.title}
         backLabel={zh.game.back}
@@ -657,6 +690,59 @@ export function GameClient() {
         missionLog={missionLog}
         routeItems={routeItems}
         onRouteSelect={handlePlanetClick}
+        hazardsAvoided={hazardsAvoided}
+        onTogglePause={() => setPauseMenuOpen((value) => !value)}
+      />
+
+      <StageTicker
+        stage={stageLabel}
+        hint={
+          scene === "DESCENT"
+            ? STAGE_HINT[stageLabel]
+            : scene === "SURFACE"
+              ? mission.surfaceGoal
+              : scene === "QUIZ"
+                ? "知识考验 · 答题获取样本"
+                : scene === "APPROACH"
+                  ? "进入星际接近窗口"
+                  : undefined
+        }
+      />
+
+      <PauseOverlay
+        open={pauseMenuOpen && scene !== "INTRO" && scene !== "FINISHED"}
+        voiceEnabled={voiceEnabled}
+        onToggleVoice={() => setVoiceEnabled((value) => !value)}
+        onResume={() => setPauseMenuOpen(false)}
+        onRestart={() => {
+          setPauseMenuOpen(false);
+          handleRestart();
+        }}
+        onBack={() => {
+          setPauseMenuOpen(false);
+          handleMissionBack();
+        }}
+        sceneHint={
+          scene === "DESCENT"
+            ? STAGE_HINT[stageLabel]
+            : scene === "SURFACE"
+              ? mission.surfaceGoal
+              : scene === "QUIZ"
+                ? "知识考验 · 答题获取样本"
+                : undefined
+        }
+      />
+
+      <PlayBriefingIntro
+        open={scene === "INTRO"}
+        voiceEnabled={voiceEnabled}
+        onToggleVoice={() => setVoiceEnabled((value) => !value)}
+        onStart={() => setScene("SOLAR_IDLE")}
+        onBack={() => {
+          if (typeof window !== "undefined") {
+            window.location.href = "/";
+          }
+        }}
       />
 
       <AudioSubtitle text={lastVoiceText} />
@@ -674,7 +760,7 @@ export function GameClient() {
         ) : null}
       </AnimatePresence>
 
-      <MissionBriefing
+      <MissionConsole
         open={scene === "MISSION_CONFIRM" && !!pendingPlanet}
         planetName={pendingBody?.name || ""}
         planetDistance={pendingBody?.distance || 0}
@@ -774,31 +860,32 @@ export function GameClient() {
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {scene === "FINISHED" ? (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md">
-            <motion.div initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring" }} className="glass-strong mx-4 max-w-md rounded-3xl p-8 text-center">
-              <motion.div animate={{ rotate: [0, 8, -8, 0] }} transition={{ duration: 1.5, repeat: Infinity }} className="mb-3 text-7xl">{isPerfect ? "🌌" : "🎯"}</motion.div>
-              <h2 className="gradient-text mb-2 font-display text-3xl">{isPerfect ? zh.game.perfectEnding : zh.game.finished}</h2>
-              <p className="mb-3 text-sm text-white/70">{isPerfect ? zh.game.perfectDesc : zh.game.finishedDesc}</p>
-              {newRecord ? <div className="mb-2 animate-pulse text-sm font-bold text-amber-300">✓ {zh.game.newRecord}</div> : null}
-              <div className="my-5 grid grid-cols-3 gap-2 text-xs">
-                <div className="glass rounded-lg p-2"><div className="text-white/50">{zh.game.samples}</div><div className="font-mono text-lg text-emerald-300">{samples.size}/8</div></div>
-                <div className="glass rounded-lg p-2"><div className="text-white/50">{zh.game.score}</div><div className="font-mono text-lg text-fuchsia-300">{score}</div></div>
-                <div className="glass rounded-lg p-2"><div className="text-white/50">{zh.game.bestScore}</div><div className="font-mono text-lg text-amber-300">{Math.max(score, bestScore)}</div></div>
-              </div>
-              <div className="mb-3 space-y-0.5 text-[10px] text-white/50">
-                <div>已探索行星 {samples.size}/8</div>
-                <div>总进场距离 {Math.round(distance)} m</div>
-              </div>
-              <div className="flex flex-col gap-2">
-                <button type="button" onClick={handleRestart} className="btn-primary w-full">{zh.game.restart}</button>
-                <Link href="/" className="btn-ghost w-full">{zh.game.back}</Link>
-              </div>
-            </motion.div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      {scene === "FINISHED" ? (
+        <PlayFinishCard
+          isPerfect={isPerfect}
+          samples={samples}
+          totalPlanets={PLANET_ORDER.length}
+          score={score}
+          bestScore={bestScore}
+          newRecord={newRecord}
+          distance={distance}
+          hazardsAvoided={hazardsAvoided}
+          startedAt={startedAt}
+          onRestart={handleRestart}
+          zh={{
+            finished: zh.game.finished,
+            finishedDesc: zh.game.finishedDesc,
+            perfectEnding: zh.game.perfectEnding,
+            perfectDesc: zh.game.perfectDesc,
+            newRecord: zh.game.newRecord,
+            samples: zh.game.samples,
+            score: zh.game.score,
+            bestScore: zh.game.bestScore,
+            restart: zh.game.restart,
+            back: zh.game.back
+          }}
+        />
+      ) : null}
 
       {localDebugEnabled ? (
         <div
