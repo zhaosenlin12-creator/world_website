@@ -279,6 +279,124 @@ function Planet({ body, angle, onClick, highlight }: { body: Body; angle: number
   );
 }
 
+function ShipProcedural({ accent = "#38bdf8", hullColor = "#e2e8f0", engineColor = "#22d3ee", cockpitColor = "#93c5fd", scale = 1 }: { accent?: string; hullColor?: string; engineColor?: string; cockpitColor?: string; scale?: number }) {
+  const hull = useMemo(() => new THREE.Color(hullColor), [hullColor]);
+  const accentCol = useMemo(() => new THREE.Color(accent), [accent]);
+  const cockpitCol = useMemo(() => new THREE.Color(cockpitColor), [cockpitColor]);
+  const flameRef = useRef<THREE.Mesh | null>(null);
+  const haloRef = useRef<THREE.Mesh | null>(null);
+  const ringRef = useRef<THREE.Mesh | null>(null);
+  const wingLedL = useRef<THREE.Mesh | null>(null);
+  const wingLedR = useRef<THREE.Mesh | null>(null);
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (flameRef.current) {
+      const fs = 1 + Math.sin(t * 24) * 0.28;
+      flameRef.current.scale.set(fs, fs * 1.45, fs);
+    }
+    if (haloRef.current) {
+      const hs = 1 + Math.sin(t * 6 + 0.6) * 0.1;
+      haloRef.current.scale.set(hs, hs, hs);
+    }
+    if (ringRef.current) {
+      ringRef.current.rotation.z = t * 0.4;
+    }
+    const blink = Math.sin(t * 3.2) > 0.6 ? 1 : 0.15;
+    if (wingLedL.current) (wingLedL.current.material as THREE.MeshStandardMaterial).emissiveIntensity = blink;
+    if (wingLedR.current) (wingLedR.current.material as THREE.MeshStandardMaterial).emissiveIntensity = blink;
+  });
+
+  return (
+    <group scale={scale}>
+      <group rotation={[0.12, -Math.PI / 2, 0]} position={[0, 0, 0]}>
+        <mesh position={[0, 0, 1.5]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.42, 0.55, 1.4, 24]} />
+          <meshStandardMaterial color={hull} metalness={0.62} roughness={0.34} />
+        </mesh>
+        <mesh position={[0, 0, 2.32]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.42, 0.12, 16, 32]} />
+          <meshStandardMaterial color={accentCol} metalness={0.92} roughness={0.18} emissive={accentCol} emissiveIntensity={0.7} />
+        </mesh>
+        <mesh position={[0, 0, 0.3]}>
+          <cylinderGeometry args={[0.55, 0.55, 1.3, 8]} />
+          <meshStandardMaterial color={hull} metalness={0.48} roughness={0.42} />
+        </mesh>
+        <mesh position={[0, 0, 0.3]} ref={ringRef}>
+          <torusGeometry args={[0.62, 0.05, 14, 36]} />
+          <meshStandardMaterial color={accentCol} emissive={accentCol} emissiveIntensity={0.85} roughness={0.3} metalness={0.5} />
+        </mesh>
+        <mesh position={[0, 0, -1.05]}>
+          <sphereGeometry args={[0.55, 32, 24]} />
+          <meshStandardMaterial color={hull} metalness={0.7} roughness={0.28} />
+        </mesh>
+        <mesh position={[0, 0.42, -1.05]} scale={[1.02, 0.32, 1.02]}>
+          <sphereGeometry args={[0.42, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color={cockpitCol} emissive={cockpitCol} emissiveIntensity={0.65} metalness={0.95} roughness={0.14} transparent opacity={0.9} />
+        </mesh>
+        {[-1, 1].map((side) => (
+          <group key={"wing-" + side} position={[side * 1.4, 0, 0.2]} rotation={[0, 0, side * 0.05]}>
+            <mesh>
+              <boxGeometry args={[1.6, 0.04, 0.9]} />
+              <meshStandardMaterial color={"#1e3a8a"} metalness={0.3} roughness={0.28} />
+            </mesh>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <mesh key={i} position={[(i - 2.5) * 0.24, 0.045, 0]}>
+                <boxGeometry args={[0.2, 0.02, 0.7]} />
+                <meshStandardMaterial color={"#0b1c4d"} metalness={0.5} roughness={0.22} emissive={"#1e3a8a"} emissiveIntensity={0.22} />
+              </mesh>
+            ))}
+            <mesh position={[-side * 0.7, 0, 0]}>
+              <cylinderGeometry args={[0.04, 0.04, 0.6, 8]} />
+              <meshStandardMaterial color={accentCol} metalness={0.8} roughness={0.3} />
+            </mesh>
+            <mesh ref={side < 0 ? wingLedL : wingLedR} position={[side * 0.6, 0.06, 0.4]}>
+              <sphereGeometry args={[0.05, 10, 8]} />
+              <meshStandardMaterial color={"#fb7185"} emissive={"#fb7185"} emissiveIntensity={1.2} />
+            </mesh>
+          </group>
+        ))}
+        <mesh position={[0, 0.55, -1.4]} rotation={[Math.PI / 2, 0.3, 0]}>
+          <sphereGeometry args={[0.36, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2]} />
+          <meshStandardMaterial color={"#cbd5e1"} metalness={0.8} roughness={0.4} side={THREE.DoubleSide} />
+        </mesh>
+        <mesh position={[0, 0.7, -1.4]}>
+          <cylinderGeometry args={[0.025, 0.025, 0.5, 8]} />
+          <meshStandardMaterial color={accentCol} metalness={0.7} roughness={0.35} />
+        </mesh>
+        {[
+          [0.7, 0, -0.3],
+          [-0.7, 0, -0.3],
+          [0, 0.6, 0.4],
+          [0, -0.6, 0.4]
+        ].map((p, i) => (
+          <mesh key={"thruster-" + i} position={p as unknown as [number, number, number]}>
+            <sphereGeometry args={[0.12, 12, 10]} />
+            <meshStandardMaterial color={accentCol} emissive={accentCol} emissiveIntensity={0.55} />
+          </mesh>
+        ))}
+        <mesh position={[0, 0.53, 0.3]}>
+          <boxGeometry args={[0.02, 0.02, 1.3]} />
+          <meshStandardMaterial color={accentCol} emissive={accentCol} emissiveIntensity={0.9} />
+        </mesh>
+      </group>
+      <mesh position={[0, 0, 1.0]} rotation={[Math.PI / 2, 0, 0]} ref={flameRef}>
+        <coneGeometry args={[0.34, 1.6, 14]} />
+        <meshBasicMaterial color={engineColor} transparent opacity={0.88} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+      <mesh position={[0, 0, 1.7]} rotation={[Math.PI / 2, 0, 0]} ref={haloRef}>
+        <coneGeometry args={[0.22, 1.0, 12]} />
+        <meshBasicMaterial color={"#bae6fd"} transparent opacity={0.5} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+      <mesh position={[0, 0, 2.32]} rotation={[Math.PI / 2, 0, 0]}>
+        <coneGeometry args={[0.12, 0.5, 8]} />
+        <meshBasicMaterial color={"#ffffff"} transparent opacity={0.4} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+      <pointLight color={engineColor} intensity={1.2} distance={6} decay={1.4} />
+    </group>
+  );
+}
+
 function Ship({ targetId }: { targetId: PlanetId | null }) {
   const sRef = useRef<THREE.Group>(null!);
   const flameRef = useRef<THREE.Mesh>(null!);
@@ -648,7 +766,7 @@ function EnergyOrb({ position, color, getPlayer, onCollect }: { position: [numbe
   );
 }
 
-const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number, z: number) => void; getPlayer: () => THREE.Vector3 | null; paused: boolean; onHazardHit: () => void; getHazards: () => { x: number; y: number; z: number; hit: boolean }[]; speed: number; envTilt?: number; envWind?: number }>(function ShipPlayer({ onPositionUpdate, getPlayer, paused, onHazardHit, getHazards, speed, envTilt = 0, envWind = 0 }, ref) {
+const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: number, z: number) => void; getPlayer: () => THREE.Vector3 | null; paused: boolean; onHazardHit: () => void; getHazards: () => { x: number; y: number; z: number; hit: boolean }[]; speed: number; envTilt?: number; envWind?: number; planetAccent?: string }>(function ShipPlayer({ onPositionUpdate, getPlayer, paused, onHazardHit, getHazards, speed, envTilt = 0, envWind = 0, planetAccent }, ref) {
   const innerRef = useRef<THREE.Group | null>(null);
   useImperativeHandle(ref, () => innerRef.current as THREE.Group, []);
   const flameRef = useRef<THREE.Mesh>(null!);
@@ -744,30 +862,19 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
 
   return (
     <group ref={innerRef} position={[0, 0, 0]}>
-      <group rotation={[0.22, -Math.PI / 2, 0]} position={[0, -0.08, 0.18]}>
-        <Clone object={shipModel} />
-      </group>
-      <mesh position={[0, -0.06, 0.26]}>
-        <sphereGeometry args={[0.2, 18, 18]} />
-        <meshBasicMaterial color={shipAssetCatalog.cockpitGlow} transparent opacity={0.75} toneMapped={false} />
-      </mesh>
-      {/* 涓荤伀鐒?*/}
-      <mesh position={[0, -0.03, 1.1]} rotation={[-Math.PI / 2, 0, 0]} ref={flameRef}>
-        <coneGeometry args={[0.2, 1.5, 10]} />
-        <meshBasicMaterial color="#22d3ee" transparent opacity={0.9} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
-      </mesh>
-      {/* 渚х考鐏劙 */}
-      <mesh position={[0.28, 0.1, 0.82]} rotation={[-Math.PI / 2, 0.25, 0]} ref={flame2Ref}>
-        <coneGeometry args={[0.08, 0.82, 6]} />
-        <meshBasicMaterial color="#a855f7" transparent opacity={0.85} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
-      </mesh>
-      {/* 闀垮熬杩?*/}
+      <ShipProcedural
+        accent={planetAccent || shipAssetCatalog.hullAccentColor}
+        engineColor={shipAssetCatalog.engineGlow}
+        cockpitColor={shipAssetCatalog.cockpitGlow}
+        scale={1.35}
+      />
       <mesh position={[0, -0.04, 2]} rotation={[-Math.PI / 2, 0, 0]} ref={trailRef}>
-        <coneGeometry args={[0.12, 2.7, 8]} />
-        <meshBasicMaterial color="#22d3ee" transparent opacity={0.22} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <coneGeometry args={[0.18, 3.2, 10]} />
+        <meshBasicMaterial color="#22d3ee" transparent opacity={0.3} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      <pointLight color="#22d3ee" intensity={1.1} distance={6.5} decay={1.35} />
+      <pointLight color="#22d3ee" intensity={1.15} distance={7} decay={1.3} />
       <Shockwave active={hitCountRef.current} />
+    
     </group>
   );
 });
@@ -791,7 +898,7 @@ function FollowCamera({ targetRef, shakeRef, speedRef }: { targetRef: React.Muta
     const leadY = THREE.MathUtils.clamp(velocityRef.current.y * 0.05, -0.8, 0.8);
     const baseX = p.x * 0.18 - leadX * 0.85;
     const baseY = p.y * 0.28 + THREE.MathUtils.lerp(2.85, 1.35, depth) - leadY * 0.25;
-    const baseZ = p.z + THREE.MathUtils.lerp(6.8, 4.15, depth) + Math.sin(state.clock.getElapsedTime() * (1.4 + speedFactor)) * 0.08;
+    const baseZ = p.z + THREE.MathUtils.lerp(11.5, 7.0, depth) + Math.sin(state.clock.getElapsedTime() * (1.4 + speedFactor)) * 0.08;
     let sx = 0, sy = 0, sz = 0;
     if (shakeRef && shakeRef.current > 0) {
       const s = shakeRef.current;
@@ -804,7 +911,7 @@ function FollowCamera({ targetRef, shakeRef, speedRef }: { targetRef: React.Muta
     camera.lookAt(
       p.x * 0.34 + leadX * 0.7,
       p.y * 0.18 + leadY * 0.45,
-      p.z - THREE.MathUtils.lerp(13, 21, Math.min(1, depth * 0.5 + speedFactor * 0.75))
+      p.z - THREE.MathUtils.lerp(19, 28, Math.min(1, depth * 0.5 + speedFactor * 0.75))
     );
     const targetFov = baseFov + (speedRef ? Math.min(speedRef.current * 0.46, 18) : 0) + depth * 4.5;
     if ("fov" in camera) {
