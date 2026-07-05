@@ -317,6 +317,7 @@ export default function SurfaceMission({
         texture: textureRef.current,
         decor,
         accent,
+        planetId,
         now,
       });
 
@@ -689,6 +690,7 @@ function drawMission({
   texture,
   decor,
   accent,
+  planetId,
   now,
 }: {
   ctx: CanvasRenderingContext2D;
@@ -697,6 +699,7 @@ function drawMission({
   texture: HTMLImageElement | null;
   decor: MissionDecor;
   accent: string;
+  planetId: PlanetId;
   now: number;
 }) {
   const width = canvas.clientWidth || canvas.width;
@@ -706,10 +709,11 @@ function drawMission({
 
   ctx.clearRect(0, 0, width, height);
 
+  const _bgStops = {"venus":["#3d1a0e","#1a0805","#0a0403"],"mercury":["#0a0612","#05030a","#02010a"],"earth":["#021a1f","#010e14","#000608"],"mars":["#2a0e08","#150603","#08020a"],"jupiter":["#1a1106","#0d0703","#05030a"],"saturn":["#1f1810","#100c08","#080503"],"uranus":["#062028","#031820","#010a14"],"neptune":["#06122a","#030e1f","#010614"]}[planetId] || ["#070b1a", "#040812", "#02040b"];
   const bg = ctx.createLinearGradient(0, 0, 0, height);
-  bg.addColorStop(0, "#070b1a");
-  bg.addColorStop(0.55, "#040812");
-  bg.addColorStop(1, "#02040b");
+  bg.addColorStop(0, _bgStops[0]);
+  bg.addColorStop(0.55, _bgStops[1]);
+  bg.addColorStop(1, _bgStops[2]);
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, width, height);
 
@@ -732,7 +736,108 @@ function drawMission({
     ctx.fill();
   });
 
-  const camX = runtime.cameraX;
+  // ===== per-planet 大气层（每颗行星独特的色彩氛围） =====
+  const atmosphereTint = hexToRgba(accent, 0.32);
+  const tintGrad = ctx.createLinearGradient(0, 0, 0, height);
+  tintGrad.addColorStop(0, atmosphereTint);
+  tintGrad.addColorStop(0.5, hexToRgba(accent, 0.18));
+  tintGrad.addColorStop(1, hexToRgba(accent, 0.06));
+  ctx.fillStyle = tintGrad;
+  ctx.fillRect(0, 0, width, height);
+
+  if (planetId === "venus" || planetId === "uranus") {
+    for (let i = 0; i < 6; i++) {
+      const stripeY = height * 0.2 + i * 40 + Math.sin(time * (0.4 + i * 0.1)) * 12;
+      const stripeAlpha = 0.18 + (i % 2) * 0.08;
+      const stripeGrad = ctx.createLinearGradient(0, stripeY - 14, 0, stripeY + 14);
+      stripeGrad.addColorStop(0, "rgba(0,0,0,0)");
+      stripeGrad.addColorStop(0.5, hexToRgba(planetId === "venus" ? "#facc15" : "#22d3ee", stripeAlpha));
+      stripeGrad.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = stripeGrad;
+      ctx.fillRect(0, stripeY - 18, width, 36);
+    }
+  }
+  if (planetId === "mars") {
+    for (let i = 0; i < 40; i++) {
+      const dustY = (i / 40) * height;
+      const dustX = (i * 137 + time * (60 + (i % 3) * 20)) % (width + 80) - 40;
+      const dustA = 0.12 + ((i * 13) % 7) * 0.025;
+      ctx.fillStyle = "rgba(251,113,80," + dustA + ")";
+      ctx.beginPath();
+      ctx.arc(dustX, dustY, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  if (planetId === "saturn") {
+    ctx.save();
+    ctx.translate(width * 0.5, height * 0.32);
+    ctx.rotate(-0.25);
+    for (let ring = 0; ring < 5; ring++) {
+      const ringW = width * 0.55 + ring * 40;
+      const ringH = 6 + ring * 2;
+      ctx.strokeStyle = hexToRgba("#e7c98a", 0.18 - ring * 0.025);
+      ctx.lineWidth = ringH;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, ringW / 2, ringH * 1.5, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  if (planetId === "jupiter") {
+    const spotX = width * 0.75;
+    const spotY = height * 0.78;
+    ctx.save();
+    ctx.translate(spotX, spotY);
+    ctx.rotate(time * 0.3);
+    const spotGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, 60);
+    spotGrad.addColorStop(0, "rgba(251,113,80,0.45)");
+    spotGrad.addColorStop(0.7, "rgba(251,191,80,0.25)");
+    spotGrad.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = spotGrad;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 60, 28, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+  if (planetId === "mercury") {
+    for (let i = 0; i < 3; i++) {
+      const t = (time * 0.6 + i * 0.33) % 1;
+      const mx = width * (0.2 + i * 0.3) + t * width * 0.4;
+      const my = -20 + t * (height + 40);
+      const mAlpha = (1 - Math.abs(t - 0.5) * 2) * 0.4;
+      ctx.strokeStyle = "rgba(255,255,255," + mAlpha + ")";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(mx - 60, my + 30);
+      ctx.lineTo(mx, my);
+      ctx.stroke();
+    }
+  }
+  if (planetId === "earth") {
+    for (let i = 0; i < 3; i++) {
+      const cx = width * 0.3 + i * width * 0.2;
+      const cy = height * 0.25 + Math.sin(time + i) * 30;
+      ctx.strokeStyle = hexToRgba("#22d3ee", 0.18);
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 36, 14, Math.sin(time * 0.5 + i) * 0.3, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
+  if (planetId === "neptune") {
+    for (let i = 0; i < 3; i++) {
+      const stripeY = height * (0.35 + i * 0.18);
+      const offset = (time * (80 + i * 30)) % (width + 200) - 100;
+      ctx.strokeStyle = hexToRgba("#3b82f6", 0.15 + i * 0.04);
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(offset, stripeY);
+      ctx.lineTo(offset + width * 0.4, stripeY);
+      ctx.stroke();
+    }
+  }
+
+    const camX = runtime.cameraX;
   const camY = runtime.cameraY;
 
   if (texture) {
@@ -1120,9 +1225,9 @@ function drawGrid(
   camX: number,
   camY: number
 ) {
-  const step = 80;
+  const step = 180;
   ctx.save();
-  ctx.strokeStyle = "rgba(255,255,255,0.03)";
+  ctx.strokeStyle = "rgba(255,255,255,0.012)";
   ctx.lineWidth = 1;
   ctx.beginPath();
 
