@@ -1,9 +1,15 @@
 node_modules/
 .next/
+.superpowers/
+docs/superpowers/
+.next-dev-*.log
+.tmp-surface-tests/
+.tmp-surface-component-tests/
 server_out.log
 server_err.log
 build.log
 dev.log
+scripts/*.log
 scraper/screenshots/
 scripts/screenshots/
 scraper/*.log
@@ -12,6 +18,7 @@ scraper/*.out
 scraper/cache/
 # temp build/patch scripts
 scripts/_*.cjs
+scripts/_*.mjs
 scripts/_*.json
 scripts/_*.txt
 tsconfig.tsbuildinfo
@@ -23,5 +30,9 @@ marblequest_*.zip
 
 dev*.log
 build*.log
+play_preview_2.log
+play_preview_2.err.log
+play_prod.log
+play_prod.err.log
 
 play_solar_*.png

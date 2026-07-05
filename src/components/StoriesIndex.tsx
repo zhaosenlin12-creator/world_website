@@ -2,6 +2,7 @@
 import { zh } from "@/i18n/zh";
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
+import Image from "next/image";
 
 interface Article {
   url: string;
@@ -59,7 +60,13 @@ export function StoriesIndex({ initial }: { initial: Article[] }) {
                 >
                   <div className="aspect-[16/10] relative overflow-hidden">
                     {a.hero ? (
-                      <img src={a.hero} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                      <Image
+                        src={a.hero}
+                        alt={a.title}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
                     ) : (
                       <div className="w-full h-full relative" style={{ background: "linear-gradient(135deg, " + accent + "33 0%, " + accent + "11 50%, #000 100%)" }}>
                         <div className="absolute inset-0 bg-stars opacity-60" />
@@ -91,7 +98,7 @@ export function StoriesIndex({ initial }: { initial: Article[] }) {
           })}
         </div>
         {filtered.length === 0 && (
-          <div className="text-center text-white/50 py-20">未找到匹配 "{q}" 的故事。</div>
+          <div className="text-center text-white/50 py-20">未找到匹配 “{q}” 的故事。</div>
         )}
       </div>
     </div>

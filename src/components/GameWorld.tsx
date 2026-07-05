@@ -1,7 +1,17 @@
-"use client";
+﻿"use client";
 import { useRef, useEffect, useMemo, useCallback, forwardRef, useImperativeHandle, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Clone, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { planetAssetCatalog, shipAssetCatalog } from "@/lib/play/assetCatalog";
+import {
+  computeTargetPlanetState,
+  createFlightHazards,
+  createFlightOrbs,
+  getDescentSpeed,
+  getFlightCompleteZ,
+  getLandingTriggerZ,
+} from "@/lib/play/descentFlight";
 
 export type PlanetId = "mercury" | "venus" | "earth" | "mars" | "jupiter" | "saturn" | "uranus" | "neptune";
 
@@ -28,18 +38,18 @@ export type Body = {
 };
 
 export const BODIES: Body[] = [
-  { id: "sun", name: "太阳", texture: "/assets/textures/sun.jpg", radius: 3.5, distance: 0, speed: 0, rotation: 0.04, emissive: true, glow: "#fbbf24" },
-  { id: "mercury", name: "水星", texture: "/assets/textures/mercury.jpg", radius: 0.55, distance: 7, speed: 0.32, rotation: 0.02, glow: "#a8a29e", biome: "void", collectible: "crystal", sky: "#0a0a18", ground: "#737373", accent: "#a8a29e" },
-  { id: "venus", name: "金星", texture: "/assets/textures/venus.jpg", radius: 0.75, distance: 10, speed: 0.26, rotation: 0.01, glow: "#fb923c", biome: "lava", collectible: "ruby", sky: "#3a0d04", ground: "#9a3412", accent: "#fb923c" },
-  { id: "earth", name: "地球", texture: "/assets/textures/earth.jpg", radius: 0.85, distance: 13, speed: 0.22, rotation: 0.04, glow: "#3b82f6", biome: "green", collectible: "apple", sky: "#0c1d3a", ground: "#0e3b5c", accent: "#22d3ee" },
-  { id: "mars", name: "火星", texture: "/assets/textures/mars.jpg", radius: 0.7, distance: 16, speed: 0.18, rotation: 0.038, glow: "#dc2626", biome: "sand", collectible: "ankh", sky: "#1c0608", ground: "#5c1a08", accent: "#f97316" },
-  { id: "jupiter", name: "木星", texture: "/assets/textures/jupiter.jpg", radius: 1.7, distance: 22, speed: 0.12, rotation: 0.08, glow: "#fbbf24", biome: "gas", collectible: "star", sky: "#0a0815", ground: "#1e1b4b", accent: "#a78bfa" },
-  { id: "saturn", name: "土星", texture: "/assets/textures/saturn.jpg", radius: 1.5, distance: 28, speed: 0.1, rotation: 0.07, glow: "#fbbf24", hasRing: true, ringInner: 1.9, ringOuter: 2.7, biome: "ice", collectible: "crystal", sky: "#1a1407", ground: "#3a2c10", accent: "#fde68a", ringColor: "#e7c98a" },
-  { id: "uranus", name: "天王星", texture: "/assets/textures/uranus.jpg", radius: 1.1, distance: 34, speed: 0.08, rotation: 0.06, glow: "#22d3ee", biome: "cloud", collectible: "star", sky: "#042029", ground: "#0a3a45", accent: "#67e8f9" },
-  { id: "neptune", name: "海王星", texture: "/assets/textures/neptune.webp", radius: 1.05, distance: 40, speed: 0.07, rotation: 0.055, glow: "#3b82f6", biome: "crystal", collectible: "ruby", sky: "#070b25", ground: "#101a4d", accent: "#818cf8" }
+  { id: "sun", name: "太阳", texture: planetAssetCatalog.sun.texture, radius: 3.5, distance: planetAssetCatalog.sun.distance, speed: 0, rotation: 0.04, emissive: true, glow: "#fbbf24", initialAngle: planetAssetCatalog.sun.initialAngle },
+  { id: "mercury", name: "水星", texture: planetAssetCatalog.mercury.texture, radius: 0.55, distance: planetAssetCatalog.mercury.distance, speed: 0.32, rotation: 0.02, glow: "#a8a29e", biome: "void", collectible: "crystal", sky: "#0a0a18", ground: "#737373", accent: "#a8a29e", initialAngle: planetAssetCatalog.mercury.initialAngle },
+  { id: "venus", name: "金星", texture: planetAssetCatalog.venus.texture, radius: 0.75, distance: planetAssetCatalog.venus.distance, speed: 0.26, rotation: 0.01, glow: "#fb923c", biome: "lava", collectible: "ruby", sky: "#3a0d04", ground: "#9a3412", accent: "#fb923c", initialAngle: planetAssetCatalog.venus.initialAngle },
+  { id: "earth", name: "地球", texture: planetAssetCatalog.earth.texture, radius: 0.85, distance: planetAssetCatalog.earth.distance, speed: 0.22, rotation: 0.04, glow: "#3b82f6", biome: "green", collectible: "apple", sky: "#0c1d3a", ground: "#0e3b5c", accent: "#22d3ee", initialAngle: planetAssetCatalog.earth.initialAngle },
+  { id: "mars", name: "火星", texture: planetAssetCatalog.mars.texture, radius: 0.7, distance: planetAssetCatalog.mars.distance, speed: 0.18, rotation: 0.038, glow: "#dc2626", biome: "sand", collectible: "ankh", sky: "#1c0608", ground: "#5c1a08", accent: "#f97316", initialAngle: planetAssetCatalog.mars.initialAngle },
+  { id: "jupiter", name: "木星", texture: planetAssetCatalog.jupiter.texture, radius: 1.7, distance: planetAssetCatalog.jupiter.distance, speed: 0.12, rotation: 0.08, glow: "#fbbf24", biome: "gas", collectible: "star", sky: "#0a0815", ground: "#1e1b4b", accent: "#a78bfa", initialAngle: planetAssetCatalog.jupiter.initialAngle },
+  { id: "saturn", name: "土星", texture: planetAssetCatalog.saturn.texture, radius: 1.5, distance: planetAssetCatalog.saturn.distance, speed: 0.1, rotation: 0.07, glow: "#fbbf24", hasRing: true, ringInner: 1.9, ringOuter: 2.7, biome: "ice", collectible: "crystal", sky: "#1a1407", ground: "#3a2c10", accent: "#fde68a", ringColor: "#e7c98a", initialAngle: planetAssetCatalog.saturn.initialAngle },
+  { id: "uranus", name: "天王星", texture: planetAssetCatalog.uranus.texture, radius: 1.1, distance: planetAssetCatalog.uranus.distance, speed: 0.08, rotation: 0.06, glow: "#22d3ee", biome: "cloud", collectible: "star", sky: "#042029", ground: "#0a3a45", accent: "#67e8f9", initialAngle: planetAssetCatalog.uranus.initialAngle },
+  { id: "neptune", name: "海王星", texture: planetAssetCatalog.neptune.texture, radius: 1.05, distance: planetAssetCatalog.neptune.distance, speed: 0.07, rotation: 0.055, glow: "#3b82f6", biome: "crystal", collectible: "ruby", sky: "#070b25", ground: "#101a4d", accent: "#818cf8", initialAngle: planetAssetCatalog.neptune.initialAngle }
 ];
 
-// 远景星空 (静态)
+// 杩滄櫙鏄熺┖ (闈欐€?
 function Stars({ count = 600, radius = 80 }: { count?: number; radius?: number }) {
   const ref = useRef<THREE.Points>(null!);
   const positions = useMemo(() => {
@@ -64,7 +74,7 @@ function Stars({ count = 600, radius = 80 }: { count?: number; radius?: number }
   );
 }
 
-// 高速流星空: 粒子沿 z 轴高速冲向玩家, 营造 WARP 速度感
+// 楂橀€熸祦鏄熺┖: 绮掑瓙娌?z 杞撮珮閫熷啿鍚戠帺瀹? 钀ラ€?WARP 閫熷害鎰?
 function WarpStars({ count = 400, speed = 60 }: { count?: number; speed?: number }) {
   const ref = useRef<THREE.Points>(null!);
   const positions = useMemo(() => {
@@ -112,10 +122,51 @@ function loadTex(url: string): THREE.Texture | null {
   } catch { return null; }
 }
 
-// ============ 太阳系 (SOLAR) ============
+function getOrbitAngle(body: Body, elapsedTime: number) {
+  return (body.initialAngle ?? 0) + elapsedTime * body.speed;
+}
+
+function getOrbitPosition(body: Body, elapsedTime: number) {
+  const angle = getOrbitAngle(body, elapsedTime);
+  return {
+    x: Math.cos(angle) * body.distance,
+    z: Math.sin(angle) * body.distance,
+  };
+}
+
+function tuneAssetMaterial(material: THREE.Material) {
+  const maybeStandard = material as THREE.MeshStandardMaterial;
+  if ("roughness" in maybeStandard) maybeStandard.roughness = Math.max(maybeStandard.roughness ?? 0.4, 0.42);
+  if ("metalness" in maybeStandard) maybeStandard.metalness = Math.max(maybeStandard.metalness ?? 0, 0.18);
+  if ("envMapIntensity" in maybeStandard) maybeStandard.envMapIntensity = 1.2;
+  material.needsUpdate = true;
+}
+
+function usePreparedGlb(url: string, targetSize: number) {
+  const gltf = useGLTF(url);
+  return useMemo(() => {
+    const root = gltf.scene.clone(true);
+    const box = new THREE.Box3().setFromObject(root);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+
+    root.position.sub(center);
+    root.scale.setScalar(targetSize / maxDim);
+    root.traverse((node) => {
+      if (node instanceof THREE.Mesh) {
+        if (Array.isArray(node.material)) node.material.forEach(tuneAssetMaterial);
+        else if (node.material) tuneAssetMaterial(node.material);
+      }
+    });
+    return root;
+  }, [gltf.scene, targetSize]);
+}
+
+// ============ 澶槼绯?(SOLAR) ============
 function Sun({ onClick }: { onClick?: () => void }) {
   const ref = useRef<THREE.Mesh>(null!);
-  // Procedural sun: 不依赖贴图, 纯发光球体 (sun.jpg 此前误用火星车图片)
+  // Procedural sun: 涓嶄緷璧栬创鍥? 绾彂鍏夌悆浣?(sun.jpg 姝ゅ墠璇敤鐏槦杞﹀浘鐗?
   const tex = null;
   useFrame((state) => { if (ref.current) ref.current.rotation.y = state.clock.getElapsedTime() * 0.04; });
   return (
@@ -124,12 +175,65 @@ function Sun({ onClick }: { onClick?: () => void }) {
         <sphereGeometry args={[3.5, 48, 48]} />
         <meshBasicMaterial map={tex || undefined} color={tex ? "#ffffff" : "#fbbf24"} />
       </mesh>
-      <pointLight color="#fbbf24" intensity={3.5} distance={120} decay={1.2} />
+      <pointLight color="#fbbf24" intensity={2.75} distance={112} decay={1.25} />
       <mesh>
         <sphereGeometry args={[4.2, 32, 32]} />
-        <meshBasicMaterial color="#fbbf24" transparent opacity={0.18} side={THREE.BackSide} depthWrite={false} />
+        <meshBasicMaterial color="#fbbf24" transparent opacity={0.14} side={THREE.BackSide} depthWrite={false} />
       </mesh>
     </group>
+  );
+}
+
+function NearFieldParticles({ count = 96, speed = 26, color = "#67e8f9" }: { count?: number; speed?: number; color?: string }) {
+  const ref = useRef<THREE.Points>(null!);
+  const positions = useMemo(() => {
+    const arr = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      arr[i * 3] = (Math.random() - 0.5) * 26;
+      arr[i * 3 + 1] = (Math.random() - 0.5) * 16;
+      arr[i * 3 + 2] = -Math.random() * 120;
+    }
+    return arr;
+  }, [count]);
+
+  useFrame((state, delta) => {
+    if (!ref.current) return;
+    const t = state.clock.getElapsedTime();
+    const pos = ref.current.geometry.attributes.position as THREE.BufferAttribute;
+    const arr = pos.array as Float32Array;
+
+    for (let i = 0; i < count; i++) {
+      const base = i * 3;
+      arr[base] += Math.sin(t * 0.8 + i * 0.37) * delta * 0.7;
+      arr[base + 1] += Math.cos(t * 0.65 + i * 0.21) * delta * 0.45;
+      arr[base + 2] += speed * delta * (0.9 + (i % 5) * 0.06);
+
+      if (arr[base + 2] > 12) {
+        arr[base] = (Math.random() - 0.5) * 26;
+        arr[base + 1] = (Math.random() - 0.5) * 16;
+        arr[base + 2] = -90 - Math.random() * 40;
+      }
+    }
+
+    pos.needsUpdate = true;
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+      </bufferGeometry>
+      <pointsMaterial
+        color={color}
+        size={0.18}
+        sizeAttenuation
+        transparent
+        opacity={0.34}
+        depthWrite={false}
+        toneMapped={false}
+        blending={THREE.AdditiveBlending}
+      />
+    </points>
   );
 }
 
@@ -138,8 +242,7 @@ function Planet({ body, angle, onClick, highlight }: { body: Body; angle: number
   const gRef = useRef<THREE.Group>(null!);
   const ringRef = useRef<THREE.Mesh>(null!);
   const tex = useMemo(() => loadTex(body.texture), [body.texture]);
-  const ringTex = useMemo(() => body.hasRing ? loadTex("/assets/textures/saturn_ring.jpg") : null, [body.hasRing]);
-  // ????: ref ????? (?? prop ????????)
+  const ringTex = useMemo(() => body.hasRing ? loadTex(planetAssetCatalog.saturn.ringTexture || "/assets/textures/saturn_ring.jpg") : null, [body.hasRing]);
   const angRef = useRef<number>(angle);
   const x = Math.cos(angle) * body.distance;
   const z = Math.sin(angle) * body.distance;
@@ -178,13 +281,13 @@ function Planet({ body, angle, onClick, highlight }: { body: Body; angle: number
 function Ship({ targetId }: { targetId: PlanetId | null }) {
   const sRef = useRef<THREE.Group>(null!);
   const flameRef = useRef<THREE.Mesh>(null!);
+  const shipModel = usePreparedGlb(shipAssetCatalog.cruiseModel, 3.4);
   const target = BODIES.find((b) => b.id === targetId);
   useFrame((state, delta) => {
     if (!sRef.current) return;
     const t = state.clock.getElapsedTime();
     if (target && target.distance > 0) {
-      const tx = target.distance;
-      const tz = 0;
+      const { x: tx, z: tz } = getOrbitPosition(target, t);
       const px = sRef.current.position.x;
       const pz = sRef.current.position.z;
       const dx = tx - px, dz = tz - pz;
@@ -207,15 +310,18 @@ function Ship({ targetId }: { targetId: PlanetId | null }) {
   });
   return (
     <group ref={sRef}>
-      <mesh castShadow>
-        <coneGeometry args={[0.25, 0.7, 12]} />
-        <meshStandardMaterial color="#e0e7ff" emissive="#a5b4fc" emissiveIntensity={0.4} metalness={0.8} roughness={0.18} />
+      <group rotation={[0.18, -Math.PI / 2, 0]}>
+        <Clone object={shipModel} />
+      </group>
+      <mesh position={[0, -0.03, -1.48]} rotation={[Math.PI / 2, 0, 0]} ref={flameRef}>
+        <coneGeometry args={[0.28, 1.38, 12]} />
+        <meshBasicMaterial color={shipAssetCatalog.engineGlow} transparent opacity={0.8} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      <mesh position={[0, 0, -0.5]} rotation={[Math.PI / 2, 0, 0]} ref={flameRef}>
-        <coneGeometry args={[0.18, 0.55, 8]} />
-        <meshBasicMaterial color="#22d3ee" transparent opacity={0.85} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+      <mesh position={[0, -0.04, -2.16]} rotation={[Math.PI / 2, 0, 0]}>
+        <coneGeometry args={[0.16, 2.5, 10]} />
+        <meshBasicMaterial color="#38bdf8" transparent opacity={0.18} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      <pointLight color="#22d3ee" intensity={0.6} distance={3.5} decay={1.5} />
+      <pointLight color={shipAssetCatalog.engineGlow} intensity={0.95} distance={5.2} decay={1.4} />
     </group>
   );
 }
@@ -247,13 +353,13 @@ function SolarSystem({ targetId, onPlanetClick }: { targetId: PlanetId | null; o
         <sphereGeometry args={[120, 32, 32]} />
         <meshBasicMaterial color="#02010a" side={THREE.BackSide} depthWrite={false} />
       </mesh>
-      <Stars count={1200} radius={110} />
+      <Stars count={1320} radius={118} />
       {BODIES.filter(b => b.distance > 0).map((b) => (
         <OrbitRing key={"orbit-" + b.id} distance={b.distance} />
       ))}
       <Sun />
       {BODIES.filter((b) => b.id !== "sun").map((b) => {
-        const angle = b.initialAngle ?? Math.random() * Math.PI * 2;
+        const angle = b.initialAngle ?? 0;
         return <Planet key={b.id} body={b} angle={angle} onClick={() => onPlanetClick && onPlanetClick(b.id as string)} highlight={targetId === b.id} />;
       })}
       <Ship targetId={targetId} />
@@ -266,9 +372,8 @@ function SolarCamera({ targetId, mode, startTime }: { targetId: PlanetId | null;
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (mode === "CRUISE") {
-      // 持续旋转: 相机绕中心公转, 行星自然公转
       const a = t * 0.06;
-      const r = 28 + Math.sin(t * 0.2) * 4;
+      const r = 34 + Math.sin(t * 0.2) * 4;
       camera.position.set(Math.cos(a) * r, 12 + Math.sin(t * 0.15) * 3, Math.sin(a) * r);
       camera.lookAt(0, 0, 0);
     } else if (mode === "APPROACH" && targetId) {
@@ -276,13 +381,11 @@ function SolarCamera({ targetId, mode, startTime }: { targetId: PlanetId | null;
       if (target) {
         const elapsed = (Date.now() - startTime) / 1000;
         const k = Math.min(1, elapsed / 2.5);
-        const ang = (target.initialAngle ?? 0);
-        const tx = Math.cos(ang) * target.distance;
-        const tz = Math.sin(ang) * target.distance;
-        const dist = 20 - k * 16;
-        const cx = tx + Math.cos(t * 0.4 + 1) * dist * 0.2;
-        const cy = 4 - k * 3;
-        const cz = tz + Math.sin(t * 0.4 + 1) * dist * 0.2;
+        const { x: tx, z: tz } = getOrbitPosition(target, t);
+        const dist = 22 - k * 14;
+        const cx = tx + Math.cos(t * 0.4 + 1) * dist * 0.24;
+        const cy = 5 - k * 3;
+        const cz = tz + Math.sin(t * 0.4 + 1) * dist * 0.24;
         camera.position.set(cx, cy, cz);
         camera.lookAt(tx, 0, tz);
         const fov = 60 - k * 25;
@@ -294,64 +397,42 @@ function SolarCamera({ targetId, mode, startTime }: { targetId: PlanetId | null;
   return null;
 }
 
-// ============ WARP 飞行关卡 (PLAY) ============
+// ============ WARP 椋炶鍏冲崱 (PLAY) ============
 
-// 行星: 3 阶段动态放大
+// 琛屾槦: 3 闃舵鍔ㄦ€佹斁澶?
 function TargetPlanet({ body, getPlayerZ }: { body: Body; getPlayerZ: () => number }) {
   const groupRef = useRef<THREE.Group>(null!);
   const meshRef = useRef<THREE.Mesh>(null!);
   const atmosRef = useRef<THREE.Mesh>(null!);
+  const glowRef = useRef<THREE.Mesh>(null!);
   const ringRef = useRef<THREE.Mesh>(null!);
   const tex = useMemo(() => loadTex(body.texture), [body.texture]);
+
   useFrame((state) => {
-    if (!groupRef.current) return;
-    const pz = getPlayerZ();
-    let radius, atmosRadius, atmosOpacity, dist, glowOpacity;
-    if (pz > -80) {
-      // WARP: 远处小行星, 4 -> 7
-      const kk = Math.max(0, Math.min(1, -pz / 80));
-      radius = 4 + kk * 3;
-      atmosRadius = radius * 1.08;
-      atmosOpacity = 0.1 + kk * 0.05;
-      dist = -110;
-      glowOpacity = 0.05;
-    } else if (pz > -150) {
-      // APPROACH: 7 -> 28
-      const k = (-pz - 80) / 70;
-      radius = 7 + k * 21;
-      atmosRadius = radius * 1.06;
-      atmosOpacity = 0.15 + k * 0.3;
-      dist = -110 + k * 30;
-      glowOpacity = 0.1 + k * 0.3;
-    } else if (pz > -260) {
-      // ENTRY: 28 -> 60
-      const k = (-pz - 150) / 110;
-      radius = 28 + k * 32;
-      atmosRadius = radius * 1.05;
-      atmosOpacity = 0.45 + k * 0.25;
-      dist = -80 + k * 40;
-      glowOpacity = 0.4 + k * 0.3;
-    } else if (pz > -320) {
-      // ATMOSPHERE: 60 -> 100
-      const k = (-pz - 260) / 60;
-      radius = 60 + k * 40;
-      atmosRadius = radius * 1.03;
-      atmosOpacity = 0.7 + k * 0.2;
-      dist = -40 + k * 30;
-      glowOpacity = 0.7 + k * 0.2;
-    } else {
-      // LANDING: 100 -> 200
-      const k = Math.min(1, (-pz - 320) / 80);
-      radius = 100 + k * 100;
-      atmosRadius = radius * 1.02;
-      atmosOpacity = 0.85 + k * 0.1;
-      dist = -10 + k * 5;
-      glowOpacity = 0.85 + k * 0.1;
-    }
+    if (!groupRef.current || !meshRef.current || !atmosRef.current || !glowRef.current) return;
+
+    const view = computeTargetPlanetState(getPlayerZ(), Boolean(body.hasRing));
+    const planetMaterial = meshRef.current.material as THREE.MeshStandardMaterial;
+    const atmosphereMaterial = atmosRef.current.material as THREE.MeshBasicMaterial;
+    const glowMaterial = glowRef.current.material as THREE.MeshBasicMaterial;
+
+    groupRef.current.position.set(view.offsetX, view.offsetY, view.worldZ);
+    groupRef.current.scale.setScalar(view.groupScale);
+    atmosRef.current.scale.setScalar(view.atmosphereScale);
+    glowRef.current.scale.setScalar(view.glowScale);
+    atmosphereMaterial.opacity = view.atmosphereOpacity;
+    glowMaterial.opacity = view.glowOpacity;
+    planetMaterial.emissiveIntensity = 0.08 + view.glowOpacity * 0.2;
     meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.04;
+
+    if (ringRef.current) {
+      ringRef.current.scale.setScalar(view.ringScale);
+      ringRef.current.rotation.z += 0.0025;
+    }
   });
+
   return (
-    <group ref={groupRef} position={[0, 0, -110]}>
+    <group ref={groupRef} position={[0, 0, -180]}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[4, 48, 48]} />
         <meshStandardMaterial map={tex || undefined} color={tex ? "#ffffff" : (body.glow || "#475569")} emissive={new THREE.Color(body.glow || "#000")} emissiveIntensity={0.08} roughness={0.9} metalness={0} />
@@ -359,6 +440,10 @@ function TargetPlanet({ body, getPlayerZ }: { body: Body; getPlayerZ: () => numb
       <mesh ref={atmosRef}>
         <sphereGeometry args={[4, 32, 32]} />
         <meshBasicMaterial color={body.accent || body.glow || "#22d3ee"} transparent opacity={0.15} side={THREE.BackSide} depthWrite={false} />
+      </mesh>
+      <mesh ref={glowRef}>
+        <sphereGeometry args={[4.4, 32, 32]} />
+        <meshBasicMaterial color={body.glow || body.accent || "#22d3ee"} transparent opacity={0.14} side={THREE.BackSide} depthWrite={false} toneMapped={false} blending={THREE.AdditiveBlending} />
       </mesh>
       {body.hasRing && (
         <mesh ref={ringRef} rotation={[Math.PI / 2.4, 0, 0]}>
@@ -370,10 +455,20 @@ function TargetPlanet({ body, getPlayerZ }: { body: Body; getPlayerZ: () => numb
   );
 }
 
-// 陨石: 自转 + 火焰尾迹 (拖尾)
+// 闄ㄧ煶: 鑷浆 + 鐏劙灏捐抗 (鎷栧熬)
 function Meteor({ position, scale }: { position: [number, number, number]; scale: number }) {
-  const ref = useRef<THREE.Mesh>(null!);
+  const ref = useRef<THREE.Group>(null!);
   const trailRef = useRef<THREE.Mesh>(null!);
+  const asteroidModel = usePreparedGlb(shipAssetCatalog.hazardModel, 1);
+  const baseRotation = useMemo(
+    () =>
+      new THREE.Euler(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
+      ),
+    []
+  );
   useFrame((state) => {
     if (ref.current) {
       ref.current.rotation.x += 0.6 * 0.016;
@@ -386,11 +481,10 @@ function Meteor({ position, scale }: { position: [number, number, number]; scale
   });
   return (
     <group position={position}>
-      <mesh ref={ref} castShadow>
-        <dodecahedronGeometry args={[scale, 0]} />
-        <meshStandardMaterial color="#94a3b8" emissive="#fb923c" emissiveIntensity={0.5} roughness={0.85} metalness={0.2} flatShading />
-      </mesh>
-      {/* 尾迹 (朝向玩家) */}
+      <group ref={ref} rotation={baseRotation} scale={[scale * 1.65, scale * 1.65, scale * 1.65]}>
+        <Clone object={asteroidModel} />
+      </group>
+      {/* 灏捐抗 (鏈濆悜鐜╁) */}
       <mesh ref={trailRef} position={[0, 0, 2]} rotation={[Math.PI / 2, 0, 0]}>
         <coneGeometry args={[scale * 0.4, scale * 2, 6]} />
         <meshBasicMaterial color="#fb923c" transparent opacity={0.35} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
@@ -399,7 +493,7 @@ function Meteor({ position, scale }: { position: [number, number, number]; scale
   );
 }
 
-// 能量球: 多层光环 + 内核旋转 + 接近时发光 + 收集时弹缩
+// 鑳介噺鐞? 澶氬眰鍏夌幆 + 鍐呮牳鏃嬭浆 + 鎺ヨ繎鏃跺彂鍏?+ 鏀堕泦鏃跺脊缂?
 function EnergyOrb({ position, color, getPlayer, onCollect }: { position: [number, number, number]; color: string; getPlayer: () => THREE.Vector3 | null; onCollect: () => void }) {
   const groupRef = useRef<THREE.Group>(null!);
   const halo1Ref = useRef<THREE.Mesh>(null!);
@@ -422,7 +516,7 @@ function EnergyOrb({ position, color, getPlayer, onCollect }: { position: [numbe
       innerRef.current.rotation.x = t * 1.2;
       innerRef.current.rotation.y = t * 0.9;
     }
-    // 玩家距离 < 2.4 时吸入
+    // 鐜╁璺濈 < 2.4 鏃跺惛鍏?
     const p = getPlayer();
     if (p) {
       const dx = p.x - position[0];
@@ -460,11 +554,12 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
   const flameRef = useRef<THREE.Mesh>(null!);
   const flame2Ref = useRef<THREE.Mesh>(null!);
   const trailRef = useRef<THREE.Mesh>(null!);
-  const hitCountRef = useRef(0); // 撞击次数, 触发冲击波动画
+  const shipModel = usePreparedGlb(shipAssetCatalog.cruiseModel, 1.9);
+  const hitCountRef = useRef(0); // 鎾炲嚮娆℃暟, 瑙﹀彂鍐插嚮娉㈠姩鐢?
   const keysRef = useRef<Record<string, boolean>>({});
   const velRef = useRef({ x: 0, y: 0 });
   const lastReportRef = useRef(0);
-  const lastHazardTRef = useRef(0); // 撞击节流, 避免终点前连续叮叮响
+  const lastHazardTRef = useRef(0); // 鎾炲嚮鑺傛祦, 閬垮厤缁堢偣鍓嶈繛缁彯鍙搷
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -481,7 +576,7 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
     if (paused) return;
     const t = state.clock.getElapsedTime();
     const k = keysRef.current;
-    // 4 向 + 阻尼
+    // 4 鍚?+ 闃诲凹
     const accel = 22;
     if (k["a"] || k["arrowleft"]) velRef.current.x -= accel * delta;
     else if (k["d"] || k["arrowright"]) velRef.current.x += accel * delta;
@@ -493,18 +588,18 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
     velRef.current.y = Math.max(-7, Math.min(7, velRef.current.y));
     innerRef.current.position.x = Math.max(-6, Math.min(6, innerRef.current.position.x + velRef.current.x * delta));
     innerRef.current.position.y = Math.max(-4, Math.min(4, innerRef.current.position.y + velRef.current.y * delta));
-    // 高速前进 (z 超过 -300 触发 onLandingStart, 继续飞到 -380 锁住, 避免占用 GPU)
-    if (innerRef.current.position.z > -380) {
+    // 楂橀€熷墠杩?(z 瓒呰繃 -300 瑙﹀彂 onLandingStart, 缁х画椋炲埌 -380 閿佷綇, 閬垮厤鍗犵敤 GPU)
+    if (innerRef.current.position.z > getFlightCompleteZ() - 20) {
       innerRef.current.position.z -= speed * delta;
     } else {
-      innerRef.current.position.z = -380;
+      innerRef.current.position.z = getFlightCompleteZ() - 20;
     }
-    // 倾斜 (roll + pitch)
+    // 鍊炬枩 (roll + pitch)
     const rollTarget = -velRef.current.x * 0.05;
     innerRef.current.rotation.z += (rollTarget - innerRef.current.rotation.z) * 0.15;
     const pitchTarget = velRef.current.y * 0.04;
     innerRef.current.rotation.x += (pitchTarget - innerRef.current.rotation.x) * 0.15;
-    // 火焰 (强度跟速度联动)
+    // 鐏劙 (寮哄害璺熼€熷害鑱斿姩)
     if (flameRef.current) {
       const fs = 1 + Math.sin(t * 24) * 0.3 + speed * 0.05;
       flameRef.current.scale.set(fs, fs * 1.8, fs);
@@ -516,9 +611,9 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
     if (trailRef.current) {
       trailRef.current.scale.z = 1 + Math.sin(t * 12) * 0.15 + speed * 0.05;
     }
-    // 碰撞 (球形, r=0.7) + 终点守卫 + 节流: 避免终点前后连击产生连续叮叮响
+    // 纰版挒 (鐞冨舰, r=0.7) + 缁堢偣瀹堝崼 + 鑺傛祦: 閬垮厤缁堢偣鍓嶅悗杩炲嚮浜х敓杩炵画鍙彯鍝?
     const px = innerRef.current.position;
-    // 已过终点 (z < -200) 不再触发撞击, 防止 onComplete 异步刷新 paused 期间连续命中
+    // 宸茶繃缁堢偣 (z < -200) 涓嶅啀瑙﹀彂鎾炲嚮, 闃叉 onComplete 寮傛鍒锋柊 paused 鏈熼棿杩炵画鍛戒腑
     if (px.z > -400) {
       const hazards = getHazards();
       for (const h of hazards) {
@@ -529,7 +624,7 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
         if (dz < 1.0 && dx < 0.9 && dy < 0.9) {
           h.hit = true;
           hitCountRef.current++;
-          // 撞击节流 220ms: 防止密集 hazard 区快速连击
+          // 鎾炲嚮鑺傛祦 220ms: 闃叉瀵嗛泦 hazard 鍖哄揩閫熻繛鍑?
           if (t - lastHazardTRef.current > 0.22) {
             lastHazardTRef.current = t;
             onHazardHit();
@@ -545,42 +640,54 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
 
   return (
     <group ref={innerRef} position={[0, 0, 0]}>
-      {/* 飞船主体 */}
-      <mesh castShadow>
-        <coneGeometry args={[0.35, 0.9, 12]} />
-        <meshStandardMaterial color="#e0e7ff" emissive="#a5b4fc" emissiveIntensity={0.5} metalness={0.85} roughness={0.15} />
+      <group rotation={[0.22, -Math.PI / 2, 0]} position={[0, -0.08, 0.18]}>
+        <Clone object={shipModel} />
+      </group>
+      <mesh position={[0, -0.06, 0.26]}>
+        <sphereGeometry args={[0.2, 18, 18]} />
+        <meshBasicMaterial color={shipAssetCatalog.cockpitGlow} transparent opacity={0.75} toneMapped={false} />
       </mesh>
-      {/* 主火焰 */}
-      <mesh position={[0, 0, 0.7]} rotation={[-Math.PI / 2, 0, 0]} ref={flameRef}>
-        <coneGeometry args={[0.22, 1.2, 10]} />
+      {/* 涓荤伀鐒?*/}
+      <mesh position={[0, -0.03, 1.1]} rotation={[-Math.PI / 2, 0, 0]} ref={flameRef}>
+        <coneGeometry args={[0.2, 1.5, 10]} />
         <meshBasicMaterial color="#22d3ee" transparent opacity={0.9} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      {/* 侧翼火焰 */}
-      <mesh position={[0.18, 0.15, 0.55]} rotation={[-Math.PI / 2, 0.2, 0]} ref={flame2Ref}>
-        <coneGeometry args={[0.1, 0.7, 6]} />
+      {/* 渚х考鐏劙 */}
+      <mesh position={[0.28, 0.1, 0.82]} rotation={[-Math.PI / 2, 0.25, 0]} ref={flame2Ref}>
+        <coneGeometry args={[0.08, 0.82, 6]} />
         <meshBasicMaterial color="#a855f7" transparent opacity={0.85} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      {/* 长尾迹 */}
-      <mesh position={[0, 0, 1.6]} rotation={[-Math.PI / 2, 0, 0]} ref={trailRef}>
-        <coneGeometry args={[0.12, 2.2, 8]} />
-        <meshBasicMaterial color="#22d3ee" transparent opacity={0.25} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
+      {/* 闀垮熬杩?*/}
+      <mesh position={[0, -0.04, 2]} rotation={[-Math.PI / 2, 0, 0]} ref={trailRef}>
+        <coneGeometry args={[0.12, 2.7, 8]} />
+        <meshBasicMaterial color="#22d3ee" transparent opacity={0.22} toneMapped={false} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
-      <pointLight color="#22d3ee" intensity={0.8} distance={5} decay={1.5} />
+      <pointLight color="#22d3ee" intensity={1.1} distance={6.5} decay={1.35} />
       <Shockwave active={hitCountRef.current} />
     </group>
   );
 });
 
-// 跟随相机: 第三人称 + 撞击抖动, 抖动通过相机偏移实现 (不破坏飞船物理)
+// 璺熼殢鐩告満: 绗笁浜虹О + 鎾炲嚮鎶栧姩, 鎶栧姩閫氳繃鐩告満鍋忕Щ瀹炵幇 (涓嶇牬鍧忛鑸圭墿鐞?
 function FollowCamera({ targetRef, shakeRef, speedRef }: { targetRef: React.MutableRefObject<THREE.Group | null>; shakeRef?: React.MutableRefObject<number>; speedRef?: React.MutableRefObject<number> }) {
   const { camera } = useThree();
-  const baseFov = 65;
+  const lastTargetRef = useRef(new THREE.Vector3());
+  const velocityRef = useRef(new THREE.Vector3());
+  const baseFov = 66;
   useFrame((state, delta) => {
     if (!targetRef.current) return;
     const p = targetRef.current.position;
-    const baseX = p.x * 0.2;
-    const baseY = p.y + 2.2;
-    const baseZ = p.z + 5.5;
+    if (lastTargetRef.current.lengthSq() === 0) lastTargetRef.current.copy(p);
+    velocityRef.current.copy(p).sub(lastTargetRef.current).divideScalar(Math.max(delta, 0.001));
+    lastTargetRef.current.copy(p);
+
+    const depth = THREE.MathUtils.clamp((-p.z) / 380, 0, 1);
+    const speedFactor = speedRef ? THREE.MathUtils.clamp(speedRef.current / 28, 0, 1) : 0;
+    const leadX = THREE.MathUtils.clamp(velocityRef.current.x * 0.08, -1.15, 1.15);
+    const leadY = THREE.MathUtils.clamp(velocityRef.current.y * 0.05, -0.8, 0.8);
+    const baseX = p.x * 0.18 - leadX * 0.85;
+    const baseY = p.y * 0.28 + THREE.MathUtils.lerp(2.85, 1.35, depth) - leadY * 0.25;
+    const baseZ = p.z + THREE.MathUtils.lerp(6.8, 4.15, depth) + Math.sin(state.clock.getElapsedTime() * (1.4 + speedFactor)) * 0.08;
     let sx = 0, sy = 0, sz = 0;
     if (shakeRef && shakeRef.current > 0) {
       const s = shakeRef.current;
@@ -589,9 +696,13 @@ function FollowCamera({ targetRef, shakeRef, speedRef }: { targetRef: React.Muta
       sy = (Math.sin(t * 2.1) + Math.cos(t * 1.3)) * s * 0.4;
       sz = Math.sin(t * 1.9) * s * 0.2;
     }
-    camera.position.lerp(new THREE.Vector3(baseX + sx, baseY + sy, baseZ + sz), 0.14);
-    camera.lookAt(p.x * 0.4, p.y, p.z - 12);
-    const targetFov = baseFov + (speedRef ? Math.min(speedRef.current * 0.4, 18) : 0);
+    camera.position.lerp(new THREE.Vector3(baseX + sx, baseY + sy, baseZ + sz), 0.09 + speedFactor * 0.05);
+    camera.lookAt(
+      p.x * 0.34 + leadX * 0.7,
+      p.y * 0.18 + leadY * 0.45,
+      p.z - THREE.MathUtils.lerp(13, 21, Math.min(1, depth * 0.5 + speedFactor * 0.75))
+    );
+    const targetFov = baseFov + (speedRef ? Math.min(speedRef.current * 0.46, 18) : 0) + depth * 4.5;
     if ("fov" in camera) {
       (camera as THREE.PerspectiveCamera).fov += (targetFov - (camera as THREE.PerspectiveCamera).fov) * 0.06;
       (camera as THREE.PerspectiveCamera).updateProjectionMatrix();
@@ -600,7 +711,7 @@ function FollowCamera({ targetRef, shakeRef, speedRef }: { targetRef: React.Muta
   return null;
 }
 
-// 撞击冲击波: 短暂扩散的发光环, 给玩家强烈"撞到了"反馈
+// 鎾炲嚮鍐插嚮娉? 鐭殏鎵╂暎鐨勫彂鍏夌幆, 缁欑帺瀹跺己鐑?鎾炲埌浜?鍙嶉
 function Shockwave({ active }: { active: number }) {
   const ref = useRef<THREE.Mesh>(null!);
   const matRef = useRef<THREE.MeshBasicMaterial>(null!);
@@ -636,82 +747,13 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition, 
   const completedRef = useRef(false);
   const landingTriggeredRef = useRef(false);
   const cameraShakeRef = useRef(0);
-  const speedRef = useRef(18); // 当前阶段速度, 给相机 FOV 用
+  const speedRef = useRef(18); // 褰撳墠闃舵閫熷害, 缁欑浉鏈?FOV 鐢?
 
-  // 多样化障碍布局: 单陨石 / 陨石对 / 错位三连, 玩家需灵活穿梭
-  const allHazards = useMemo(() => {
-    const arr: { x: number; y: number; z: number; hit: boolean; size: number; lane: number }[] = [];
-    // WARP (z 0 ~ -80) - 7 颗, 间距大, 随机 lane
-    for (let i = 0; i < 7; i++) {
-      const z = -12 - i * 10;
-      const lane = Math.floor(Math.random() * 3);
-      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.4, z, hit: false, size: 0.5 + Math.random() * 0.25, lane });
-    }
-    // APPROACH (z -80 ~ -150) - 9 颗, 有时双陨石并排
-    for (let i = 0; i < 9; i++) {
-      const z = -88 - i * 7;
-      const isPair = i % 3 === 1;
-      if (isPair) {
-        const lanes = [0, 2];
-        for (const lane of lanes) {
-          arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.5, z, hit: false, size: 0.5 + Math.random() * 0.3, lane });
-        }
-      } else {
-        const lane = Math.floor(Math.random() * 3);
-        arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.8, z, hit: false, size: 0.5 + Math.random() * 0.35, lane });
-      }
-    }
-    // ENTRY (z -150 ~ -200) - 5 颗, 间距大, 飞向大气层
-    for (let i = 0; i < 5; i++) {
-      const z = -158 - i * 8;
-      const lane = i % 3;
-      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1, z, hit: false, size: 0.4 + Math.random() * 0.25, lane });
-    }
-        // ATMOSPHERE (z -260 ~ -320) - 6 棰? 澶ф皵灞傛诞绉? 蹇
-    for (let i = 0; i < 6; i++) {
-      const z = -268 - i * 9;
-      const lane = i % 3;
-      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1.4, z, hit: false, size: 0.5 + Math.random() * 0.3, lane });
-    }
-    // LANDING (z -320 ~ -400) - 5 棰? 闂磋窛闀? 钀藉湴鍓
-    for (let i = 0; i < 5; i++) {
-      const z = -330 - i * 14;
-      const lane = i % 3;
-      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 0.8, z, hit: false, size: 0.5 + Math.random() * 0.25, lane });
-    }
-    return arr;
-  }, [planetId]);
+  // 澶氭牱鍖栭殰纰嶅竷灞€: 鍗曢櫒鐭?/ 闄ㄧ煶瀵?/ 閿欎綅涓夎繛, 鐜╁闇€鐏垫椿绌挎
+  const allHazards = useMemo(() => createFlightHazards(planetId), [planetId]);
 
-  // 能量球: 始终在 3 lane 中央, 间隔远
-  const allOrbs = useMemo(() => {
-    const arr: { x: number; y: number; z: number; collected: boolean }[] = [];
-    // WARP
-    for (let i = 0; i < 5; i++) {
-      const lane = (i + 1) % 3;
-      arr.push({ x: -3 + lane * 3, y: 0, z: -8 - i * 14, collected: false });
-    }
-    // APPROACH
-    for (let i = 0; i < 12; i++) {
-      const lane = (i + 1) % 3;
-      arr.push({ x: -3 + lane * 3, y: (Math.random() - 0.5) * 1, z: -88 - i * 5.2, collected: false });
-    }
-    // ENTRY
-    for (let i = 0; i < 6; i++) {
-      const lane = (i + 1) % 3;
-      arr.push({ x: -3 + lane * 3, y: 0, z: -152 - i * 8, collected: false });
-    }
-        // ATMOSPHERE
-    for (let i = 0; i < 5; i++) {
-      const lane = (i + 1) % 3;
-      arr.push({ x: -3 + lane * 3, y: 0, z: -272 - i * 10, collected: false });
-    }
-    // LANDING
-    for (let i = 0; i < 3; i++) {
-      const lane = (i + 1) % 3;
-      arr.push({ x: -3 + lane * 3, y: 0, z: -340 - i * 18, collected: false });
-    }
-    return arr;
-  }, [planetId]);
+  // 鑳介噺鐞? 濮嬬粓鍦?3 lane 涓ぎ, 闂撮殧杩?
+  const allOrbs = useMemo(() => createFlightOrbs(planetId), [planetId]);
 
   const hazardsRef = useRef(allHazards);
   const orbsRef = useRef(allOrbs);
@@ -726,17 +768,12 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition, 
 
   const getPlayer = useCallback(() => playerRef.current ? playerRef.current.position : null, []);
 
-  // 速度按阶段: WARP 18, APPROACH 26, ENTRY 34 (提升穿越感)
+  // 閫熷害鎸夐樁娈? WARP 18, APPROACH 26, ENTRY 34 (鎻愬崌绌胯秺鎰?
   const playerSpeed = useCallback(() => {
-    const z = playerZRef.current;
-    if (z > -100) return 10;
-    if (z > -180) return 14;
-    if (z > -260) return 18;
-    if (z > -320) return 24;
-    return 30;
+    return getDescentSpeed(playerZRef.current);
   }, []);
 
-  // 同步当前速度到 speedRef, 给相机用
+  // 鍚屾褰撳墠閫熷害鍒?speedRef, 缁欑浉鏈虹敤
   useFrame(() => {
     speedRef.current = playerSpeed();
   });
@@ -748,12 +785,12 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition, 
     const p = playerRef.current.position;
     playerZRef.current = p.z;
     onPosition(p.z);
-    if (p.z < -300 && !landingTriggeredRef.current && onLandingStart) { landingTriggeredRef.current = true; onLandingStart(); }
-    if (p.z < -400 && !paused && !completedRef.current) {
+    if (p.z < getLandingTriggerZ() && !landingTriggeredRef.current && onLandingStart) { landingTriggeredRef.current = true; onLandingStart(); }
+    if (p.z < getFlightCompleteZ() && !paused && !completedRef.current) {
       completedRef.current = true;
       onComplete();
     }
-    // 撞击震动: 仅记录强度, 由 FollowCamera 读取后做相机抖动, 不再直接修改飞船坐标 (避免破坏物理)
+    // 鎾炲嚮闇囧姩: 浠呰褰曞己搴? 鐢?FollowCamera 璇诲彇鍚庡仛鐩告満鎶栧姩, 涓嶅啀鐩存帴淇敼椋炶埞鍧愭爣 (閬垮厤鐮村潖鐗╃悊)
     if (shakeRef.current > 0) {
       shakeRef.current = Math.max(0, shakeRef.current - delta * 2.5);
     }
@@ -773,7 +810,8 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition, 
         <meshBasicMaterial color={body.sky || "#02010a"} side={THREE.BackSide} depthWrite={false} />
       </mesh>
       <Stars count={250} radius={80} />
-      <WarpStars count={300} speed={baseSpeed * 6} />
+      <WarpStars count={360} speed={baseSpeed * 7} />
+      <NearFieldParticles count={96} speed={baseSpeed * 1.7} color={accent} />
       <TargetPlanet body={body} getPlayerZ={() => playerZRef.current} />
       {allHazards.map((h, i) => <Meteor key={"h" + i} position={[h.x, h.y, h.z]} scale={h.size} />)}
       {allOrbs.map((o, i) => (
@@ -795,9 +833,20 @@ function Level({ planetId, paused, onCollect, onHazard, onComplete, onPosition, 
   );
 }
 
+useGLTF.preload(shipAssetCatalog.cruiseModel);
+useGLTF.preload(shipAssetCatalog.hazardModel);
+
 export type GameWorldHandle = { setSelected: (id: string | null) => void };
 
-type Scene = "INTRO" | "SOLAR" | "APPROACH" | "PLAY" | "FINISHED";
+type Scene =
+  | "INTRO"
+  | "SOLAR_IDLE"
+  | "MISSION_CONFIRM"
+  | "APPROACH"
+  | "DESCENT"
+  | "SURFACE"
+  | "QUIZ"
+  | "FINISHED";
 
 export const GameWorld = forwardRef<GameWorldHandle, {
   scene: Scene;
@@ -816,13 +865,13 @@ export const GameWorld = forwardRef<GameWorldHandle, {
   return (
     <Canvas dpr={[1, 1.5]} camera={{ position: [0, 2, 6], fov: 65, near: 0.1, far: 500 }} gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }} shadows={false}>
       <Suspense fallback={null}>
-        {(scene === "INTRO" || scene === "SOLAR" || scene === "APPROACH") && (
+        {(scene === "INTRO" || scene === "SOLAR_IDLE" || scene === "MISSION_CONFIRM" || scene === "APPROACH") && (
           <>
             <SolarSystem targetId={targetId} onPlanetClick={onPlanetClick} />
             <SolarCamera targetId={targetId} mode={scene === "APPROACH" ? "APPROACH" : "CRUISE"} startTime={startTime} />
           </>
         )}
-        {scene === "PLAY" && targetId && (
+        {(scene === "DESCENT" || scene === "SURFACE" || scene === "QUIZ") && targetId && (
           <Level
             planetId={targetId}
             paused={paused}
@@ -837,3 +886,4 @@ export const GameWorld = forwardRef<GameWorldHandle, {
     </Canvas>
   );
 }));
+

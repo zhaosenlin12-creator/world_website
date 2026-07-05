@@ -40,12 +40,12 @@ const FILTERS = [
 
 export function ResourcesView() {
   const [filter, setFilter] = useState<string>("all");
-  const cards = zh.resources.cards || [];
 
   const filtered = useMemo(() => {
+    const cards = zh.resources.cards || [];
     if (filter === "all") return cards;
     return cards.filter((c: any) => c.tag.includes(filter));
-  }, [cards, filter]);
+  }, [filter]);
 
   return (
     <div className="relative overflow-hidden">

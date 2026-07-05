@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { zh } from "@/i18n/zh";
 import { ScrollReveal } from "@/components/fx/ScrollReveal";
@@ -88,7 +89,13 @@ export function FeaturedStories() {
               <div className="relative h-full rounded-2xl overflow-hidden border border-white/10 bg-black/30 backdrop-blur-sm transition-all duration-500 group-hover:scale-[1.02] group-hover:border-white/30 group-hover:shadow-[0_0_50px_rgba(168,85,247,0.15)]">
                 <div className="aspect-[16/10] relative overflow-hidden bg-gradient-to-br from-indigo-900/40 to-purple-900/30">
                   {s.hero ? (
-                    <img src={s.hero} alt={s.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <Image
+                      src={s.hero}
+                      alt={s.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
                   ) : (
                     <div className="w-full h-full bg-stars" />
                   )}
