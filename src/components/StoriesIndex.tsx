@@ -2,7 +2,7 @@
 import { zh } from "@/i18n/zh";
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
-import Image from "next/image";
+
 
 interface Article {
   url: string;
@@ -47,8 +47,9 @@ export function StoriesIndex({ initial }: { initial: Article[] }) {
               <motion.article
                 key={a.url}
                 initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: Math.min(i, 12) * 0.04 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                transition={{ duration: 0.35, delay: Math.min(i, 12) * 0.03, ease: "easeOut" }}
                 className="group"
               >
                 <a
@@ -59,13 +60,15 @@ export function StoriesIndex({ initial }: { initial: Article[] }) {
                   style={{ boxShadow: "inset 0 1px 0 " + accent + "22" }}
                 >
                   <div className="aspect-[16/10] relative overflow-hidden">
-                    {a.hero ? (
-                      <Image
+                    {a.hero && a.hero.length > 0 ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
                         src={a.hero}
                         alt={a.title}
-                        fill
-                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        onError={(e) => { e.currentTarget.style.display = "none"; }}
                       />
                     ) : (
                       <div className="w-full h-full relative" style={{ background: "linear-gradient(135deg, " + accent + "33 0%, " + accent + "11 50%, #000 100%)" }}>

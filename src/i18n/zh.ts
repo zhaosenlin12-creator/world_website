@@ -367,15 +367,15 @@ export const zh = {
       { slug: "neptune", tag: "冰巨星", title: "海王星:太阳系最快的风", desc: "风速超过 2100 km/h。第一颗通过数学计算预测发现的行星(1846 年)。", image: "/assets/textures/neptune.webp", accent: "#3b82f6" },
       { slug: "kuiper", tag: "边疆", title: "柯伊伯带:冰封的甜甜圈", desc: "海王星轨道之外的冰质天体区域。冥王星、阋神星、鸟神星都住在这里。", image: "/assets/textures/pluto.jpg", accent: "#a78bfa" },
       { slug: "asteroid-belt", tag: "小行星", title: "小行星带:未完成的行星", desc: "位于火星与木星之间,总质量仅为月球的 4%。木星的引力阻止了它聚合成行星。", image: "/assets/textures/ceres.jpg", accent: "#94a3b8" },
-      { slug: "solar-wind", tag: "太阳", title: "太阳风:不间断的粒子涊流", desc: "太阳每秒向太空喷出 160 亿吨质量。它形成背黯处的弥散结构,为太阳系护出一个巨大的军点。", image: "", accent: "#fbbf24" },
-      { slug: "earth-magnetosphere", tag: "家园", title: "地球磁层:生命的隐型护盾", desc: "地球内核液体动能产生磁层,使涊象带偏转,避免太阳风直接冲击大气。不到它,生命遥远不会出现。", image: "", accent: "#3b82f6" },
-      { slug: "io-volcano", tag: "卫星", title: "伊奥:太阳系最活跃的火山世界", desc: "木星最内侧的大卫星伊奥,受吸源吻刂使其内部日复一日点。表面有数百座活火山,向宇航火嘴高射 400 公里。", image: "", accent: "#fb923c" },
-      { slug: "titan-methane", tag: "卫星", title: "泰坦:含甲烷塑河的冰月世界", desc: "土星的最大卫星泰坦,拥有密度气。表面涵河流动的是液态甲烷,云里下甲烷雨。是地外生命查找的首选。", image: "", accent: "#fde68a" },
-      { slug: "pluto-heart", tag: "边疆", title: "冬玠璃:冬天的心脏", desc: "2015 年 New Horizons 探测器拍下了冬玠璃“心脏”冰原,面积约与泰坦相当。这个“心脏”成为深空探险的谜题之一。", image: "", accent: "#a78bfa" },
-      { slug: "aurora", tag: "起步", title: "极光:太阳风与磁层的谌舞", desc: "高纬度地区的天空中,太阳风与地球磁层交互,释放出绿色与紫色的幽光。冰岛与乌拉以北是最佳观测点。", image: "", accent: "#10b981" },
-      { slug: "interstellar", tag: "宇宙", title: "星际物质:来自另一個星系的使者", desc: "2017 年人类首次检测到来自太阳系外的太空访客 “卢克浪”。它不受太阳引力束缚,学术界重新审视宇宙中的身体。", image: "", accent: "#818cf8" },
-      { slug: "exoplanet-trappist", tag: "系外", title: "TRAPPIST-1:七位地球的彭点", desc: "39 光年外的 TRAPPIST-1 系统拥有 7 颗累体大小接近地球的岩石行星。其中 3 颗位于居住带,是生命查找的重点目标。", image: "", accent: "#22d3ee" },
-      { slug: "milky-way", tag: "银河", title: "银河系:我们的宇宙孭邻", desc: "银河系是一个棗斜上下的棗約星系,包含超过 1000 亿颗息星。中心是超质量黑洞 Sgr A*。太阳纪 2.26 亿年绕其一圈。", image: "", accent: "#a78bfa" }
+      { slug: "solar-wind", tag: "太阳", title: "太阳风:不间断的粒子涊流", desc: "太阳每秒向太空喷出 160 亿吨质量。它形成背黯处的弥散结构,为太阳系护出一个巨大的军点。", image: "/assets/textures/solar-wind.svg", accent: "#fbbf24" },
+      { slug: "earth-magnetosphere", tag: "家园", title: "地球磁层:生命的隐型护盾", desc: "地球内核液体动能产生磁层,使涊象带偏转,避免太阳风直接冲击大气。不到它,生命遥远不会出现。", image: "/assets/textures/earth-magnetosphere.svg", accent: "#3b82f6" },
+      { slug: "io-volcano", tag: "卫星", title: "伊奥:太阳系最活跃的火山世界", desc: "木星最内侧的大卫星伊奥,受吸源吻刂使其内部日复一日点。表面有数百座活火山,向宇航火嘴高射 400 公里。", image: "/assets/textures/io-volcano.svg", accent: "#fb923c" },
+      { slug: "titan-methane", tag: "卫星", title: "泰坦:含甲烷塑河的冰月世界", desc: "土星的最大卫星泰坦,拥有密度气。表面涵河流动的是液态甲烷,云里下甲烷雨。是地外生命查找的首选。", image: "/assets/textures/titan-methane.svg", accent: "#fde68a" },
+      { slug: "pluto-heart", tag: "边疆", title: "冬玠璃:冬天的心脏", desc: "2015 年 New Horizons 探测器拍下了冬玠璃“心脏”冰原,面积约与泰坦相当。这个“心脏”成为深空探险的谜题之一。", image: "/assets/textures/pluto-heart.svg", accent: "#a78bfa" },
+      { slug: "aurora", tag: "起步", title: "极光:太阳风与磁层的谌舞", desc: "高纬度地区的天空中,太阳风与地球磁层交互,释放出绿色与紫色的幽光。冰岛与乌拉以北是最佳观测点。", image: "/assets/textures/aurora.svg", accent: "#10b981" },
+      { slug: "interstellar", tag: "宇宙", title: "星际物质:来自另一個星系的使者", desc: "2017 年人类首次检测到来自太阳系外的太空访客 “卢克浪”。它不受太阳引力束缚,学术界重新审视宇宙中的身体。", image: "/assets/textures/interstellar.svg", accent: "#818cf8" },
+      { slug: "exoplanet-trappist", tag: "系外", title: "TRAPPIST-1:七位地球的彭点", desc: "39 光年外的 TRAPPIST-1 系统拥有 7 颗累体大小接近地球的岩石行星。其中 3 颗位于居住带,是生命查找的重点目标。", image: "/assets/textures/exoplanet-trappist.svg", accent: "#22d3ee" },
+      { slug: "milky-way", tag: "银河", title: "银河系:我们的宇宙孭邻", desc: "银河系是一个棗斜上下的棗約星系,包含超过 1000 亿颗息星。中心是超质量黑洞 Sgr A*。太阳纪 2.26 亿年绕其一圈。", image: "/assets/textures/milky-way.svg", accent: "#a78bfa" }
     ]
   },
   // Footer
