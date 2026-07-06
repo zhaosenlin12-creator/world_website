@@ -1,12 +1,13 @@
-﻿/** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   reactStrictMode: true,
+  trailingSlash: true,
   images: {
     unoptimized: true,
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
-      { protocol: "https", hostname: "**" }
+      { protocol: 'https', hostname: '**' }
     ]
   }
 };

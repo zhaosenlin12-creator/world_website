@@ -1013,52 +1013,16 @@ export default function LandingPlatformer({
             <div className="relative h-full w-full overflow-hidden rounded-[28px] border border-cyan-400/30 bg-[#04030b] shadow-[0_0_60px_rgba(34,211,238,0.12)]">
               <canvas ref={canvasRef} width={VIEW_W} height={VIEW_H} className="h-full w-full" style={{ display: "block" }} />
 
-              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-start justify-between gap-3 p-3 md:p-5">
-                <div className="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 backdrop-blur-md">
-                  <div className="text-[10px] uppercase tracking-[0.35em] text-cyan-300/80">着陆阶段</div>
-                  <div className="mt-1 text-lg font-semibold text-white">{hud.stage}</div>
-                  <div className="mt-1 max-w-[220px] text-xs leading-relaxed text-white/70">{hud.stageDetail}</div>
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex flex-col gap-1.5 px-2 py-1.5 md:flex-row md:items-center md:justify-between md:gap-2 md:px-3 md:py-2">
+                <div className="pointer-events-auto flex items-center gap-1.5 overflow-hidden rounded-full border border-white/10 bg-black/30 px-2.5 py-1 text-[10px] text-white/75 backdrop-blur-md md:gap-2 md:px-3 md:py-1.5 md:text-[11px]">
+                  <span className="font-semibold uppercase tracking-[0.22em] text-cyan-300/85">着陆阶段</span>
+                  <span className="font-semibold text-white">{hud.stage}</span>
                 </div>
-
-                <div className="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-right backdrop-blur-md">
-                  <div className="text-[10px] uppercase tracking-[0.35em] text-fuchsia-300/80">{planetName} 着陆窗</div>
-                  <div className="mt-1 text-2xl font-semibold text-white">{hud.distance} m</div>
-                  <div className="mt-1 text-xs text-white/65">距最终着陆环剩余高度</div>
+                <div className="pointer-events-auto flex items-center gap-1.5 overflow-hidden rounded-full border border-white/10 bg-black/30 px-2.5 py-1 text-[10px] text-white/75 backdrop-blur-md md:gap-2 md:px-3 md:py-1.5 md:text-[11px]">
+                  <span className="font-semibold uppercase tracking-[0.22em] text-fuchsia-300/85">{planetName} 着陆窗</span>
+                  <span className="font-mono font-semibold tabular-nums text-white">{hud.distance} m</span>
                 </div>
               </div>
-
-              <div className="pointer-events-none absolute left-3 right-3 top-[108px] z-10 flex gap-3 md:left-5 md:right-5 md:top-[118px]">
-                <div className="min-w-[160px] rounded-2xl border border-white/10 bg-black/28 px-4 py-3 backdrop-blur-md">
-                  <div className="flex items-center justify-between text-[11px] text-white/65">
-                    <span>姿态稳定度</span>
-                    <span className="font-mono text-cyan-300">{hud.stability}%</span>
-                  </div>
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/8">
-                    <div className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-sky-300 to-emerald-300 transition-all duration-200" style={{ width: `${hud.stability}%` }} />
-                  </div>
-                </div>
-
-                <div className="min-w-[160px] rounded-2xl border border-white/10 bg-black/28 px-4 py-3 backdrop-blur-md">
-                  <div className="flex items-center justify-between text-[11px] text-white/65">
-                    <span>能源样本</span>
-                    <span className="font-mono text-amber-300">{hud.collected} / {hud.total}</span>
-                  </div>
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/8">
-                    <div className="h-full rounded-full bg-gradient-to-r from-amber-300 via-orange-300 to-fuchsia-300 transition-all duration-200" style={{ width: `${(hud.collected / Math.max(1, hud.total)) * 100}%` }} />
-                  </div>
-                </div>
-
-                <div className="hidden flex-1 rounded-2xl border border-white/10 bg-black/28 px-4 py-3 backdrop-blur-md md:block">
-                  <div className="flex items-center justify-between text-[11px] text-white/65">
-                    <span>着陆进度</span>
-                    <span className="font-mono text-white/80">{Math.round(hud.progress * 100)}%</span>
-                  </div>
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/8">
-                    <div className="h-full rounded-full bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 transition-all duration-200" style={{ width: `${hud.progress * 100}%` }} />
-                  </div>
-                </div>
-              </div>
-
               <AnimatePresence>
                 {!!banner && (
                   <motion.div
