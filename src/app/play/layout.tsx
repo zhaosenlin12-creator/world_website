@@ -1,3 +1,3 @@
-﻿export default function PlayLayout({ children }: { children: React.ReactNode }) {
+export default function PlayLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

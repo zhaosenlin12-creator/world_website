@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useRef } from "react";
 
 export function WarpField({ speed = 1, density = 240 }: { speed?: number; density?: number }) {

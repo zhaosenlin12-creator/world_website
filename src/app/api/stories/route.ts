@@ -1,4 +1,4 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { zh } from "@/i18n/zh";
 
 export const dynamic = "force-dynamic";

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { SolarBody, ALL_BODIES } from "@/data/bodies";
 import { useEffect, useState } from "react";

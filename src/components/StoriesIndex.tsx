@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { zh } from "@/i18n/zh";
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";

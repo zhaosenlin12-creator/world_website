@@ -1,4 +1,4 @@
-﻿// Solar system bodies data (NASA-derived public domain facts).
+// Solar system bodies data (NASA-derived public domain facts).
 
 export type BodyKind = "star" | "planet" | "dwarf" | "moon" | "asteroid" | "comet" | "belt";
 

@@ -1,4 +1,4 @@
-﻿import { GameClient } from "@/components/GameClient";
+import { GameClient } from "@/components/GameClient";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

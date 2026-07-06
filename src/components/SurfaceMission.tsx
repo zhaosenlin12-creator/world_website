@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { planetAssetCatalog } from "@/lib/play/assetCatalog";
-import type { PlanetId, SurfaceHazard, SurfaceNode } from "@/lib/play/missionData";
+import type { MissionType, PlanetId, SurfaceHazard, SurfaceNode } from "@/lib/play/missionData";
 import {
   SURFACE_WORLD,
   advanceCheckpoint,
@@ -31,6 +31,7 @@ type Props = {
   accent: string;
   summary: string;
   goal: string;
+  missionType?: MissionType;
   nodes: SurfaceNode[];
   hazards: SurfaceHazard[];
   onCollect: () => void;
@@ -111,6 +112,10 @@ type MissionRuntime = {
     checkpointY: number;
     safeElapsed: number;
     hitFlash: number;
+    shake: number;
+    knockbackX: number;
+    knockbackY: number;
+    knockbackTimer: number;
   };
   nodes: RuntimeNode[];
   hazards: RuntimeHazard[];
@@ -129,6 +134,7 @@ type MissionRuntime = {
   banner: string;
   bannerUntil: number;
   completed: boolean;
+  collectBurst: { x: number; y: number; t: number; color: string } | null;
 };
 
 type HudSnapshot = {
@@ -163,6 +169,7 @@ export default function SurfaceMission({
   accent,
   summary,
   goal,
+  missionType,
   nodes,
   hazards,
   onCollect,
@@ -377,6 +384,7 @@ export default function SurfaceMission({
 
               <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
+              <MissionTypeChip missionType={missionType} accent={accent} planetId={planetId} />
               <div className="pointer-events-none absolute left-4 top-4 z-10 md:left-6 md:top-6">
                 <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-black/28 px-4 py-2 text-sm text-white/88 backdrop-blur-md">
                   <span
@@ -495,6 +503,18 @@ function updateRuntime({
   if (runtime.completed) return;
 
   const player = runtime.player;
+  if (player.shake > 0) player.shake = Math.max(0, player.shake - dt * 60);
+  if (player.knockbackTimer > 0) {
+    player.knockbackTimer = Math.max(0, player.knockbackTimer - dt);
+    player.x += player.knockbackX * 220 * dt;
+    player.y += player.knockbackY * 220 * dt;
+  }
+  if (player.hitFlash > 0) player.hitFlash = Math.max(0, player.hitFlash - dt * 1.2);
+  if (runtime.collectBurst) {
+    runtime.collectBurst.t += dt;
+    if (runtime.collectBurst.t > 0.95) runtime.collectBurst = null;
+  }
+
   const moveX = Number(Boolean(keys.d || keys.arrowright)) - Number(Boolean(keys.a || keys.arrowleft));
   const moveY = Number(Boolean(keys.s || keys.arrowdown)) - Number(Boolean(keys.w || keys.arrowup));
   const moveLength = Math.hypot(moveX, moveY) || 1;
@@ -579,6 +599,15 @@ function updateRuntime({
     onHazard();
     onVoiceCue?.("hazardWarning");
     setMissionBanner(runtime, banner, now, 2400);
+    // Knockback direction: from impact point back toward player
+    const dkx = (player.x - player.checkpointX);
+    const dky = (player.y - player.checkpointY);
+    const dkl = Math.hypot(dkx, dky) || 1;
+    const knockStrength = Math.min(1, integrityLoss / 24);
+    player.knockbackX = dkx / dkl;
+    player.knockbackY = dky / dkl;
+    player.knockbackTimer = 0.32;
+    player.shake = Math.max(player.shake, 14 + knockStrength * 8);
     player.x = player.checkpointX;
     player.y = player.checkpointY;
     player.vx = 0;
@@ -651,6 +680,7 @@ function updateRuntime({
         player.checkpointY = node.y;
         player.safeElapsed = 0;
         setMissionBanner(runtime, `已完成 ${node.label} 扫描，继续前往下一处信标。`, now, 2200);
+        runtime.collectBurst = { x: node.x, y: node.y, t: 0, color: "#22d3ee" };
         onCollect();
         onVoiceCue?.("sample");
       }
@@ -839,6 +869,42 @@ function drawMission({
 
     const camX = runtime.cameraX;
   const camY = runtime.cameraY;
+  // Camera shake (decaying sin offset from impact)
+  const shakeAmp = runtime.player.shake;
+  const shakeDx = shakeAmp > 0 ? Math.sin(time * 64) * shakeAmp : 0;
+  const shakeDy = shakeAmp > 0 ? Math.cos(time * 78) * shakeAmp * 0.6 : 0;
+  const camXeff = camX + shakeDx;
+  const camYeff = camY + shakeDy;
+  // === Hazard proximity pulse (red ring around hazards within 80px) ===
+  runtime.hazards.forEach((hazard) => {
+    const hScreen = worldToScreen(hazard.x, hazard.y, camX, camY);
+    const dist = distance(runtime.player.x, runtime.player.y, hazard.x, hazard.y);
+    if (dist < hazard.radius + 90) {
+      const warnIntensity = 1 - Math.max(0, (dist - hazard.radius) / 90);
+      const pulse = 0.5 + Math.sin(time * 9) * 0.4;
+      ctx.strokeStyle = "rgba(248,113,113," + (0.5 * warnIntensity * pulse) + ")";
+      ctx.lineWidth = 1.5 + warnIntensity * 1.5;
+      ctx.beginPath();
+      ctx.arc(hScreen.x, hScreen.y, hazard.radius + 4, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  });
+  runtime.emitters.forEach((emitter) => {
+    if (emitter.activeFrom > runtime.nodes.filter(n => n.collected).length) return;
+    const eScreen = worldToScreen(emitter.x, emitter.y, camX, camY);
+    const dist = distance(runtime.player.x, runtime.player.y, emitter.x, emitter.y);
+    if (dist < emitter.radius + 110) {
+      const warnIntensity = 1 - Math.max(0, (dist - emitter.radius) / 110);
+      const pulse = 0.5 + Math.sin(time * 12) * 0.4;
+      ctx.strokeStyle = "rgba(244,114,182," + (0.55 * warnIntensity * pulse) + ")";
+      ctx.lineWidth = 1.5 + warnIntensity * 2;
+      ctx.beginPath();
+      ctx.arc(eScreen.x, eScreen.y, emitter.radius + 4, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  });
+
+
 
   if (texture) {
     ctx.save();
@@ -1113,11 +1179,65 @@ function drawMission({
     ctx.fill();
   });
 
+  // === Collect burst particles (8-cardinal radial spray) ===
+  if (runtime.collectBurst) {
+    const cb = runtime.collectBurst;
+    const cbScreen = worldToScreen(cb.x, cb.y, camX, camY);
+    const elapsed = cb.t;
+    const burstAlpha = Math.max(0, 1 - elapsed / 0.95);
+    const burstRadius = 14 + elapsed * 70;
+    if (burstAlpha > 0) {
+      // Outer expanding ring
+      ctx.strokeStyle = hexToRgba(cb.color, 0.85 * burstAlpha);
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.arc(cbScreen.x, cbScreen.y, burstRadius, 0, Math.PI * 2);
+      ctx.stroke();
+      // Inner flash
+      const flashGrad = ctx.createRadialGradient(cbScreen.x, cbScreen.y, 0, cbScreen.x, cbScreen.y, 22);
+      flashGrad.addColorStop(0, hexToRgba("#ffffff", 0.95 * burstAlpha));
+      flashGrad.addColorStop(0.4, hexToRgba(cb.color, 0.6 * burstAlpha));
+      flashGrad.addColorStop(1, hexToRgba(cb.color, 0));
+      ctx.fillStyle = flashGrad;
+      ctx.beginPath();
+      ctx.arc(cbScreen.x, cbScreen.y, 26, 0, Math.PI * 2);
+      ctx.fill();
+      // 8 cardinal sparks
+      for (let k = 0; k < 8; k++) {
+        const ang = (k / 8) * Math.PI * 2 + elapsed * 0.5;
+        const sparkDist = 8 + elapsed * 80;
+        const sx = cbScreen.x + Math.cos(ang) * sparkDist;
+        const sy = cbScreen.y + Math.sin(ang) * sparkDist;
+        const sparkAlpha = Math.max(0, 1 - elapsed / 0.7) * 0.9;
+        ctx.fillStyle = hexToRgba(k % 2 === 0 ? "#ffffff" : cb.color, sparkAlpha);
+        ctx.beginPath();
+        ctx.arc(sx, sy, 1.5 + (1 - elapsed) * 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
   const playerScreen = worldToScreen(runtime.player.x, runtime.player.y, camX, camY);
+  const playerScreenX = playerScreen.x + shakeDx;
+  const playerScreenY = playerScreen.y + shakeDy;
+  // === Boost trail (trailing cyan exhaust) ===
+  if (runtime.player.boostTimer > 0) {
+    for (let t = 1; t <= 5; t++) {
+      const trailAlpha = 0.7 - t * 0.13;
+      if (trailAlpha <= 0) break;
+      const tx = playerScreenX - Math.cos(runtime.player.heading) * t * 6;
+      const ty = playerScreenY - Math.sin(runtime.player.heading) * t * 6;
+      ctx.fillStyle = hexToRgba(accent, trailAlpha);
+      ctx.beginPath();
+      ctx.arc(tx, ty, 4 - t * 0.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
   drawPlayer(
     ctx,
-    playerScreen.x,
-    playerScreen.y,
+    playerScreenX,
+    playerScreenY,
     runtime.player.heading,
     runtime.player.boostTimer,
     runtime.player.hitFlash,
@@ -1133,6 +1253,17 @@ function drawMission({
     ctx.arc(px, py, particle.size, 0, Math.PI * 2);
     ctx.fill();
   });
+
+  // === Hit flash red vignette ===
+  if (runtime.player.hitFlash > 0.05) {
+    const flashAlpha = runtime.player.hitFlash * 0.55;
+    const flashGrad = ctx.createRadialGradient(width * 0.5, height * 0.5, width * 0.18, width * 0.5, height * 0.5, width * 0.85);
+    flashGrad.addColorStop(0, "rgba(255,0,0,0)");
+    flashGrad.addColorStop(0.6, "rgba(248,113,113," + (flashAlpha * 0.4) + ")");
+    flashGrad.addColorStop(1, "rgba(190,18,60," + flashAlpha + ")");
+    ctx.fillStyle = flashGrad;
+    ctx.fillRect(0, 0, width, height);
+  }
 
   const vignette = ctx.createRadialGradient(width * 0.5, height * 0.5, width * 0.16, width * 0.5, height * 0.5, width * 0.78);
   vignette.addColorStop(0, "rgba(0,0,0,0)");
@@ -1155,67 +1286,205 @@ function drawPlayer(
   ctx.translate(x, y);
   ctx.rotate(heading + Math.PI / 2);
 
-  ctx.fillStyle = hitFlash > 0 ? "rgba(251,113,133,0.28)" : `${hexToRgba(accent, 0.18)}`;
+  // 1) Shield aura
+  const shieldPulse = 30 + Math.sin(time * 4) * 2;
+  const shieldGrad = ctx.createRadialGradient(0, 0, 4, 0, 0, shieldPulse);
+  shieldGrad.addColorStop(0, hexToRgba(accent, 0.0));
+  shieldGrad.addColorStop(0.72, hexToRgba(accent, hitFlash > 0 ? 0.45 : 0.18));
+  shieldGrad.addColorStop(1, hexToRgba(accent, 0));
+  ctx.fillStyle = shieldGrad;
   ctx.beginPath();
-  ctx.arc(0, 0, 34 + Math.sin(time * 4) * 2, 0, Math.PI * 2);
+  ctx.arc(0, 0, shieldPulse, 0, Math.PI * 2);
   ctx.fill();
 
-  const hull = ctx.createLinearGradient(0, -26, 0, 24);
-  hull.addColorStop(0, "rgba(226,232,240,0.96)");
-  hull.addColorStop(0.42, "rgba(51,65,85,0.96)");
-  hull.addColorStop(1, "rgba(8,15,28,0.96)");
-  ctx.fillStyle = hull;
+  // 2) Solar wing LEFT (parallel rib panel)
+  const wingGradL = ctx.createLinearGradient(-26, -6, -26, 14);
+  wingGradL.addColorStop(0, "rgba(30,58,138,0.94)");
+  wingGradL.addColorStop(1, "rgba(11,28,77,0.94)");
+  ctx.fillStyle = wingGradL;
+  roundRect(ctx, -28, -5, 26, 11, 2);
+  ctx.fill();
+  // wing rib highlights
+  ctx.fillStyle = "rgba(125,211,252,0.6)";
+  for (let i = 0; i < 3; i++) {
+    ctx.fillRect(-27 + i * 8, -4, 4, 9);
+  }
+  // wing RED LED tip
+  ctx.fillStyle = "#fb7185";
   ctx.beginPath();
-  ctx.moveTo(0, -24);
-  ctx.lineTo(14, -8);
-  ctx.lineTo(18, 14);
-  ctx.lineTo(8, 20);
-  ctx.lineTo(-8, 20);
-  ctx.lineTo(-18, 14);
-  ctx.lineTo(-14, -8);
+  ctx.arc(-26, 0, 2, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 3) Solar wing RIGHT (mirror)
+  const wingGradR = ctx.createLinearGradient(26, -6, 26, 14);
+  wingGradR.addColorStop(0, "rgba(30,58,138,0.94)");
+  wingGradR.addColorStop(1, "rgba(11,28,77,0.94)");
+  ctx.fillStyle = wingGradR;
+  roundRect(ctx, 2, -5, 26, 11, 2);
+  ctx.fill();
+  ctx.fillStyle = "rgba(125,211,252,0.6)";
+  for (let i = 0; i < 3; i++) {
+    ctx.fillRect(4 + i * 8, -4, 4, 9);
+  }
+  ctx.fillStyle = "#fb7185";
+  ctx.beginPath();
+  ctx.arc(26, 0, 2, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 4) Main thruster (rear cylinder - drawn first since behind hull)
+  ctx.save();
+  ctx.translate(0, 14);
+  ctx.fillStyle = "#cbd5e1";
+  roundRect(ctx, -10, -2, 20, 8, 2);
+  ctx.fill();
+  ctx.fillStyle = hexToRgba(accent, 0.8);
+  roundRect(ctx, -10, 0, 20, 3, 1);
+  ctx.fill();
+  // thruster torus ring
+  ctx.strokeStyle = hexToRgba(accent, 0.95);
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.ellipse(0, 1, 9, 3, 0, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+
+  // 5) Hull (main body - hexagonal)
+  const hullGrad = ctx.createLinearGradient(0, -22, 0, 14);
+  hullGrad.addColorStop(0, "rgba(248,250,252,0.98)");
+  hullGrad.addColorStop(0.35, "rgba(148,163,184,0.96)");
+  hullGrad.addColorStop(1, "rgba(30,41,59,0.96)");
+  ctx.fillStyle = hullGrad;
+  ctx.beginPath();
+  ctx.moveTo(0, -22);
+  ctx.lineTo(11, -10);
+  ctx.lineTo(13, 6);
+  ctx.lineTo(6, 14);
+  ctx.lineTo(-6, 14);
+  ctx.lineTo(-13, 6);
+  ctx.lineTo(-11, -10);
   ctx.closePath();
   ctx.fill();
-
-  ctx.fillStyle = "rgba(125,211,252,0.95)";
-  ctx.beginPath();
-  ctx.ellipse(0, -6, 6, 11, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = "rgba(148,163,184,0.92)";
-  ctx.beginPath();
-  ctx.moveTo(-22, 10);
-  ctx.lineTo(-7, 2);
-  ctx.lineTo(-3, 16);
-  ctx.lineTo(-16, 18);
-  ctx.closePath();
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.moveTo(22, 10);
-  ctx.lineTo(7, 2);
-  ctx.lineTo(3, 16);
-  ctx.lineTo(16, 18);
-  ctx.closePath();
-  ctx.fill();
-
-  ctx.strokeStyle = hitFlash > 0 ? "rgba(251,113,133,0.94)" : "rgba(226,232,240,0.82)";
-  ctx.lineWidth = 1.4;
+  // hull edge highlight
+  ctx.strokeStyle = "rgba(255,255,255,0.55)";
+  ctx.lineWidth = 0.8;
   ctx.stroke();
 
-  const thrusterLength = boostTimer > 0 ? 32 : 18 + Math.sin(time * 15) * 3;
-  const thrusterGradient = ctx.createLinearGradient(0, 18, 0, 18 + thrusterLength);
-  thrusterGradient.addColorStop(0, "rgba(255,255,255,0.96)");
-  thrusterGradient.addColorStop(0.3, `${hexToRgba(accent, 0.94)}`);
-  thrusterGradient.addColorStop(1, "rgba(34,211,238,0)");
-  ctx.fillStyle = thrusterGradient;
+  // 6) Cockpit dome (glass canopy)
+  const cockpitGrad = ctx.createRadialGradient(0, -10, 1, 0, -10, 8);
+  cockpitGrad.addColorStop(0, "rgba(186,230,253,0.98)");
+  cockpitGrad.addColorStop(0.5, "rgba(125,211,252,0.92)");
+  cockpitGrad.addColorStop(1, "rgba(29,78,216,0.85)");
+  ctx.fillStyle = cockpitGrad;
   ctx.beginPath();
-  ctx.moveTo(-6, 16);
-  ctx.lineTo(6, 16);
-  ctx.lineTo(0, 18 + thrusterLength);
+  ctx.ellipse(0, -10, 5, 8, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // cockpit reflection
+  ctx.fillStyle = "rgba(255,255,255,0.55)";
+  ctx.beginPath();
+  ctx.ellipse(-1, -12, 1.5, 2.5, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 7) Nose accent stripe (front)
+  ctx.strokeStyle = hexToRgba(accent, 0.92);
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(0, -22);
+  ctx.lineTo(0, -2);
+  ctx.stroke();
+
+  // 8) Hull vent stripes (cyan accent strips)
+  ctx.fillStyle = hexToRgba(accent, 0.7);
+  ctx.fillRect(-2, -4, 4, 1.2);
+  ctx.fillRect(-2, 2, 4, 1.2);
+  ctx.fillRect(-2, 8, 4, 1.2);
+
+  // 9) Damage / hit flash overlay
+  if (hitFlash > 0) {
+    ctx.fillStyle = "rgba(251,113,133," + (0.4 + hitFlash * 0.5) + ")";
+    ctx.beginPath();
+    ctx.arc(0, 0, 30, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // 10) Thruster flame (rear)
+  const thrusterLength = boostTimer > 0 ? 38 : 22 + Math.sin(time * 15) * 3;
+  const flameGrad = ctx.createLinearGradient(0, 16, 0, 16 + thrusterLength);
+  flameGrad.addColorStop(0, "rgba(255,255,255,0.98)");
+  flameGrad.addColorStop(0.25, "rgba(186,230,253,0.95)");
+  flameGrad.addColorStop(0.55, hexToRgba(accent, 0.9));
+  flameGrad.addColorStop(1, hexToRgba(accent, 0));
+  ctx.fillStyle = flameGrad;
+  ctx.beginPath();
+  ctx.moveTo(-7, 16);
+  ctx.lineTo(7, 16);
+  ctx.lineTo(0, 16 + thrusterLength);
   ctx.closePath();
   ctx.fill();
 
+  // 11) Side RCS jets when boosting
+  if (boostTimer > 0) {
+    ctx.fillStyle = hexToRgba("#a855f7", 0.5);
+    ctx.beginPath();
+    ctx.moveTo(-13, 8);
+    ctx.lineTo(-22, 12);
+    ctx.lineTo(-13, 13);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(13, 8);
+    ctx.lineTo(22, 12);
+    ctx.lineTo(13, 13);
+    ctx.closePath();
+    ctx.fill();
+  }
+
   ctx.restore();
+}
+
+
+type MissionTypeChipProps = {
+  missionType?: MissionType;
+  accent: string;
+  planetId: PlanetId;
+};
+
+const MISSION_TYPE_META: Record<MissionType, { label: string; subtitle: string; icon: string }> = {
+  thermalSurvey:     { label: "热成像勘测",   subtitle: "Thermal Survey",     icon: "🔥" },
+  atmosphericDrill:  { label: "酸云垂直钻探", subtitle: "Atmospheric Drill",  icon: "☁️" },
+  orbitalScan:       { label: "极地卫星扫描", subtitle: "Orbital Scan",       icon: "🛰️" },
+  dustCrossing:      { label: "沙尘带穿越",   subtitle: "Dust Crossing",      icon: "🌪️" },
+  gravitySlingshot:  { label: "引力弹弓绕飞", subtitle: "Gravity Slingshot",  icon: "🌌" },
+  ringTraversal:     { label: "环缝穿越",     subtitle: "Ring Traversal",     icon: "💫" },
+  rollLanding:       { label: "倾轴滚降着陆", subtitle: "Roll Landing",       icon: "🌀" },
+  windRun:           { label: "高速风带竞速", subtitle: "Wind Run",           icon: "💨" },
+};
+
+function MissionTypeChip({ missionType, accent, planetId }: MissionTypeChipProps) {
+  if (!missionType) return null;
+  const meta = MISSION_TYPE_META[missionType];
+  return (
+    <div className="pointer-events-none absolute right-4 top-4 z-10 md:right-6 md:top-6">
+      <div
+        className="rounded-full border px-4 py-2 backdrop-blur-md"
+        style={{
+          borderColor: accent + "55",
+          background: "rgba(4, 8, 18, 0.55)",
+          boxShadow: "0 0 18px " + accent + "33",
+        }}
+      >
+        <div className="flex items-center gap-2 text-[11px]">
+          <span
+            className="inline-block h-2 w-2 rounded-full"
+            style={{ background: accent, boxShadow: "0 0 8px " + accent }}
+          />
+          <span className="font-mono text-[10px] uppercase tracking-[0.28em]" style={{ color: accent }}>
+            {meta.subtitle}
+          </span>
+          <span className="text-white/72">{meta.label}</span>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function drawGrid(
@@ -1265,6 +1534,10 @@ function createRuntime(nodes: SurfaceNode[], hazards: SurfaceHazard[], startedAt
       checkpointY: START_Y,
       safeElapsed: 0,
       hitFlash: 0,
+      shake: 0,
+      knockbackX: 0,
+      knockbackY: 0,
+      knockbackTimer: 0,
     },
     nodes: runtimeNodes,
     hazards: runtimeHazards,
@@ -1280,6 +1553,7 @@ function createRuntime(nodes: SurfaceNode[], hazards: SurfaceHazard[], startedAt
     },
     extractionProgress: 0,
     lastHitAt: 0,
+    collectBurst: null,
     banner: "地表扫描启动，先锁定第一处信标。",
     bannerUntil: startedAt + 2400,
     completed: false,
@@ -1367,28 +1641,21 @@ function createDecor(seedKey: string): MissionDecor {
       height: 18 + rand() * 42,
       alpha: 0.02 + rand() * 0.04,
     })),
-    craters: Array.from({ length: 22 }, () => ({
+    craters: Array.from({ length: 6 }, () => ({
       x: 80 + rand() * (WORLD_WIDTH - 160),
       y: 80 + rand() * (WORLD_HEIGHT - 160),
       radius: 38 + rand() * 92,
-      alpha: 0.08 + rand() * 0.08,
-      depth: 0.18 + rand() * 0.18,
+      alpha: 0.05 + rand() * 0.05, depth: 0.08 + rand() * 0.08,
     })),
-    ridges: Array.from({ length: 14 }, () => ({
+    ridges: Array.from({ length: 4 }, () => ({
       x: 120 + rand() * (WORLD_WIDTH - 240),
       y: 120 + rand() * (WORLD_HEIGHT - 240),
-      width: 120 + rand() * 260,
-      height: 24 + rand() * 44,
-      rotation: rand() * Math.PI,
-      alpha: 0.12 + rand() * 0.08,
+      width: 80 + rand() * 140, height: 12 + rand() * 22, rotation: rand() * Math.PI, alpha: 0.05 + rand() * 0.04,
     })),
-    debris: Array.from({ length: 20 }, () => ({
+    debris: Array.from({ length: 6 }, () => ({
       x: 100 + rand() * (WORLD_WIDTH - 200),
       y: 100 + rand() * (WORLD_HEIGHT - 200),
-      width: 26 + rand() * 56,
-      height: 8 + rand() * 18,
-      rotation: rand() * Math.PI,
-      alpha: 0.12 + rand() * 0.12,
+      width: 14 + rand() * 24, height: 4 + rand() * 8, rotation: rand() * Math.PI, alpha: 0.06 + rand() * 0.06,
     })),
     particles: Array.from({ length: 48 }, () => ({
       x: rand() * 1200,

@@ -508,21 +508,21 @@ export default function LandingPlatformer({
       platformId: "dock"
     };
     checkpointRef.current = { x: 340, y: 220, platformId: "dock" };
-    starsRef.current = Array.from({ length: 140 }, () => ({
+    starsRef.current = Array.from({ length: 90 }, () => ({
       x: rand(0, VIEW_W),
       y: rand(0, VIEW_H),
       size: rand(0.8, 2.8),
       alpha: rand(0.16, 0.92),
       speed: rand(0.4, 1.4)
     }));
-    driftsRef.current = Array.from({ length: 36 }, () => ({
+    driftsRef.current = Array.from({ length: 18 }, () => ({
       x: rand(-120, VIEW_W + 120),
       y: rand(-120, VIEW_H + 120),
       len: rand(70, 190),
       alpha: rand(0.08, 0.24),
       speed: rand(1, 2.8)
     }));
-    skyDebrisRef.current = Array.from({ length: 20 }, () => ({
+    skyDebrisRef.current = Array.from({ length: 9 }, () => ({
       x: rand(-140, VIEW_W + 140),
       y: rand(-120, VIEW_H + 220),
       size: rand(20, 68),

@@ -1,4 +1,4 @@
-﻿// 中文语言包
+// 中文语言包
 export const zh = {
   // Site
   siteName: "宇宙探索者",

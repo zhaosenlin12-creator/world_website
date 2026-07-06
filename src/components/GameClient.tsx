@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -660,6 +660,7 @@ export function GameClient() {
         accent={body?.accent || body?.glow || "#22d3ee"}
         summary={mission.summary}
         goal={mission.surfaceGoal}
+        missionType={mission.environment.missionType}
         nodes={mission.surfaceNodes}
         hazards={mission.surfaceHazards}
         onCollect={handleSurfaceCollect}

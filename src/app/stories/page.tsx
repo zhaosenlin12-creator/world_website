@@ -1,4 +1,4 @@
-﻿import { StoriesIndex } from "@/components/StoriesIndex";
+import { StoriesIndex } from "@/components/StoriesIndex";
 import { allStories } from "@/lib/articles";
 import { zh } from "@/i18n/zh";
 import type { Metadata } from "next";
