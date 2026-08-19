@@ -76,7 +76,7 @@ function FocusRig({
 }) {
   const { camera } = useThree();
   const lookAtRef = useRef(new THREE.Vector3(0, 0, 0));
-  const desiredCamera = useRef(new THREE.Vector3(0, 28, 165));
+  const desiredCamera = useRef(new THREE.Vector3(0, 35, 240));
 
   useFrame((_, delta) => {
     const selectedPosition = selectedSlug ? positionsRef.current[selectedSlug] : null;
@@ -85,7 +85,7 @@ function FocusRig({
       desiredCamera.current.copy(selectedPosition).add(offset);
       lookAtRef.current.lerp(selectedPosition, 1 - Math.pow(0.08, delta));
     } else {
-      desiredCamera.current.lerp(new THREE.Vector3(0, 28, 165), 1 - Math.pow(0.08, delta));
+      desiredCamera.current.lerp(new THREE.Vector3(0, 35, 240), 1 - Math.pow(0.08, delta));
       lookAtRef.current.lerp(new THREE.Vector3(0, 0, 0), 1 - Math.pow(0.08, delta));
     }
     camera.position.lerp(desiredCamera.current, 1 - Math.pow(0.12, delta));
@@ -241,7 +241,7 @@ export function SpacecraftFleet({ models, selectedSlug, onSelect }: Props) {
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: [0, 28, 165], fov: 55, near: 0.1, far: 800 }}
+      camera={{ position: [0, 35, 240], fov: 60, near: 0.1, far: 900 }}
       gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
       onPointerMissed={() => {
         document.body.style.cursor = "default";
