@@ -1,6 +1,7 @@
 "use client";
 import { zh } from "@/i18n/zh";
 import { motion } from "framer-motion";
+import { publicUrl } from "@/lib/assetPath";
 import { useState, useMemo } from "react";
 
 
@@ -63,7 +64,7 @@ export function StoriesIndex({ initial }: { initial: Article[] }) {
                     {a.hero && a.hero.length > 0 ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        src={a.hero}
+                        src={publicUrl(a.hero)}
                         alt={a.title}
                         loading="lazy"
                         decoding="async"

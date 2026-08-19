@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { publicUrl } from "@/lib/assetPath";
 import { useEffect, useState } from "react";
 import featuredData from "@/data/featuredStories.json";
 import { zh } from "@/i18n/zh";
@@ -89,7 +90,7 @@ export function FeaturedStories() {
                 <div className="aspect-[16/10] relative overflow-hidden bg-gradient-to-br from-indigo-900/40 to-purple-900/30">
                   {s.hero ? (
                     <Image
-                      src={s.hero}
+                      src={publicUrl(s.hero)}
                       alt={s.title}
                       fill
                       sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
