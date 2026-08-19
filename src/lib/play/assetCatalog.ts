@@ -1,4 +1,5 @@
 import type { PlanetId } from "./missionData";
+import { publicUrl } from "@/lib/assetPath";
 
 type PlanetAsset = {
   texture: string;
@@ -9,56 +10,56 @@ type PlanetAsset = {
 
 export const planetAssetCatalog: Record<PlanetId | "sun", PlanetAsset> = {
   sun: {
-    texture: "/assets/textures/sun.jpg",
+    texture: publicUrl("/assets/textures/sun.jpg"),
     distance: 0,
     initialAngle: 0,
   },
   mercury: {
-    texture: "/assets/textures/mercury.jpg",
+    texture: publicUrl("/assets/textures/mercury.jpg"),
     distance: 7,
     initialAngle: 0.45,
   },
   venus: {
-    texture: "/assets/textures/venus.jpg",
+    texture: publicUrl("/assets/textures/venus.jpg"),
     distance: 10.6,
     initialAngle: 1.25,
   },
   earth: {
-    texture: "/assets/textures/earth.jpg",
+    texture: publicUrl("/assets/textures/earth.jpg"),
     distance: 14.4,
     initialAngle: 2.05,
   },
   mars: {
-    texture: "/assets/textures/mars.jpg",
+    texture: publicUrl("/assets/textures/mars.jpg"),
     distance: 18.8,
     initialAngle: 2.78,
   },
   jupiter: {
-    texture: "/assets/textures/jupiter.jpg",
+    texture: publicUrl("/assets/textures/jupiter.jpg"),
     distance: 24.8,
     initialAngle: 3.62,
   },
   saturn: {
-    texture: "/assets/textures/saturn.jpg",
+    texture: publicUrl("/assets/textures/saturn.jpg"),
     distance: 31.4,
     initialAngle: 4.4,
-    ringTexture: "/assets/textures/saturn_ring.jpg",
+    ringTexture: publicUrl("/assets/textures/saturn_ring.jpg"),
   },
   uranus: {
-    texture: "/assets/textures/uranus.jpg",
+    texture: publicUrl("/assets/textures/uranus.jpg"),
     distance: 37.8,
     initialAngle: 5.12,
   },
   neptune: {
-    texture: "/assets/textures/neptune.webp",
+    texture: publicUrl("/assets/textures/neptune.webp"),
     distance: 44.2,
     initialAngle: 5.86,
   },
 };
 
 export const shipAssetCatalog = {
-  cruiseModel: "/assets/models/nasa/voyager-probe-b/voyager-probe-b.glb",
-  hazardModel: "/assets/models/nasa/1999-rq36-asteroid/rq36-asteroid.glb",
+  cruiseModel: publicUrl("/assets/models/nasa/voyager-probe-b/voyager-probe-b.glb"),
+  hazardModel: publicUrl("/assets/models/nasa/1999-rq36-asteroid/rq36-asteroid.glb"),
   hullBaseColor: "#e2e8f0",
   hullAccentColor: "#38bdf8",
   hullShadowColor: "#334155",

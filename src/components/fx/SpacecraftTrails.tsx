@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, Suspense } from "react";
 import { useGLTF } from "@react-three/drei";
+import { publicUrl } from "@/lib/assetPath";
 import { useFrame } from "@react-three/fiber";
 import { ErrorBoundary } from "@/components/fx/ErrorBoundary";
 import * as THREE from "three";
@@ -9,8 +10,8 @@ import * as THREE from "three";
 // 与主场景隔离, 失败时不影响行星/太阳/星场渲染
 
 function SpacecraftModels() {
-  const voyager = useGLTF("/assets/models/nasa/voyager-probe-b/voyager-probe-b.glb");
-  const rq36 = useGLTF("/assets/models/nasa/1999-rq36-asteroid/rq36-asteroid.glb");
+  const voyager = useGLTF(publicUrl("/assets/models/nasa/voyager-probe-b/voyager-probe-b.glb"));
+  const rq36 = useGLTF(publicUrl("/assets/models/nasa/1999-rq36-asteroid/rq36-asteroid.glb"));
   const ref = useRef<THREE.Group>(null!);
   useFrame((_, delta) => {
     if (!ref.current) return;

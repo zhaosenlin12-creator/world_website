@@ -1,4 +1,5 @@
 "use client";
+import { publicUrl } from "@/lib/assetPath";
 import { Canvas, useFrame, useThree, ThreeEvent } from "@react-three/fiber";
 import { Stars, OrbitControls, Html, useTexture } from "@react-three/drei";
 import { Suspense, useMemo, useRef, useState, useEffect, useLayoutEffect, useCallback, MutableRefObject } from "react";
@@ -15,20 +16,20 @@ interface SceneProps {
 }
 
 const TEXTURES: Record<string, string> = {
-  sun:     "/assets/textures/sun.jpg",
-  mercury: "/assets/textures/mercury.jpg",
-  venus:   "/assets/textures/venus.jpg",
-  earth:   "/assets/textures/earth.jpg",
-  mars:    "/assets/textures/mars.jpg",
-  jupiter: "/assets/textures/jupiter.jpg",
-  saturn:  "/assets/textures/saturn.jpg",
-  uranus:  "/assets/textures/uranus.jpg",
-  neptune: "/assets/textures/neptune.webp",
-  pluto:   "/assets/textures/pluto.jpg",
-  ceres:   "/assets/textures/ceres.jpg",
-  moon:    "/assets/textures/moon.jpg",
+  sun:     publicUrl("/assets/textures/sun.jpg"),
+  mercury: publicUrl("/assets/textures/mercury.jpg"),
+  venus:   publicUrl("/assets/textures/venus.jpg"),
+  earth:   publicUrl("/assets/textures/earth.jpg"),
+  mars:    publicUrl("/assets/textures/mars.jpg"),
+  jupiter: publicUrl("/assets/textures/jupiter.jpg"),
+  saturn:  publicUrl("/assets/textures/saturn.jpg"),
+  uranus:  publicUrl("/assets/textures/uranus.jpg"),
+  neptune: publicUrl("/assets/textures/neptune.webp"),
+  pluto:   publicUrl("/assets/textures/pluto.jpg"),
+  ceres:   publicUrl("/assets/textures/ceres.jpg"),
+  moon:    publicUrl("/assets/textures/moon.jpg"),
 };
-const SATURN_RING = "/assets/textures/saturn_ring.jpg";
+const SATURN_RING = publicUrl("/assets/textures/saturn_ring.jpg");
 
 function nameOf(b: SolarBody) { return b.nameZh || b.name; }
 

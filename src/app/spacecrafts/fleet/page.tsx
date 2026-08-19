@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import fleet from "../../../../data/nasa3d.json";
+import { publicUrl } from "@/lib/assetPath";
 
 interface Entry {
   slug: string;
@@ -91,7 +92,7 @@ export default function FleetPage() {
         .map((entry) => ({
           slug: entry.slug,
           title: zhNames[entry.slug] || entry.title,
-          url: entry.glbLocal as string,
+          url: publicUrl(entry.glbLocal as string),
           description: entry.description,
           narration: narrationMap[entry.slug] || entry.description,
           scale: entry.slug === "70-meter-dish" ? 0.42 : entry.slug === "advanced-crew-escape-suit" ? 1.25 : 0.96,

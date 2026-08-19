@@ -1,4 +1,5 @@
 "use client";
+import { publicUrl } from "@/lib/assetPath";
 import { useRef, useEffect, useMemo, useCallback, forwardRef, useImperativeHandle, Suspense } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Clone, useGLTF } from "@react-three/drei";
@@ -243,7 +244,7 @@ function Planet({ body, angle, onClick, highlight }: { body: Body; angle: number
   const gRef = useRef<THREE.Group>(null!);
   const ringRef = useRef<THREE.Mesh>(null!);
   const tex = useMemo(() => loadTex(body.texture), [body.texture]);
-  const ringTex = useMemo(() => body.hasRing ? loadTex(planetAssetCatalog.saturn.ringTexture || "/assets/textures/saturn_ring.jpg") : null, [body.hasRing]);
+  const ringTex = useMemo(() => body.hasRing ? loadTex(planetAssetCatalog.saturn.ringTexture || publicUrl("/assets/textures/saturn_ring.jpg")) : null, [body.hasRing]);
   const angRef = useRef<number>(angle);
   const x = Math.cos(angle) * body.distance;
   const z = Math.sin(angle) * body.distance;

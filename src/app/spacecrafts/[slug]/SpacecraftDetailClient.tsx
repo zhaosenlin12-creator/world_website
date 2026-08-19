@@ -1,5 +1,6 @@
-﻿"use client";
+"use client";
 
+import { publicUrl } from "@/lib/assetPath";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { LiquidGlassPanel } from "@/components/fx/LiquidGlassPanel";
@@ -56,7 +57,7 @@ export default function SpacecraftDetailClient({ slug, entries }: { slug: string
       <section className="px-6 pt-8">
         <div className="max-w-6xl mx-auto relative h-[60vh] overflow-hidden rounded-3xl border border-white/10 bg-black/40">
           {entry.glbLocal ? (
-            <SingleModelViewer url={entry.glbLocal} />
+            <SingleModelViewer url={publicUrl(entry.glbLocal)} />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-white/60">
               当前模型暂无本地 GLB 资源。

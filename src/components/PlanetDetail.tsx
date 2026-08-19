@@ -3,6 +3,7 @@ import { zh } from "@/i18n/zh";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { SolarBody, BODIES } from "@/data/bodies";
+import { publicUrl } from "@/lib/assetPath";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
@@ -45,18 +46,18 @@ export function PlanetDetail({ body, articles }: { body: SolarBody; articles: Ar
     const radius = 1.5;
     const geom = new THREE.SphereGeometry(radius, 96, 96);
     const TEX_MAP = {
-      sun: "/assets/textures/sun.jpg",
-      mercury: "/assets/textures/mercury.jpg",
-      venus: "/assets/textures/venus.jpg",
-      earth: "/assets/textures/earth.jpg",
-      mars: "/assets/textures/mars.jpg",
-      jupiter: "/assets/textures/jupiter.jpg",
-      saturn: "/assets/textures/saturn.jpg",
-      uranus: "/assets/textures/uranus.jpg",
-      neptune: "/assets/textures/neptune.webp",
-      pluto: "/assets/textures/pluto.jpg",
-      ceres: "/assets/textures/ceres.jpg",
-      moon: "/assets/textures/moon.jpg"
+      sun: publicUrl("/assets/textures/sun.jpg"),
+      mercury: publicUrl("/assets/textures/mercury.jpg"),
+      venus: publicUrl("/assets/textures/venus.jpg"),
+      earth: publicUrl("/assets/textures/earth.jpg"),
+      mars: publicUrl("/assets/textures/mars.jpg"),
+      jupiter: publicUrl("/assets/textures/jupiter.jpg"),
+      saturn: publicUrl("/assets/textures/saturn.jpg"),
+      uranus: publicUrl("/assets/textures/uranus.jpg"),
+      neptune: publicUrl("/assets/textures/neptune.webp"),
+      pluto: publicUrl("/assets/textures/pluto.jpg"),
+      ceres: publicUrl("/assets/textures/ceres.jpg"),
+      moon: publicUrl("/assets/textures/moon.jpg")
     };
     const texUrl = body.textureUrl || TEX_MAP[body.id] || "";
     const mat = new THREE.MeshStandardMaterial({

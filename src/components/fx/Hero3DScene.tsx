@@ -20,6 +20,8 @@ const STAR_TEX_CACHE = (() => {
   return c;
 })();
 import * as THREE from "three";
+import { publicUrl } from "@/lib/assetPath";
+
 
 type Body = {
   id: string;
@@ -38,15 +40,15 @@ type Body = {
 };
 
 const BODIES: Body[] = [
-  { id: "sun",     name: "太阳",   texture: "/assets/textures/sun.jpg",     radius: 4.0,  distance: 0,    speed: 0,      tilt: 0.3, rotation: 0.06,  emissive: true },
-  { id: "mercury", name: "水星",   texture: "/assets/textures/mercury.jpg", radius: 0.45, distance: 8,    speed: 0.32,   tilt: 0.0, rotation: 0.04 },
-  { id: "venus",   name: "金星",   texture: "/assets/textures/venus.jpg",   radius: 0.7,  distance: 11.5, speed: 0.24,   tilt: 0.05, rotation: -0.02, glow: "#eab308" },
-  { id: "earth",   name: "地球",   texture: "/assets/textures/earth.jpg",   radius: 0.75, distance: 15,   speed: 0.20,   tilt: 0.23, rotation: 0.5,  glow: "#3b82f6" },
-  { id: "mars",    name: "火星",   texture: "/assets/textures/mars.jpg",    radius: 0.55, distance: 19,   speed: 0.16,   tilt: 0.25, rotation: 0.48, glow: "#dc2626" },
-  { id: "jupiter", name: "木星",   texture: "/assets/textures/jupiter.jpg", radius: 1.7,  distance: 26,   speed: 0.085,  tilt: 0.06, rotation: 0.85 },
-  { id: "saturn",  name: "土星",   texture: "/assets/textures/saturn.jpg",  radius: 1.4,  distance: 32,   speed: 0.062,  tilt: 0.32, rotation: 0.78, hasRing: true, ringInner: 1.8, ringOuter: 2.8 },
-  { id: "uranus",  name: "天王星", texture: "/assets/textures/uranus.jpg",  radius: 1.0,  distance: 38,   speed: 0.045,  tilt: 1.4,  rotation: 0.6,  glow: "#22d3ee" },
-  { id: "neptune", name: "海王星", texture: "/assets/textures/neptune.webp", radius: 0.95, distance: 44,   speed: 0.035,  tilt: 0.5,  rotation: 0.55, glow: "#1d4ed8" }
+  { id: "sun",     name: "太阳",   texture: publicUrl("/assets/textures/sun.jpg"),     radius: 4.0,  distance: 0,    speed: 0,      tilt: 0.3, rotation: 0.06,  emissive: true },
+  { id: "mercury", name: "水星",   texture: publicUrl("/assets/textures/mercury.jpg"), radius: 0.45, distance: 8,    speed: 0.32,   tilt: 0.0, rotation: 0.04 },
+  { id: "venus",   name: "金星",   texture: publicUrl("/assets/textures/venus.jpg"),   radius: 0.7,  distance: 11.5, speed: 0.24,   tilt: 0.05, rotation: -0.02, glow: "#eab308" },
+  { id: "earth",   name: "地球",   texture: publicUrl("/assets/textures/earth.jpg"),   radius: 0.75, distance: 15,   speed: 0.20,   tilt: 0.23, rotation: 0.5,  glow: "#3b82f6" },
+  { id: "mars",    name: "火星",   texture: publicUrl("/assets/textures/mars.jpg"),    radius: 0.55, distance: 19,   speed: 0.16,   tilt: 0.25, rotation: 0.48, glow: "#dc2626" },
+  { id: "jupiter", name: "木星",   texture: publicUrl("/assets/textures/jupiter.jpg"), radius: 1.7,  distance: 26,   speed: 0.085,  tilt: 0.06, rotation: 0.85 },
+  { id: "saturn",  name: "土星",   texture: publicUrl("/assets/textures/saturn.jpg"),  radius: 1.4,  distance: 32,   speed: 0.062,  tilt: 0.32, rotation: 0.78, hasRing: true, ringInner: 1.8, ringOuter: 2.8 },
+  { id: "uranus",  name: "天王星", texture: publicUrl("/assets/textures/uranus.jpg"),  radius: 1.0,  distance: 38,   speed: 0.045,  tilt: 1.4,  rotation: 0.6,  glow: "#22d3ee" },
+  { id: "neptune", name: "海王星", texture: publicUrl("/assets/textures/neptune.webp"), radius: 0.95, distance: 44,   speed: 0.035,  tilt: 0.5,  rotation: 0.55, glow: "#1d4ed8" }
 ];
 
 // 单个行星: 独立公转 (每颗行星有独立的角速度, 距离越远越慢)
