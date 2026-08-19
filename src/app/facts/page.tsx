@@ -16,7 +16,7 @@ export default function Page() {
         <div className="mx-auto max-w-6xl text-center">
           <div className="eyebrow mb-3">宇宙数据速览</div>
           <div className="flex justify-center">
-            <AsciiTitle text="DATA 01" size={64} caption="太阳系核心参数" />
+            <AsciiTitle text="数据总览" size={64} caption="太阳系核心参数" />
           </div>
         </div>
       </section>

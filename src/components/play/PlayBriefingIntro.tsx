@@ -93,7 +93,7 @@ export default function PlayBriefingIntro({ open, onStart, onBack, voiceEnabled,
               <div className="flex flex-col gap-4">
                 <div className="console-panel fuchsia p-5">
                   <div className="console-eyebrow text-fuchsia-200/85">任务代号</div>
-                  <div className="mt-2 font-mono text-2xl text-white">HELIOS // 8 PLANETS</div>
+                  <div className="mt-2 font-mono text-2xl text-white">日轮号 · 八大行星</div>
                   <p className="mt-2 text-xs leading-6 text-white/62">
                     这是你今天唯一的任务。所有遥测数据会写入本地存储，关闭页面再回来可以接着上次的目标继续。
                   </p>

@@ -40,9 +40,9 @@ const zhNames: Record<string, string> = {
 
 const narrationMap: Record<string, string> = {
   "1999-rq36-asteroid": "这是 OSIRIS-REx 重点研究的近地小行星，保留着太阳系早期形成阶段的原始物质。",
-  "70-meter-dish": "这是一座 70 米深空通信天线，用来接收深空探测器极其微弱的信号，是 NASA 深空网络的重要节点。",
+  "70-meter-dish": "这是一座 70 米深空通信天线，用来接收深空探测器极其微弱的信号，是深空网络的重要节点。",
   "active-cavity-irradiance-monitor-satellite-acrimsat-a": "AcrimSAT 负责长期测量太阳总辐照度，用于研究太阳活动与地球气候之间的关系。",
-  "active-cavity-irradiance-monitor-satellite-acrimsat-b": "这台 AcrimSAT 变体同样面向太阳辐照观测，展示了 NASA 长期稳定监测太阳输出的能力。",
+  "active-cavity-irradiance-monitor-satellite-acrimsat-b": "这台 AcrimSAT 变体同样面向太阳辐照观测，展示了长期稳定监测太阳输出的能力。",
   "advanced-composition-explorer": "先进成分探测器 ACE 主要研究太阳风、星际介质以及高能粒子的来源和组成。",
   "advanced-crew-escape-suit": "先进乘员逃逸服用于高风险飞行阶段的人体保护，兼顾压力防护与紧急撤离支持。",
   "advanced-technology-large-aperture-space-telescope-atlast": "ATLAST 是下一代大型空间望远镜概念，目标是更深入观测系外行星与深空结构。",
@@ -172,7 +172,7 @@ export default function FleetPage() {
           ) : (
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="text-[10px] tracking-[0.24em] text-cyan-200/78">NASA 飞行器宇宙场景</div>
+                <div className="text-[10px] tracking-[0.24em] text-cyan-200/78">飞行器宇宙场景</div>
                 <div className="mt-1 text-xs text-white/68">点击飞行器开始讲解，拖拽旋转，滚轮缩放，右键可以平移视角。</div>
               </div>
               <Link

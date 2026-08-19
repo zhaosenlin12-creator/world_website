@@ -120,16 +120,20 @@ export function FeaturedVideoPanel({
 
   return (
     <section className={`relative w-full overflow-hidden rounded-[28px] ${height}`}>
-      <video
-        ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover"
-        src={src}
-        poster={poster}
-        muted
-        autoPlay
-        playsInline
-        preload="auto"
-      />
+      {src ? (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 h-full w-full object-cover"
+          src={src}
+          poster={poster}
+          muted
+          autoPlay
+          playsInline
+          preload="auto"
+        />
+      ) : poster ? (
+        <img src={poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      ) : null}
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/40 to-black/80" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.55)_75%)]" />
 

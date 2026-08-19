@@ -141,7 +141,7 @@ export default function PlayFinishCard({
 
             <div className="flex items-center justify-between text-[11px] text-white/55">
               <span>· 完整遥测数据写入本地存储 ·</span>
-              <span className="text-cyan-200/80">SOL /// HELIOS</span>
+              <span className="text-cyan-200/80">日轮号 · 完结</span>
             </div>
           </div>
         </div>

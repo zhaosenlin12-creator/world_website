@@ -4,7 +4,7 @@
     "slug": "solar-system/resources/resource-packages/pluto-dwarf-planet-resources",
     "title": "Pluto and Dwarf Planet Resources - NASA Science",
     "description": "Explore this page for a curated collection of resources, including activities that can be done at home, as well as videos and animations, images, printable graphics, and 3D models. This resource package is suitable for educators, students, and anyone interested in learning more about dwarf planets!",
-    "hero": "https://science.nasa.gov/wp-content/uploads/2023/07/dwarf-planets.jpg",
+    "hero": null,
     "body": [
       "Explore this page for a curated collection of resources, including activities that can be done at home, as well as videos and animations, images, printable graphics, and 3D models. This resource package is suitable for educators, students, and anyone interested in learning more about dwarf planets!",
       "In addition to the resources on this page, follow along with updates on Pluto and other dwarf planets through @NASASolarSystem on your preferred social media platform.",
@@ -36,127 +36,127 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/i/a/1/PIA19857-1.jpg?w=1920&h=1080&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Pluto is reddish and has a heart shape lighter patch in the lower right half of this image from the New Horizons spacecraft."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/07/dwarf-planets.jpg?w=1024",
+        "src": "",
         "alt": "Composite image showing five dwarf planets of various sizes and colors"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5525/Pluto_Heart-1.jpeg?w=800&h=424&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Pluto is reddish and has a heart shape lighter patch in the lower right half of this image from the New Horizons spacecraft."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/12/new-horizons.jpg?w=1024",
+        "src": "",
         "alt": "An artist's concept shows a spacecraft flying over the limb of Pluto with the moon Charon and the Sun in the background. The Sun is small and bright at this distance."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/1240/Close_up_of_probable_ice_volcano_on_Pluto.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Close up of probable ice volcano on Pluto."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/10/clyde-tombaugh.png?w=1024",
+        "src": "",
         "alt": "A man wearing glasses and a suit poses for a photo in front of a rocky wall and next to a slightly open door."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3061/dawn_ceres-600-1.jpg?w=320&h=240&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Artist's concept of the Dawn spacecraft at Ceres"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/10/pia21906-ceres-full-globe-small.jpg?w=1000",
+        "src": "",
         "alt": "Gray dwarf planet with bright spot near center"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3384/Crater_with_bright_white_area_in_center.jpeg?w=1280&h=720&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Crater with bright white area in center."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/04/makemakemoon100mile-jpg.webp?w=1024",
+        "src": "",
         "alt": "This illustration shows a dim, reddish sphere against black space, with light from a star above it cast across its surface. A smaller sphere, a moon, is visible at the lower right of the bigger sphere."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/06/pluto-and-charon-1920x640-1.jpg?w=768",
+        "src": "",
         "alt": "A composite image with Pluto's moon, Charon behind Pluto. Both worlds appear reddish with tan features in this enhanced color image."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/10/beads-20100111-640-640x350-1.jpg?w=640",
+        "src": "",
         "alt": "A hand is shown holding a blue string taut. A circular golden bell is at the right end of the string and four smaller beads are dispersed to the left of the bell."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/06/poetry-step4-b-640x350-1.jpg?w=640",
+        "src": "",
         "alt": "A mainly blank notebook is shown with the beginnings of a written poem on the right page. A hand is shown holding a pen to the paper."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/10/new-horizons-coloring-page.png?w=751",
+        "src": "",
         "alt": "A sketch of a spacecraft with a large dish antenna is shown in front of two spheres. Stars and dots sprinkle the surrounding sky."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2016/05/screenshot-2023-11-02-at-4.28.52-pm.png?w=344",
+        "src": "",
         "alt": "This full disc view of Pluto features bright region that looks like a heart on the side of the dwarf planet."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/10/poster-pluto-front-b-1.jpg?w=663",
+        "src": "",
         "alt": "Close view of mountains and plains on Pluto."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5091/Pluto-1.jpeg?w=1280&h=900&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "View of Pluto in space, featuring the heart-shaped bright area amidst the dark reds, pinks, and purples of its icy landscape."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/10/poster-ceres-front-a.jpg?w=663",
+        "src": "",
         "alt": "Full disk view of dwarf planet Ceres, with a bright blueish spot at center."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/10/poster-ceres-front-b.jpg?w=663",
+        "src": "",
         "alt": "A close-up view of dwarf planet Ceres's pockmarked surface."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/10/poster-ceres-front-c.jpg?w=663",
+        "src": "",
         "alt": "Half disk view of Ceres showing craters in great detail."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/l/pluto_lorri_20150713_2017_print-1.jpg?w=1024&h=574&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Slice of dwarf planet Pluto in black and white."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/11/nh-new-horizons-in-space.webp",
+        "src": "",
         "alt": "Illustration of a gold spacecraft with a silver dish on the front floating in space"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/03/ceres-dawn-pia19562-16x9-1.jpg?w=1024",
+        "src": "",
         "alt": "Gray Ceres has a bright spot near its upper left side in this image from NASA's Dawn spacecraft."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/h/haumea_th.jpg?w=320&h=240&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "An oblong grey egg shaped object."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/m/makemake_th.jpg?w=320&h=240&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A reddish brown sphere with craters spread across its surface is shown."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/e/eris_th.jpg?w=320&h=240&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A grey sphere is shown with large gouges across its surface."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/11/ceres-full-globe-pia21906-1920x640-1.jpg?w=1024",
+        "src": "",
         "alt": "Dwarf planet Ceres appears gray with white splotches in this image from the Dawn spacecraft."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/s/solar_system_Cover_rev_40-3.jpg?w=6600&h=5232&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/04/hubble_faq_image-jpg.webp?w=1512",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/07/dwarf-planets.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/PIA19968.jpg?w=2000&h=2000&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -166,7 +166,7 @@
     "slug": "solar-system/10-things-whats-that-space-rock",
     "title": "10 Things: What's That Space Rock? - NASA Science",
     "description": "The path through the solar system is a rocky road. Asteroids, comets, Kuiper Belt Objects—all kinds of small bodies of rock, metal and ice are in constant motion as they orbit the Sun. But what’s the difference between them? Why do these miniature worlds fascinate space explorers so much?",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/06/ida_1600.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "NASA Science Editorial Team",
       "Asteroids, comets, meteors, and meteorites. What are they, and how can we tell them apart?",
@@ -191,55 +191,55 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/04/NASA_logo.png?w=300",
+        "src": "",
         "alt": "The headshot image of NASA Science Editorial Team"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/ida_1600.jpg?w=1600&h=655&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "two rocky asteroids in black space"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5636/Asteroid_Eros-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "rocky asteroid in dark space"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5637/Churyumov-Gerasimenko-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "rocky comet nucleus venting a jet of gas"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/2565/shattered_boulders_in_space.jpeg?w=4534&h=2550&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "shattered boulders in space"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/2566/bright_streak_above_curved_earth_seen_from_above-1.jpeg?w=1995&h=1331&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "bright streak above curved earth seen from above"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/2567/shooting_stars_in_starry_sky_with_shiloutted_pine_trees-1.jpeg?w=1200&h=922&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "shooting stars in the starry sky with silhouetted pine trees"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/2581/man_and_meteorite_rock_on_ground-1.jpeg?w=1024&h=846&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "man and meteorite rock on ground"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/2582/ceres_in_color-1.jpeg?w=1024&h=1024&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "ceres in color"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5703/Arrokoth-1.jpeg?w=1280&h=900&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "illustration showing spacecraft and big space rock"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/2585/diagram_showing_different_solar_system_zones-1.jpeg?w=1839&h=1024&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "diagram showing different solar system zones"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5638/Bennu-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Close-up image of dark asteroid Bennu showing its rocky surface."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/learn/science-activation-stories/2026/NESSP_e2v_photo_5-Darci_Snowden.jpg?w=1440&h=1080&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
@@ -247,11 +247,11 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/iotd/2026/playing-the-moon-game-/tenthousandsmokes_oli2_20250929_th.jpg?w=720&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
@@ -259,11 +259,11 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -273,7 +273,7 @@
     "slug": "solar-system/planets/analog-explorer",
     "title": "Planetary Analog Explorer - NASA Science",
     "description": "Compare field research sites on Earth with similar environments on other worlds. Pairs like these are called planetary analogs. Research at analog locations on Earth helps scientists to make sense of our solar system.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/07/LavaBedsErnieBell.jpeg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "The Analog Explorer gallery shows field research sites on Earth side-by-side with similar environments on other worlds. Pairs like these are called",
       "Naturally-occurring lava caves may someday shelter astronauts on the Moon and Mars from harmful radiation.",
@@ -294,163 +294,163 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/07/LavaBedsErnieBell.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/07/MariusHillsOffCenter.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/LavaBedsErnieBell.jpeg?w=2048&h=1152&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "In an underground cave, five researchers wearing helmets and headlamps look towards a brightly lit opening overhead. The rocky cavern is large enough for all five to stand apart."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/MariusHillsOffCenter.jpg?w=1600&h=900&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Satellite image of the Moon’s surface. In the middle of the image, the surface is sharply interrupted by what appears to be an opening in the roof of a cave. The landscape is illuminated at a low angle, revealing a small part of what looks like a larger void below the opening."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2610-hawaiiandreajones.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2610-moonhadleyrille.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2610-hawaiiandreajones.jpeg?w=768",
+        "src": "",
         "alt": "Scientists carry gear as the navigate the slopes of a volcano."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2610-moonhadleyrille.jpeg?w=768",
+        "src": "",
         "alt": "An astronaut works near a Moon buggy on the surface of the Moon."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2609-pilotvalleykenndalynch.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2609-phoenixmars.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2609-pilotvalleykenndalynch.jpeg?w=768",
+        "src": "",
         "alt": "A scientist in a t-shirt and long pants with a hat hanging off her neck inspects rocks in the desert."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2609-phoenixmars.jpeg?w=768",
+        "src": "",
         "alt": "A spacecraft's scoop hangs above the red soil of Mars. The spacecraft's solar arrays can be seen to the left of the scoop."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/alaskanickschmerr.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2612-enceladusgeyserbasin.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/alaskanickschmerr.jpg?w=768",
+        "src": "",
         "alt": "A smiling, bundled-up researcher stands beside an array of heavy-duty containers and equipment spread across a dim, icy landscape. Behind her, another researcher works. In the background, dark mountains rise into misty, heavy clouds."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2612-enceladusgeyserbasin.jpeg?w=768",
+        "src": "",
         "alt": "The limb of moon Enceladus with bright jets shooting material out into space"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2606-atacamamarcocastillo.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2606-perseveranceingenuity.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2606-atacamamarcocastillo.jpeg?w=768",
+        "src": "",
         "alt": "Two scientists unload gear from the back of a truck and onto the desert floor."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2606-perseveranceingenuity.jpeg?w=768",
+        "src": "",
         "alt": "A small helicopter sits on the surface of Mars near the much larger Perseverance rover."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2611-icelandstephenscheidt.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2611-marsripples.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2611-icelandstephenscheidt.jpeg?w=768",
+        "src": "",
         "alt": "Grayish-white expanse of rippled land at the foot of a volcano."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2611-marsripples.jpeg?w=768",
+        "src": "",
         "alt": "Ripples and valleys on Mars"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/deathvalleyandreajones.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/03/7318_Mars-Viking-Lander-American-Flag-full2-e1724349011640.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/deathvalleyandreajones.jpg?w=768",
+        "src": "",
         "alt": "A dark grey, barren hillside covered in boulders of many sizes. In the background: distant blue mountain ridgelines under a clear sky."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/resources/detail_files/7318_Mars-Viking-Lander-American-Flag-full2.jpg?w=2818&h=1587&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Rover’s-eye view of an orange-brown, barren landscape covered in boulders of many sizes. In the near foreground, part of the rover is captured in its own camera’s field of view."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/lakesalda.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/jezerodelta.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/lakesalda.jpg?w=768",
+        "src": "",
         "alt": "Satellite view of a deep blue lake surrounded by a green and brown landscape. The lake’s edge is clearly visible as a narrow band of light-colored material."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/jezerodelta.jpg?w=768",
+        "src": "",
         "alt": "Satellite image of an ancient crater with a dry riverbed flowing into it. Inside the crater’s rim, in what looks like a former river delta, an oval-shaped outline is labeled “Mars Perseverance Landing Site, 4.8 mi x 4.1 mi, 7.7 km x 6.6 km”."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2021/01/potrillolorableacher2to1-e1724348732612.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2608-eistlaregiovenus.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2021/01/potrillolorableacher2to1-e1724348732612.jpg?w=768",
+        "src": "",
         "alt": "Scientists walk across lumpy, dark brown land"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/2608-eistlaregiovenus.jpeg?w=768",
+        "src": "",
         "alt": "Illustration of volcanoes and orange and yellow scorched ground on Venus."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2021/06/2614-verdevalleysvetlanashkolyar.jpeg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/buckskinmtsharpmars.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2021/06/2614-verdevalleysvetlanashkolyar.jpeg?w=768",
+        "src": "",
         "alt": "Rocky outcrop in a sandy, hilly area, under a blue sky with a cloud."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/buckskinmtsharpmars.jpg?w=768",
+        "src": "",
         "alt": "A rover sits on the hilly, orange Martian surface beneath a flat grey sky, surrounded by chunks of rock."
       }
     ]
@@ -460,7 +460,7 @@
     "slug": "solar-system/comets/facts",
     "title": "Comet Facts",
     "description": "Comets are leftovers from the dawn of our solar system around 4.6 billion years ago, and consist mostly of ice coated with dark organic material. They have been referred to as \"dirty snowballs.\"",
-    "hero": "https://science.nasa.gov/wp-content/uploads/2023/06/comet-night-sky-16x9-1.jpg",
+    "hero": null,
     "body": [
       "Comets are leftovers from the dawn of our solar system around 4.6 billion years ago, and consist mostly of ice coated with dark organic material. They have been referred to as \"dirty snowballs.\" They may yield important clues about the formation of our solar system. Comets may have brought water and organic compounds, the building blocks of life, to the early Earth and other parts of the solar system.",
       "For the most up to date count of comets, visit NASA/JPL's Solar System Dynamics website.",
@@ -477,35 +477,35 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2017/10/comet-hartley-pia13570-16x9-1.jpg?w=469&h=264&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A close-up view of a peanut-shaped object with jets of material streaming out of the right end."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/ESA_Rosetta_NavCam_20150131_Mosaic.jpg?w=1280&h=1199&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Jet erupting from comet."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/i/a/PIA02137.tif?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/05/borisov-1200x1200-1.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": "White dot surrounded by faint blue trailing off it into black."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -515,7 +515,7 @@
     "slug": "solar-system/meteors-meteorites",
     "title": "Meteors and Meteorites - NASA Science",
     "description": "Meteors, and meteorites are often called “shooting stars” - bright lights streaking across the sky. We call the same objects by different names, depending on where they are located.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/3352/Scientists_examining_meteorite_on_snow-covered_ground.jpeg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Meteors and meteorites are often called “shooting stars” — bright lights streaking across the sky. But we call the same objects by different names, depending on where they are located.",
       "Small, rocky, and still in space",
@@ -531,59 +531,59 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/10/collecting-meteorite.jpg?w=1024",
+        "src": "",
         "alt": "Scientists in heavy red coats and eye goggles photograph a meteorite in the snow."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/10/perseid-meteor-shower-bill-dunford.jpg?w=1024",
+        "src": "",
         "alt": "Starry night with meteors streaking above the trees. The constellation Orion is visible"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/10/579890main-iss028e024847-full.jpg?w=1024",
+        "src": "",
         "alt": "A meteor heads toward Earth as seen from the ISS"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/10/collecting-meteorite.jpg?w=2048",
+        "src": "",
         "alt": "Scientists in heavy red coats and eye goggles photograph a meteorite in the snow."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3353/Meteor_falling_over_the_desert.jpeg?w=1280&h=854&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/20526349219_052849eedb_Optimized.jpg?fit=clip&crop=faces%2Cfocalpoint&w=2048",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/7457588672-61c58e8f44-k-jpg.webp?w=150&h=150&crop=1",
+        "src": "",
         "alt": "A man looks through a telescope at twilight."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/09/pdco-bright-bolide-0.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": "Bolides shown: very bright meteors that can even be seen in daylight"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/n/NHQ201608120002.jpg?w=5000&h=3337&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/bosf/images/1-3-leonid-danielsen1.jpeg?w=768&h=512&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Leonids shower"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -593,7 +593,7 @@
     "slug": "solar-system/resources/resource-packages/lucy-mission-resources",
     "title": "Lucy Mission Resources - NASA Science",
     "description": "This is a curated collection of resources about NASA's Lucy mission, including activities that can be done at home, as well as videos, animations, posters, and online interactives.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/06/final_lucy_high-end-render_pira.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Explore this page for a curated collection of resources, including activities that can be done at home, as well as videos, animations, handouts, and online interactives. This resource package is suitable for educators, students, and anyone interested in learning more about NASA's Lucy mission!",
       "In addition to the resources on this page, follow the progress of the Lucy mission at #LucyMission and @NASASolarSystem on your preferred social media platform, and read more on the",
@@ -631,143 +631,143 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/final-lucy-high-end-render-pira.jpg?w=1440",
+        "src": "",
         "alt": "Illustration of a spacecraft at an asteroid."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/Lucy_Flyby_CILab_Preview_1600.jpg?w=1248&h=720&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Artist's concept of the Lucy spacecraft flying by two of its asteroid targets."
       },
       {
-        "src": "https://assets.science.nasa.gov/content/dam/science/missions/lucy/djencounter_movie_release_v2.gif?w=1022&h=766&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Gif of Asteroid Donaldjohanson, as seen by the Lucy spacecraft during its close flyby. The asteroid looks like two lobes, attached by a thinner cylinder, like a barbell with very large weights. One lobe is smaller than the other. Although they are both about the same circumference, the smaller lobe is less wide than the other. The asteroid is a smooth, light gray surface, with smooth-edged craters dimpling its surface. The larger lobe has many more craters. The asteroid moves closer to the camera, pushing in on the larger lobe. Then it rotates slightly to look along the asteroid long-ways."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/12/ta010359-lucy3-c-orbit-jpg.webp.jpeg?w=1024",
+        "src": "",
         "alt": "Illustration of looping orbits to reach asteroids in front of and behind Jupiter."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/dinkinesh-family-portrait-2.png?w=588",
+        "src": "",
         "alt": "An image of asteroid Dinkinesh, at left, an asteroid with a slightly jagged surface and its two two binary satellites, at right, two small grey jagged orbs, taken from the Lucy spacecraft."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5706/Lucy_Earth_Gravity_Assist-640x480-1.jpg?w=640&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A spacecraft is shown approaching a globe of Earth, with a starry black sky in the background."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5166/Lucy_Launch_Rocket-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Lucy Launch Rocket"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/dj_stereo_xeye.png?w=2068&h=770&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Two side-by-side grayscale images of an irregularly shaped object against a black background. Each has an elongated, peanut-shaped body with a narrower section on the left and wider section on the right. The surface appears rough and cratered with visible light and shadow areas highlighting their textured surfaces."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/final-lucy-high-end-render-pira.jpg?w=1024",
+        "src": "",
         "alt": "Illustration of a spacecraft at an asteroid."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/12/ta010359-lucy3-c-orbit-jpg.webp.jpeg",
+        "src": "",
         "alt": "Illustration of looping orbits to reach asteroids in front of and behind Jupiter."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/12/dinkinesh-firstlook-llorri.webp",
+        "src": "",
         "alt": "An image of asteroid Dinkinesh, a pair of grey asteroids with a slightly jagged surface, taken from the Lucy spacecraft."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/10/dinkinesh-lucyspacecraft.png?w=1024",
+        "src": "",
         "alt": "Visualization showing a black and white image of stars, with a zoomed in view square of asteroid Dinkenish with a yellow circle around it. There's a timeline above the image showing the dates Lucy passed near the asteorid between Sept. 3 through Sept. 22, and will eventually Lucy passes by the asteroid on Nov. 1."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/lucy-dinkinesh.jpg?w=1024",
+        "src": "",
         "alt": "A large asteroid is shown at the left of the screen, with a smaller asteroid about a quarter of its size positioned in the middle. An even smaller asteroid is shown to the right, with a red circle around it. The text \"Lucy's Journey 'Dinkinesh'\" is shown beneath the middle asteroid."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/13965-lucythumb.jpg?w=1024",
+        "src": "",
         "alt": "A cartoon spacecraft with two bright gold 10-sided panels is shown beneath the text \"Lucy's Journey.\""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/ep1-lucygoestospace.jpg?w=1024",
+        "src": "",
         "alt": "A cartoon spacecraft stares out into the solar system."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/ep2-lucygoestospace.jpg?w=1024",
+        "src": "",
         "alt": "A cartoon spacecraft is shown orbiting around the Sun. Jupiter's orbit is also shown, as are the locations of the two Trojan asteroid groups."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/ep3-lucygoestospace.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/ep4-lucygoestospace.jpg?w=1024",
+        "src": "",
         "alt": "An animation showing a pockmarked asteroid, with zoomed in views captured in call-out boxes encircling the asteroid."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/ep5-lucygoestospace.jpg?w=1024",
+        "src": "",
         "alt": "A cartoon spacecraft is shown towering over two figures dressed in grey clean suits."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/4974/Trojan_asteroids-1.jpeg?w=1200&h=960&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "artist's concept of the Trojan asteroids"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/lucy-plaque.png?w=1024",
+        "src": "",
         "alt": "A computer rendering of the gold-hued plaque aboard the Lucy mission: mission logos, an orbital diagram and various inspiring quotations are shown."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/4966/LUCY_OVERVIEW_MASTER_00035_print.jpg?w=640&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Illustration of Lucy mission logo in front of an asteroid"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5400/Lucy_Coloring_Book-640x480-1.png?w=774&h=663&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A cartoon spacecraft looks diagonally up to the right at elliptical orbits. The words \"Lucy's Mission to the Trojan Asteroids Activity Book\" are written above the spacecraft."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5506/Lucy_Mission_Epic_Voyage-640x480-1.jpg?w=640&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A black and white coloring page showing an outline of a cartoon spacecraft, along with stars and asteroids."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5327/Lucy_Time_Capsule-640x480-1.jpg?w=640&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Lucy Time Capsule"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/4972/Snowflake-Instructions-letter.jpg?w=640&h=253&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "White paper cutouts showing the intricate design of the Lucy spacecraft."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/lucy/Donaldjohanson%20Postcard.png?w=14584&h=10417&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "The Lucy spacecraft cartoon character peeking out from behind an artistic rendering of the two-lobed asteroid Donaldjohanson with the words “Greetings from Donaldjohanson.”"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/lucy/outreach-materials/postcards/lucy-dinkinesh-selam-postcard.png?w=1067&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A vintage style postcard of the cartoon Lucy spacecraft flying by the asteroid Dinkinesh and it contact-binary satellite, Selam."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/lucypostcard.png?w=622",
+        "src": "",
         "alt": "A pop art style postcard showing four squares with outlines of the Lucy spacecraft and an asteroid."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5714/Lucy_Eyes-640x480-1.jpg?w=640&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A view of a spacecraft with two large solar panels in space."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5288/Eyes_on_Asteroids-640x480-1.jpg?w=640&h=472&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "The NASA logo is shown above a crescent shaped asteroid. The text \"Eyes on Asteroids\" is displayed below."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/s/solar_system_Cover_rev_40-3.jpg?w=6600&h=5232&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/lucy/final_0798443319_dec.png?w=1010&h=830&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/dinkinesh-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5264/Asteroid_Bennu-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -777,7 +777,7 @@
     "slug": "solar-system/10-things-movie-night",
     "title": "10 Things: Movie Night",
     "description": "NASA's mission is to pioneer the future in space exploration and scientific discovery. Grab some popcorn and join us for some \"movies\" about this exciting and important journey.",
-    "hero": "https://science.nasa.gov/wp-content/uploads/2023/06/auroras-credit-bill-dunford-cc-by-nc-2-0.jpg",
+    "hero": null,
     "body": [
       "NASA Science Editorial Team",
       "NASA's mission is to pioneer the future in space exploration and scientific discovery. Grab some popcorn and join us for some \"movies\" about this exciting and important journey.",
@@ -788,27 +788,27 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/auroras-credit-bill-dunford-cc-by-nc-2-0.jpg?w=1536",
+        "src": "",
         "alt": "Colorful, pink and green glowing bands fill the sky above a desert mountain range."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/04/NASA_logo.png?w=300",
+        "src": "",
         "alt": "The headshot image of NASA Science Editorial Team"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/bosf/images/editor-page-nasa-logo-250s.png?w=250&h=250&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "NASA logo"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/12/1067-jpl-redblack-rgb-stacked-5in-160601-320x240-1.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": "JPL Jet Propulsion Laboratory, California Institute of Technology logo"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/bosf/images/editor-page-nasa-logo-250s.png?w=250&h=250&fit=crop&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "NASA logo"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/learn/science-activation-stories/2026/NESSP_e2v_photo_5-Darci_Snowden.jpg?w=1440&h=1080&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
@@ -816,11 +816,11 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/iotd/2026/playing-the-moon-game-/tenthousandsmokes_oli2_20250929_th.jpg?w=720&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
@@ -828,11 +828,11 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -842,7 +842,7 @@
     "slug": "solar-system/10-things-going-interstellar",
     "title": "10 Things: Going Interstellar",
     "description": "Humanity’s great leap into interstellar space – the space between the stars – is underway. NASA's Voyager 1 and Voyager 2 probes are both in interstellar space.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/06/Milky_Way_1600.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Humanity’s great leap into interstellar space – the space between the stars – is underway. NASA's Voyager 1 and Voyager 2 probes are both in interstellar space. For the moment, sending humans to the edge of interstellar space, let alone across the cosmic void to other stars, remains firmly in the realm of science fiction. But scientists and engineers are developing skills and technologies that might help us get there one day.",
       "Here are 10 things we’ve learned about going interstellar.",
@@ -873,55 +873,55 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2023/06/m/main-milkyway-full-nasa-jpl-caltech.jpg?w=2400&h=2589&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://secure.gravatar.com/avatar/e6dba132e4918865ea3914d570a5902360b8d93a2ef5dcd6c71899369b75471a?s=300&d=https%3A%2F%2Fassets.science.nasa.gov%2Fdynamicimage%2Fassets%2Fscience%2Fpsd%2Fsolar%2Fbosf%2Fimages%2Feditor-page-nasa-logo-250s.png%3Fw%3D250%26h%3D250%26fit%3Dclip%26crop%3Dfaces%252Cfocalpoint&r=g",
+        "src": "",
         "alt": "The headshot image of AMANDA BARNETT"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3570/Retro_disco_poster_celebrating_Voyager.jpeg?w=1200&h=1601&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Retro disco poster celebrating Voyager"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3571/Planets_of_our_solar_system_appear_as_distant_points_of_light_in_this_mosaic.jpeg?w=1600&h=791&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Planets of our solar system appear as distant points of light in this mosaic."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3572/Small_object_moving_against_background_of_stars.jpeg?w=1670&h=950&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Small object moving against background of stars."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3573/Illustrated_view_of_the_wake_our_solar_system_makes_in_space.jpeg?w=1600&h=900&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Illustrated view of the wake our solar system makes in space."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3574/Rocket_launching_into_space_from_Florida.jpeg?w=800&h=1190&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Rocket launching into space from Florida."
       },
       {
-        "src": "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/3575/Animated_GIF_showing_cosmic_rays_increasing_as_particles_from_the_Sun_decrease-1.gif?w=1600&h=900&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Animated GIF showing cosmic rays increasing as particles from the Sun decrease."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3576/Golden_record_with_cover_that_includes_details_about_Earths_location_in_space.jpeg?w=1400&h=788&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Golden record with a cover that includes details about Earth's location in space."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/rst/science/Brown%20superjupiter%20D2%201.jpg?w=7000&h=3500&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/chandra/2026/250th_ngc4736.jpg?w=4200&h=4200&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/learn/science-activation-stories/2026/NESSP_e2v_photo_5-Darci_Snowden.jpg?w=1440&h=1080&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
@@ -929,11 +929,11 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -943,7 +943,7 @@
     "slug": "solar-system/asteroids/101955-bennu",
     "title": "Bennu - NASA Science",
     "description": "Asteroid Bennu was the target of NASA's first asteroid sample return mission, OSIRIS-REx. The spacecraft delivered a sample of Bennu to Earth on Sept. 24, 2023.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/5264/Asteroid_Bennu-1.jpeg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Bennu is a relatively small asteroid that passes close to Earth about every six years. Bennu was the target of NASA's OSIRIS-REx, the first U.S. mission to collect a sample from an asteroid and deliver it to Earth on Sept. 24, 2023.",
       "Bennu is about one-third of a mile wide at its equator.",
@@ -959,23 +959,23 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1920",
+        "src": "",
         "alt": "Closeup view of a rocky, diamond-shaped asteroid in space"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/b/Bennu_boulders.jpg?w=930&h=1024&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/02/53216317540-1a7bc66e35-o-3.jpg?w=1024",
+        "src": "",
         "alt": "Black, top-shaped sample return capsule sits on the desert ground with flags surrounding it."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2016/05/orex-bennu-container.png?w=1024",
+        "src": "",
         "alt": "Wedge-shaped silver metal container holding dark gray and black rocks and regolith"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/10/bennu-comettempel1.png?w=1024",
+        "src": "",
         "alt": "A diamond shaped rocky object is shown side-by-side with another rocky object that has a bright point of light at its bottom right side."
       },
       {
@@ -983,7 +983,7 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/dj_stereo_xeye.png?w=2068&h=770&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
@@ -991,31 +991,31 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia26/pia26750/figures/PIA26750_figA.jpg?w=1499&h=888&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/neo-surveyor/images/1_PIA26669-telescope.jpg?w=1920&h=1280&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": "Closeup view of a rocky, diamond-shaped asteroid in space"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1025,7 +1025,7 @@
     "slug": "solar-system/asteroids/2024-yr4",
     "title": "Asteroid 2024 YR4",
     "description": "When discovered, asteroid 2024 YR4 appeared to have a small chance of impacting Earth on Dec. 22, 2032. Experts now think it poses no significant risk to Earth.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar-system/asteroids/images/webb_telescope_image_asteroid_2024_yr4.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "When asteroid 2024 YR4 was first discovered, it was thought the asteroid had a very small chance of impacting Earth on Dec. 22, 2032. After more observations, NASA has concluded the object poses no significant impact risk to Earth in 2032 and beyond.",
       "Asteroid 2024 YR4 is a near-Earth asteroid.",
@@ -1044,19 +1044,19 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/content/dam/science/psd/planetary-defense/2024yr4_discovery_atlas.gif?w=650&h=500&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "image of asteroid 2024 YR4"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/planetary-defense/2024yr4-image.png?w=2646&h=1254&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Image of the position of Near-Earth Asteroid 2024 YR4 passing the M"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/asteroids/images/2024_yr4_lunar_impact_probability.png?w=1149&h=1149&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Graphic of Moon’s orbit with Earth at the center. A line of yellow dots represents the range of possible locations for asteroid 2024 YR4 on Dec. 22 2032. Text at the top reads Position Uncertainty in 2032 as of 2025-Apr-02. Lunar Impact Probability: 3.8%"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/asteroids/images/webb_telescope_image_asteroid_2024_yr4.jpg?w=3015&h=2009&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A split image with a large box on the left and two smaller ones stacked on the right. The image on the left has a black starfield a several colorful dots indicating objects in space. Each of the two smaller boxes has one smudged reddish dot indicating an asteroid."
       },
       {
@@ -1064,7 +1064,7 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/dj_stereo_xeye.png?w=2068&h=770&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
@@ -1072,43 +1072,43 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia26/pia26750/figures/PIA26750_figA.jpg?w=1499&h=888&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/neo-surveyor/images/1_PIA26669-telescope.jpg?w=1920&h=1280&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/asteroids/images/2024_YR4_Jan27_2025UT-29.jpg?w=873&h=929&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Image of asteroid 2024 YR4"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/08/pdco-shield-white.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": "Planetary Defense Coordination Office shield"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/bosf/images/editor-page-nasa-logo-250s.png?w=250&h=250&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "NASA logo"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/12/planetary-defenders-promotional-photo-4.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": "The image shows a man in the foreground wearing a wide-brimmed, light beige hat and a white polo shirt. He is pointing towards the distance with his right arm extended. The landscape is a desert environment with sparse vegetation and rocky ground. In the background, there is a large radio antenna or satellite dish, characterized by its wide, circular dish supported by a strong base. The sky is clear, with a few wispy clouds scattered across it. The horizon shows low hills or mountains in the distance."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1118,7 +1118,7 @@
     "slug": "solar-system/kuiper-belt",
     "title": "Kuiper Belt",
     "description": "The Kuiper Belt is a doughnut-shaped region of icy objects beyond the orbit of Neptune. It is home to Pluto and most of the known dwarf planets and some comets.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/06/PIA22190_1600.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "The Kuiper Belt is a doughnut-shaped region of icy objects beyond the orbit of Neptune. It is home to Pluto and most of the known dwarf planets and some comets.",
       "The Kuiper Belt is a large, doughnut-shaped region of icy bodies extending far beyond the orbit of Neptune.",
@@ -1136,15 +1136,15 @@
         "alt": "This artist's impression is of NASA's New Horizons spacecraft encountering Arrokoth, a Kuiper Belt object that orbits one billion miles (1.6 billion kilometers) beyond Pluto, on Jan. 1, 2019."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/466/Hubble_Images_of_Kuiper_Belt_Objects-1.jpeg?w=2268&h=1035&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Hubble Images of Kuiper Belt Objects"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/07/hubble-space-telescope-hst-6.jpg?w=1008",
+        "src": "",
         "alt": "Hubble Space Telescope in space with Earth in the background."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/hubble/solar-system/asteroids/Hubble_148780Altjira_STScI-01HXVR9DMSQ88WTM48768WJ8DY.jpg?fit=clip&crop=faces%2Cfocalpoint&w=2048",
+        "src": "",
         "alt": ""
       },
       {
@@ -1184,31 +1184,31 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/kuiperbeltobject.webp",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/rst/science/Brown%20superjupiter%20D2%201.jpg?w=7000&h=3500&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/swift-observatory/homepage/swift_view_update.jpg?w=3840&h=2160&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/88000/88300/minuteman_oli_2015288_wide.jpg?w=720&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/hpd/space-weather/20260630_205556_4096_0131.jpg?w=4096&h=4096&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/chandra/2026/250th_ngc4736.jpg?w=4200&h=4200&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/kuiperbelt4.en_.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": "Whimsical cartoon of football-shaped Haumea and its two moons."
       },
       {
@@ -1216,15 +1216,15 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2016/05/screenshot-2023-11-02-at-4.28.52-pm.png?w=344",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/hubble/mission/35th-anniversary/stargazing-banner-2_crop.jpg?w=375&h=350&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1234,7 +1234,7 @@
     "slug": "solar-system/planets/what-is-a-planet",
     "title": "What is a Planet?",
     "description": "In 2006, the International Astronomical Union - a group of astronomers that names objects in our solar system - agreed on a new definition of the word \"planet.\"",
-    "hero": "https://science.nasa.gov/wp-content/uploads/2023/06/solar-system-banner-1920x640-1.jpg",
+    "hero": null,
     "body": [
       "It's a simple question with a complicated answer.",
       "The word goes back to the ancient Greek word planēt, and it means \"wanderer.\"",
@@ -1259,23 +1259,23 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/solar-system-banner-1920x640-1.jpg?w=1920",
+        "src": "",
         "alt": "Illustration of eight planets and one dwarf planet displayed three across and three down."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/planet_9_art_1_1400.jpg?w=1400&h=834&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/astro/exo-explore/exoplanet-artists-concepts/e1-6000-exoplanets-artists-concept-web.jpg?w=5760&h=3816&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1285,7 +1285,7 @@
     "slug": "solar-system/planets/planetary-analogs",
     "title": "Planetary Analogs - NASA Science",
     "description": "Similar environments on different worlds are called planetary analogs. Studying our home planet helps NASA scientists understand our whole solar system better.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/4658/dsc_6060-2_800.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Earth isn't the only place with volcanoes, impact craters, quakes, and erosion.",
       "Similar environments on different worlds are called",
@@ -1326,95 +1326,95 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/planetary-expeditions/2022-09-gift-hawaii/GIFT_Hawaii-lava-cave-cover-image.jpg?w=4000&h=3000&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Group of workers wearing high-visibility vests and helmets, sitting under a natural skylight in a rocky cave."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/lavabedsnikkiwhelley.jpg?w=800",
+        "src": "",
         "alt": "A scientist wearing a blue helmet with a light on smiles as they climb around rocks."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/namibia-oli-2018186-e1724280192804.webp",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/planetary-analogs/Titan-Dunes-NASA-PIA08738-cropped.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/planetary-analogs/Titan-Dunes-NASA-PIA08738-cropped.jpg?w=1466&h=825&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Grayscale image of a vast field of sand dunes, seen from orbit.  The swirling ridges of the dunes look almost like fingerprint patterns. A few blotches of dense white speckles interrupt an otherwise gray-to-dark-gray pattern."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/planetary-analogs/Titan-Dunes-NASA-PIA08738-cropped.jpg?w=1466&h=825&fit=crop&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Grayscale image of a vast field of sand dunes, seen from orbit.  The swirling ridges of the dunes look almost like fingerprint patterns. A few blotches of dense white speckles interrupt an otherwise gray-to-dark-gray pattern."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/4657/GreenlandNamrahHabib1.jpg?w=952&h=537&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A researcher sits in the snow, bundled in protective gear, surrounded by small pieces of equipment."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/meteorcrater-e1724280263917.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/copernicusmosaic-e1724280314635.jpg",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/meteorcrater-e1724280263917.jpg?w=768",
+        "src": "",
         "alt": "Huge, round crater, with evidence of erosion around its edge."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/copernicusmosaic-e1724280314635.jpg?w=768",
+        "src": "",
         "alt": "Huge, round crater, with concentric ledges around its edge, and (relatively) small peaks near the middle of its floor."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/4658/dsc_6060-2_800.jpg?w=800&h=640&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A researcher in a clean suit kneels in the desert, collecting samples."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/planetary-analogs/1-PIA26674-Researchers-Test-Mars-Drone-Softwa.width-1320.jpg?w=1320&h=742&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Two people wearing sun-protective gear stand on a sand dune, with a massive wall of sand filling the frame behind them. A drone hovers over their heads."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/07/vtts1-hikeoutlandscape.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/06/jsc2024e033763orig.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/iotd/2026/playing-the-moon-game-/tenthousandsmokes_oli2_20250929_th.jpg?w=720&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/iotd/2026/a-volcanic-medley-near-mammoth-lakes-/mammothlakes_oli2_20260329_th.jpg?w=720&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/iotd/2026/a-most-unusual-lake/lakeuntersee_oli2_20260216_th.jpg?w=720&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/iotd/2026/scoria-cones-on-earth-and-mars/sunsetcratercomp_ctx_oli_20250619_th.jpg?w=720&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/planetary-expeditions/2025-12-2026-01-astrobiology-antarctica/NASA-samples-antarctic-water-to-inform-search-for-life-on-icy-worlds.jpg?w=3676&h=2043&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/307096main_jsc2008e-1280.jpg?w=1280&h=967&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "NASA's Lunar Electric Rover at Black Point Lava Flow in Arizona"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2024/08/ouralienearth-keyart-vert.png?w=1080&h=1920&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/planetary-expeditions/2025-06-gift-iceland/20250626_173844-2.jpg?w=3585&h=2252&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
@@ -1422,11 +1422,11 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/03/moon-1-jpeg.webp?w=1000",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/hubble/mission/35th-anniversary/stargazing-banner-2_crop.jpg?w=375&h=350&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1436,7 +1436,7 @@
     "slug": "solar-system/kuiper-belt/exploration",
     "title": "Kuiper Belt: Exploration - NASA Science",
     "description": "Most of what we know about the Kuiper Belt comes from ground-based telescopes and the Hubble Space Telescope. Only one spacecraft has visited the Kuiper Belt.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/5223/Arrokoth-1.jpeg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Most of what we know about the Kuiper Belt comes from ground-based telescopes and the",
       "This flyby was the most distant in the history of space exploration, a billion miles beyond Pluto.",
@@ -1448,31 +1448,31 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5223/Arrokoth-1.jpeg?w=800&h=1153&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Arrokoth"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3269/Fuzzy_image_of_first_KBO.jpeg?w=736&h=930&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Fuzzy image of first KBO"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/5_detail_640x350_saturn.jpg?w=640&h=350&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Eyes on the Solar System Ad"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1482,7 +1482,7 @@
     "slug": "solar-system/moons/10-things-about-our-solar-systems-most-marvelous-moons",
     "title": "10 Things: Our Solar System's Most Marvelous Moons - NASA Science",
     "description": "Our solar system is a jewel box filled with a glittering variety of beautiful worlds—and not all of them are planets. We present 10 of our solar system's most",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/654/Titan_atmosphere_and_lakes.jpeg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "NASA Science Editorial Team",
       "NASA has selected Rocket Lab to provide the launch service for both the agency’s PolSIR…",
@@ -1490,51 +1490,51 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/04/NASA_logo.png?w=300",
+        "src": "",
         "alt": "The headshot image of NASA Science Editorial Team"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/07/pia19048-europa-stunning-surface.jpg?w=2048",
+        "src": "",
         "alt": "The largest portion of the Europa's surface can be seen at the highest resolution from Galileo."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/654/Titan_atmosphere_and_lakes.jpeg?w=1024&h=1024&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Titan atmosphere and lakes"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia24/pia24681/jpeg/PIA24681.jpg?w=1625&h=2524&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A gray moon with several craters including a large one that looks like a belly button. The area around the large crater is lighter than the surrounding areas."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/656/Triton.jpeg?w=732&h=520&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Triton"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/657/Enceladus.jpeg?w=768&h=448&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Enceladus"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/658/Io.jpeg?w=700&h=350&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Io"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/06/pluto-and-charon-1920x640-1.jpg?w=1920",
+        "src": "",
         "alt": "A composite image with Pluto's moon, Charon behind Pluto. Both worlds appear reddish with tan features in this enhanced color image."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/i/a/2/PIA20523_full.jpg?w=1020&h=1020&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/downloadable_items/3/8/38427_Phobos-Mars-Moon-HIRISE-MRO-PIA10368.jpg?w=3374&h=3300&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/04/ldep-1.jpeg?w=1041",
+        "src": "",
         "alt": "A ridge that is comprised of lunar rock is grey in color with silver highlights. A large dark shadow reaches out behind the central peak of Tycho. The foreground is comprised of smaller mounds of the crater that are similarly illuminated by sunlight."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/learn/science-activation-stories/2026/NESSP_e2v_photo_5-Darci_Snowden.jpg?w=1440&h=1080&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
@@ -1542,11 +1542,11 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/iotd/2026/playing-the-moon-game-/tenthousandsmokes_oli2_20250929_th.jpg?w=720&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
@@ -1554,11 +1554,11 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1568,7 +1568,7 @@
     "slug": "solar-system/asteroids/4-vesta",
     "title": "4 Vesta - NASA Science",
     "description": "Vesta is the second most massive body in the main asteroid belt, accounting for almost 9% of the total mass of all asteroids. Only dwarf planet Ceres is more",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/07/4_vesta_main.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Vesta is the second most massive body in the main asteroid belt, accounting for almost 9% of the total mass of all asteroids. Only dwarf planet Ceres is more massive in that region of rocky debris between Mars and Jupiter. NASA’s Dawn spacecraft circled Vesta from July 16, 2011, until Sept. 5, 2012, when it departed and began its journey to dwarf planet Ceres.",
       "The giant asteroid is almost spherical, and so is nearly classified a dwarf planet. Unlike most known asteroids, Vesta has separated into crust, mantle and core (a characteristic known as being differentiated), much like Earth.",
@@ -1582,23 +1582,23 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/11/vesta-pia15678-1920x640-1.jpg?w=1920",
+        "src": "",
         "alt": "Roundish asteroid in space"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1608,7 +1608,7 @@
     "slug": "solar-system/kuiper-belt/facts",
     "title": "Kuiper Belt: Facts - NASA Science",
     "description": "The Kuiper Belt is located in the outer reaches of our solar system beyond the orbit of Neptune. It's sometimes called the \"third zone\" of the solar system.",
-    "hero": "https://science.nasa.gov/wp-content/uploads/2018/11/arrokoth-1920x640-1.jpg",
+    "hero": null,
     "body": [
       "The Kuiper Belt is a large, doughnut-shaped region of icy bodies extending far beyond the orbit of Neptune.",
       "The Kuiper Belt is located in the outer reaches of our solar system beyond the orbit of Neptune. It's sometimes called the \"third zone\" of the solar system. Astronomers think there are millions of small, icy objects in this region – including hundreds of thousands that are larger than 60 miles (100 kilometers) wide. Some of the objects, including Pluto, are over 600 miles (1,000 kilometers) wide. In addition to rock and water ice, objects in the Kuiper Belt also contain a variety of other frozen compounds like ammonia and methane.",
@@ -1649,27 +1649,27 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/466/Hubble_Images_of_Kuiper_Belt_Objects-1.jpeg?w=2268&h=1035&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Hubble Images of Kuiper Belt Objects"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5222/Arrokoth-2.jpeg?w=800&h=1153&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Arrokoth"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1679,7 +1679,7 @@
     "slug": "solar-system/asteroids/didymos",
     "title": "Didymos & Dimorphos - NASA Science",
     "description": "Asteroid Didymos and its small moonlet Dimorphos make up what’s called a binary asteroid system – meaning the small moon (Dimorphos) orbits the larger body",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/5697/Didymos_and_Dimorphos-1.jpeg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Asteroid Didymos and its small moonlet Dimorphos make up what’s called a binary asteroid system – meaning the small moon (Dimorphos) orbits the larger body (Didymos).",
       "The two asteroids are not a threat to Earth, but because they do pass relatively close to Earth, they were chosen as the target for NASA’s Double Asteroid Redirection Test (DART) mission – the agency's first mission to test planetary defense technology. This technology could one day be used to deflect hazardous asteroids on a collision course with Earth.",
@@ -1715,7 +1715,7 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2020/06/didymos-and-dimorphos-1920x640-1.jpg?w=1920",
+        "src": "",
         "alt": "Two asteroids in space"
       },
       {
@@ -1723,59 +1723,59 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5245/DART_Lifts_Off-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "DART Lifts Off"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5698/Dimorphos-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Dimorphos"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5700/LICIACube_Didymos_Dimorphos-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "LICIACube_Didymos_Dimorphos"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/08/pdco-dart-blue.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": "DART"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/4223/dart_still-reviseda_500.jpg?w=500&h=426&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Illustration of spacecraft on a collision course with an asteroid moon."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planetary-defense-coordination-office-seal.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": "Seal shows a guard in a castle turret using a telescope to watch out for asteroids and comets in the sky."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/dart/licia_cube_side_by_side.png?w=1920&h=1080&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/08/53894299636-aace57eda9-o.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/07/didymos-ridgeformation-picture1.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/06/hera-her-cubesats-and-their-rocky-target-destination.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1785,7 +1785,7 @@
     "slug": "solar-system/asteroids/dinkinesh",
     "title": "Dinkinesh - NASA Science",
     "description": "Dinkinesh is a small asteroid located in the main asteroid belt between Mars and Jupiter. On Nov. 1, 2023, NASA’s Lucy spacecraft flew by the asteroid, and",
-    "hero": "https://science.nasa.gov/wp-content/uploads/2023/11/dinkinesh-1920x640-1.jpg",
+    "hero": null,
     "body": [
       "A small asteroid with a 'marvelous' surprise.",
       "Dinkinesh is a small asteroid located in the main asteroid belt between Mars and Jupiter. On Nov. 1, 2023, NASA’s Lucy spacecraft flew by the asteroid, and sent back images showing that Dinkinesh has a moon, which",
@@ -1808,55 +1808,55 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/dinkinesh-1366.jpg?w=1366",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/dinkinesh-family-portrait-2.png?w=588",
+        "src": "",
         "alt": "An image of asteroid Dinkinesh, at left, an asteroid with a slightly jagged surface and its two two binary satellites, at right, two small grey jagged orbs, taken from the Lucy spacecraft."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/12/dinkinesh-and-selam.jpeg?w=982",
+        "src": "",
         "alt": "Two images of two gray colored asteroids. One of the space rocks is much larger."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/12/lucy-solar-array-preview.png?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/dj_stereo_xeye.png?w=2068&h=770&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/comets/3i-atlas/2025/Lucy",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/comets/3i-atlas/2025/MRO%20HiRISE-CLEAN%20FINAL.tif?w=150",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/lucy/Donaldjohanson%20Postcard.png?w=14584&h=10417&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/dj_stereo_xeye.png?w=2068&h=770&fit=crop&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/4204/Jupiter_against_black_background_of_space.jpeg?w=2260&h=2260&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/resources/detail_files/7/7668_Mars-viking-2-orbiter-global-view-partial-valles-marinares-PIA04304-full2.jpg?w=1600&h=1517&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/final_lucy_high-end-render_pira.jpg?w=1440&h=810&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1866,7 +1866,7 @@
     "slug": "solar-system/resources/resource-packages",
     "title": "Solar System Resource Packages - NASA Science",
     "description": "Explore these pages for curated collections of planetary resources, including activities that can be done at home, as well as videos, animations, printable",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/09/s/solar_system_Cover_rev_40-3.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Explore these pages for curated collections of planetary resources, including activities that can be done at home, as well as videos, animations, printable graphics, and online interactives. These resource packages are suitable for educators, students, and anyone interested in learning more about our solar system!",
       "You're invited! Each International Observe the Moon Night, people around the world celebrate lunar observation, science, exploration, arts, and culture.",
@@ -1874,63 +1874,63 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/solar-system-illustration-16x9-1.jpg?w=2048",
+        "src": "",
         "alt": "An illustration of a slice of a bright orange sun, with planets, a comet and asteroids against a blue-black starry background."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/10/bennu-comettempel1.png?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia14/pia14011/jpeg/PIA14011.jpg?fit=clip&crop=faces%2Cfocalpoint&w=300",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2024/07/uranus-and-neptune.png?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/STSCI-H-p1936a-f-1600.jpg?fit=clip&crop=faces%2Cfocalpoint&w=300",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/final_lucy_high-end-render_pira.jpg?fit=clip&crop=faces%2Cfocalpoint&w=300",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/hubble/releases/2025/04/STScI-01JQ6NFS351FM041Z2XBFZXEVP.jpg?fit=clip&crop=faces%2Cfocalpoint&w=300",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/11/mercury-messenger-globe-pia15162.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/07/ns-clppr-srfc-100622-031-00000-cropped.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2022/10/orex-new2.png?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/07/dwarf-planets.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/682400main_pia14922_full_full.jpg?fit=clip&crop=faces%2Cfocalpoint&w=300",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/s/solar_system_Cover_rev_40-3.jpg?fit=clip&crop=faces%2Cfocalpoint&w=300",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/688_Venus_1200.jpg?fit=clip&crop=faces%2Cfocalpoint&w=300",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/international-observe-the-moon-night-promo.png?w=900",
+        "src": "",
         "alt": ""
       },
       {
@@ -1938,11 +1938,11 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/07/pia06890-our-solar-system-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/2021-messenging-1-jpg.webp?w=1536",
+        "src": "",
         "alt": ""
       }
     ]
@@ -1952,7 +1952,7 @@
     "slug": "solar-system/asteroids",
     "title": "Asteroids",
     "description": "Asteroids, sometimes called minor planets, are rocky, airless remnants left over from the early formation of our solar system about 4.6 billion years ago.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/5264/Asteroid_Bennu-1.jpeg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Asteroids, sometimes called minor planets, are rocky, airless remnants left over from the early formation of our solar system about 4.6 billion years ago.",
       "Most asteroids can be found orbiting the Sun between Mars and Jupiter within the main asteroid belt. Asteroids range in size from",
@@ -1969,7 +1969,7 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1920",
+        "src": "",
         "alt": "Closeup view of a rocky, diamond-shaped asteroid in space"
       },
       {
@@ -1977,51 +1977,51 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/186_bennu_carousel_5.jpg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/content/dam/science/psd/planetary-defense/2024yr4_discovery_atlas.gif?w=650&h=500&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Asteroid 2024 YR4"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/Apophis.jpeg?w=800&h=372&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A grainy image with a distant asteroid circled"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/09/pia24471-modest.jpg?w=577",
+        "src": "",
         "alt": "Asteroid Psyche in space. The asteroid has reddish patches and large craters."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5264/Asteroid_Bennu-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A close up view of diamond-shaped Asteroid Bennu. The asteroid appears gray in this image. Rocks and craters are visible."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/12/dinkinesh-firstlook-llorri.webp",
+        "src": "",
         "alt": "An image of asteroid Dinkinesh, a pair of grey asteroids with a slightly jagged surface, taken from the Lucy spacecraft."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/lucy/final_0798443319_dec.png?w=1010&h=830&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Asteroid Donaldjohanson, as seen by the Lucy spacecraft during its close flyby. The asteroid looks like two lobes, attached by a thinner cylinder, like a barbell with very large weights. One lobe is smaller than the other. Although they are both about the same circumference, the smaller lobe is less wide than the other. The asteroid is a smooth, light gray surface, with smooth-edged craters dimpling its surface. The larger lobe has many more craters."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2020/06/didymos-and-dimorphos-1920x640-1.jpg?w=1024",
+        "src": "",
         "alt": "Two asteroids in space"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/4898/Asteroid_Vesta-1.jpeg?w=800&h=702&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Asteroid Vesta"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/i/a/0/PIA02467-1.jpg?w=1024&h=691&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/i/ida_dactyl.jpg?w=905&h=655&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/11/itokawa-banner-1920x640-1.jpg?w=1024",
+        "src": "",
         "alt": "Image of an asteroid in space"
       },
       {
@@ -2029,7 +2029,7 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/dj_stereo_xeye.png?w=2068&h=770&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
@@ -2037,39 +2037,39 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia26/pia26750/figures/PIA26750_figA.jpg?w=1499&h=888&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/neo-surveyor/images/1_PIA26669-telescope.jpg?w=1920&h=1280&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/08/pdco-shield-white.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": "Planetary Defense Coordination Office shield"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/10/cneos-banner.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": "Illustration of an asteroid approaching Earth"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/i/a/0/PIA00135-1.jpg?w=2100&h=2130&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -2079,7 +2079,7 @@
     "slug": "solar-system/comets/c-2012-s1-ison",
     "title": "C/2012 S1 (ISON) - NASA Science",
     "description": "C/2012 S1 (ISON) was the subject of the most coordinated comet observing campaign in history. Over the course of a year, more than a dozen spacecraft and",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/07/c-2012-s1-ison_main.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "C/2012 S1 (ISON) was the subject of the most coordinated comet observing campaign in history. Over the course of a year, more than a dozen spacecraft and numerous ground-based observers collected what is believed to be the largest single cometary dataset in history as ISON plunged toward a close encounter with the Sun.",
       "Just prior to its closest approach to the Sun on Nov. 28, 2013, Comet ISON went through a major heating event, and was torn to pieces. What remained of Comet ISON appeared to brighten and spread out, then fade. We have seen comets come close to the Sun and disrupt and disappear before, like Comets Lovejoy and Elenin in 2012.",
@@ -2090,23 +2090,23 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/c-2012-s1-ison_main.jpg?w=768&h=524&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -2116,7 +2116,7 @@
     "slug": "solar-system/meteors-meteorites/facts",
     "title": "Meteors and Meteorites: Facts - NASA Science",
     "description": "Meteoroids are space rocks that range in size from dust grains to small asteroids. This term only applies when these rocks while they are still in space.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/internal_resources/3358/Man_standing_over_meteorite_in_desert.jpeg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "What’s that flash of light streaking across the sky? We call the objects that creates this brilliant effect by different names, depending on where it is.",
       "Meteoroids are space rocks that range in size from dust grains to small asteroids.",
@@ -2149,55 +2149,55 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/bosf/images/1-3-leonid-danielsen1.jpeg?w=768&h=512&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Meteoroids are space rocks that range in size from dust grains to small asteroids."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/10/perseids-2023-preston-dyches-16x9-1.jpg?w=1024",
+        "src": "",
         "alt": "When meteoroids enter Earth’s atmosphere, or that of another planet, at high speed and burn up, they’re called meteors."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/geminids_main.jpg?w=768&h=576&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "When you see lots if meteors, you’re watching a meteor shower."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3359/Meteorite_help_between_finger_and_thumb-1.jpeg?w=1944&h=2592&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "When a meteoroid survives its trip through the atmosphere and hits the ground, it’s called a meteorite. Meteorites typically range between the size of a pebble and a fist."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/11/2008-tc3-meteor.jpg?w=2048",
+        "src": "",
         "alt": "A man in a blue jacket, jeans, a tan scarfc and a baseball type cap walks toward a rock in the desert."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3357/Lone_figure_searching_a_vast_expanse_of_desert-1.jpeg?w=946&h=710&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Lone figure searching a vast expanse of desert."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/328/PIA18387_modest.jpg?w=834&h=400&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Meteorites on surface of Mars."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3360/Aerial_view_of_Meteor_Crater_in_Arizona.jpeg?w=800&h=533&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Aerial view of Meteor Crater in Arizona."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5267/Chelabinsyk_Meteor-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Chelyabinsk Meteor"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -2207,7 +2207,7 @@
     "slug": "solar-system/comets/1p-halley",
     "title": "1P/Halley - NASA Science",
     "description": "Halley is often called the most famous comet because it marked the first time astronomers understood comets could be repeat visitors to our night skies.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/07/Giotto_halley_br.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Halley is often called the most famous comet because it marked the first time astronomers understood comets could be repeat visitors to our night skies. Astronomers have now linked the comet's appearances to observations dating back more than 2,000 years.",
       "Halley was last seen in Earth's skies in 1986 and was met in space by an international fleet of spacecraft. It will return in 2061 on its regular 76-year journey around the Sun.",
@@ -2228,27 +2228,27 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/Giotto_halley_br.jpg?w=732&h=383&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Image of Comet Halley"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3744/Tapestry_on_men_looking_at_comet.jpeg?w=1280&h=1332&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Tapestry on men looking at comet."
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -2258,7 +2258,7 @@
     "slug": "solar-system/asteroids/16-psyche",
     "title": "Asteroid Psyche",
     "description": "Up until recently, the scientific consensus was that the asteroid Psyche consisted mostly of metal. The more recent data indicates that the asteroid is",
-    "hero": "https://science.nasa.gov/wp-content/uploads/2023/08/psyche-asteroid-illustration-pia24472.jpg",
+    "hero": null,
     "body": [
       "A Unique, Metal Rich World",
       "Psyche has an irregular, potato-like shape. If it were sliced in half horizontally at the equator – picture a squished oval – it would measure 173 miles (280 kilometers) across at its widest point and 144 miles (232 kilometers) long. Its surface area is 64,000 square miles (165,800 square kilometers).",
@@ -2283,19 +2283,19 @@
         "alt": "This illustration, created in March 2021, depicts the 140-mile-wide (226-kilometer-wide) asteroid Psyche, which lies in the main asteroid belt between Mars and Jupiter."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/172/Psyche_Mission-1.jpeg?w=768&h=432&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Psyche Mission"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/09/pia24834-modest.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/09/pia23875.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/08/psyche-icon-color-jpg.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": "An unlabeled logo for NASA's Psyche mission. It's a square shape with multiple colors and a white background."
       },
       {
@@ -2303,15 +2303,15 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia26/pia26750/figures/PIA26750_figA.jpg?w=1499&h=888&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2023/08/pia24473-psyche-spacecraft-16.jpg?w=1600&h=900&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/photojournal/pia/pia24/pia24473/PIA24473.jpg?w=384&h=256&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
@@ -2319,19 +2319,19 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -2341,7 +2341,7 @@
     "slug": "solar-system/asteroids/donaldjohanson",
     "title": "Asteroid Donaldjohanson",
     "description": "Asteroid Donaldjohanson is a uniquely shaped fragment of an asteroid that formed about 150 million years ago. It is located in the main asteroid belt.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/missions/lucy/final_0798443319_dec.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "hero": null,
     "body": [
       "Asteroid Donaldjohanson is a uniquely shaped fragment of an asteroid that formed about 150 million years ago. It is located in the main asteroid belt between Mars and Jupiter. NASA’s",
       "The asteroid was previously observed to have large brightness variations over a 10-day period, so some of Lucy team members’ expectations were confirmed when the first images showed what appeared to be an elongated contact binary (an object formed when two smaller bodies collide). However, the team was surprised by the odd shape of the narrow neck connecting the two lobes, which looks like two nested ice cream cones.",
@@ -2359,59 +2359,59 @@
     ],
     "images": [
       {
-        "src": "https://assets.science.nasa.gov/content/dam/science/missions/lucy/djencounter_movie_release_v2.gif?w=1022&h=766&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Gif of Asteroid Donaldjohanson, as seen by the Lucy spacecraft during its close flyby. The asteroid looks like two lobes, attached by a thinner cylinder, like a barbell with very large weights. One lobe is smaller than the other. Although they are both about the same circumference, the smaller lobe is less wide than the other. The asteroid is a smooth, light gray surface, with smooth-edged craters dimpling its surface. The larger lobe has many more craters. The asteroid moves closer to the camera, pushing in on the larger lobe. Then it rotates slightly to look along the asteroid long-ways."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/lucy/final_0798443319_dec.png?w=1010&h=830&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Asteroid Donaldjohanson, as seen by the Lucy spacecraft during its close flyby. The asteroid looks like two lobes, attached by a thinner cylinder, like a barbell with very large weights. One lobe is smaller than the other. Although they are both about the same circumference, the smaller lobe is less wide than the other. The asteroid is a smooth, light gray surface, with smooth-edged craters dimpling its surface. The larger lobe has many more craters."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/dj_stereo_xeye.png?w=2068&h=770&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/comets/3i-atlas/2025/Lucy",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar-system/comets/3i-atlas/2025/MRO%20HiRISE-CLEAN%20FINAL.tif?w=150",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/lucy/Donaldjohanson%20Postcard.png?w=14584&h=10417&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/dj_stereo_xeye.png?w=2068&h=770&fit=crop&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/bosf/images/editor-page-nasa-logo-250s.png?w=250&h=250&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "NASA logo"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2023/06/f/final_lucy_high-end-render_pira-1.jpg?w=1440&h=945&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "image of the Lucy spacecraft flying by an asteroid"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/general/images/2023/06/b/bennu.jpg?w=1600&h=900&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "A full disc view of Bennu, whoing its surface littered with giant boulders."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5696/Apophis-1.jpeg?w=800&h=372&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5264/Asteroid_Bennu-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/08/psyche-asteroid-illustration-pia24472.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/plugins/nasa-blocks/assets/images/topic-cards/topic-card-sample-4.jpg",
+        "src": "",
         "alt": ""
       }
     ]
@@ -2421,7 +2421,7 @@
     "slug": "solar-system/asteroids/25143-itokawa",
     "title": "25143 Itokawa - NASA Science",
     "description": "In 2005, 25143 Itokawa became the first asteroid from which samples were captured and brought to Earth for analysis. The Japanese spacecraft Hayabusa",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/07/itokawa_main.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "In 2005, 25143 Itokawa became the first asteroid from which samples were captured and brought to Earth for analysis. The Japanese spacecraft Hayabusa (Japanese for falcon) touched down twice on the asteroid and collected a small amount of dust despite the failure of the mechanism designed for the purpose. It delivered the sample to Earth on 13 June 2010.",
       "Hayabusa's close-up observations of the asteroid and the subsequent analysis of its dust in labs on Earth support the conclusion that Itokawa is part of what remains from a much larger object that was shattered by a collision. The dust also confirms that S-type (this refers to the asteroid's color spectrum) asteroids like Itokawa, which are the most common type of asteroid in the inner main belt, are the source of the most common kind of meteorite found on Earth: the ordinary chondrite.",
@@ -2435,23 +2435,23 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/11/itokawa-banner-1920x640-1.jpg?w=1920",
+        "src": "",
         "alt": "Image of an asteroid in space"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -2461,7 +2461,7 @@
     "slug": "solar-system/asteroids/433-eros",
     "title": "433 Eros - NASA Science",
     "description": "Eros is famous as the first asteroid to be orbited by a spacecraft, and the first asteroid to have a spacecraft land on it. But Eros was important to",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/07/Eros_main.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "Eros is famous as the first asteroid to be orbited by a spacecraft, and the first asteroid to have a spacecraft land on it. But Eros was important to astronomers as far back as 1898 when it became the first near-Earth asteroid (NEA) to be discovered.",
       "The NEAR spacecraft first flew by Eros on Dec. 23, 1998, at a distance of about 2,400 miles (about 3,800 kilometers) and found that the asteroid was smaller than expected and had two medium-sized craters, a long surface ridge, and a density similar to that of Earth's crust. After several trajectory adjustments, NEAR finally moved into orbit around Eros on Valentine's Day (befitting an asteroid named for the Greek god of love), Feb. 14, 2000.",
@@ -2477,23 +2477,23 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/11/eros-banner-pia02467-1920x640-1.jpg?w=1920",
+        "src": "",
         "alt": "An oblong-shaped asteroid in space with a giant crater near its center"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -2503,7 +2503,7 @@
     "slug": "solar-system/how-to-photograph-a-meteor-shower",
     "title": "How to Photograph a Meteor Shower - NASA Science",
     "description": "Photographing a meteor shower can be an exercise in patience, but with these tips – and some good fortune – you might be rewarded with a great photo.",
-    "hero": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/06/20526349219_052849eedb_Optimized.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    "hero": null,
     "body": [
       "NASA Science Editorial Team",
       "Taking photographs of a meteor shower can be an exercise in patience as meteors streak across the sky quickly and unannounced, but with these tips – and some good fortune – you might be rewarded with a great photo.",
@@ -2528,51 +2528,51 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/04/NASA_logo.png?w=300",
+        "src": "",
         "alt": "The headshot image of NASA Science Editorial Team"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/20526349219_052849eedb_Optimized.jpg?w=1280&h=854&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Meteor streaks over desert landscape."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/1319/Meteor_streak_over_a_forest.jpeg?w=1600&h=1356&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Meteor streak over a forest."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/1320/Meteor_streak_over_Washington__DC.jpeg?w=1600&h=633&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Meteor streak over Washington, DC."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/1321/Meteor_with_Milky_Way_in_the_background.jpeg?w=1600&h=1271&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Meteor with Milky Way in the background."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/1322/Light_trail_on_a_path_in_Joshua_Tree_National_Park.jpeg?w=1607&h=1073&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Light trail on a path in Joshua Tree National Park."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/1323/Meteor_over_a_forest_with_twilight_on_the_horizon.jpeg?w=1600&h=1068&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Meteor over a forest with twilight on the horizon."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/3183/Chart_showing_Leonid_Meteors_radiating_from_constellation_Leo-1.jpeg?w=1517&h=1058&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Chart showing Leonid Meteors radiating from constellation Leo."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/1325/Meteor_falling_against_dark__starry_sky.jpeg?w=1600&h=1013&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Meteor falling against dark, starry sky."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/1326/Light_trail_made_by_hikers_going_up_a_mountain_in_the_dark.jpeg?w=1600&h=1068&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Light trail made by hikers going up a mountain in the dark."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/1328/Meteor_falling_to_Earth_as_seen_from_the_International_Space_Station.jpeg?w=1277&h=850&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Meteor falling to Earth as seen from the International Space Station."
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/cds/learn/science-activation-stories/2026/NESSP_e2v_photo_5-Darci_Snowden.jpg?w=1440&h=1080&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
@@ -2580,11 +2580,11 @@
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/iotd/2026/playing-the-moon-game-/tenthousandsmokes_oli2_20250929_th.jpg?w=720&h=480&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
@@ -2592,11 +2592,11 @@
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]
@@ -2606,7 +2606,7 @@
     "slug": "solar-system/asteroids/facts",
     "title": "Asteroid Facts",
     "description": "Asteroids are rocky remnants left over from the formation of our solar system about 4.6 billion years ago. Here are some facts about asteroids.",
-    "hero": "https://science.nasa.gov/wp-content/uploads/2023/08/psyche-asteroid-illustration-pia24472.jpg",
+    "hero": null,
     "body": [
       "Asteroids, sometimes called minor planets, are rocky remnants left over from the formation of our solar system about 4.6 billion years ago.",
       "For the most up to date count of asteroids in our solar system please visit NASA/JPL's Solar System Dynamics website.",
@@ -2634,55 +2634,55 @@
     ],
     "images": [
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1024",
+        "src": "",
         "alt": "Closeup view of a rocky, diamond-shaped asteroid in space"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/Didymos_and_Dimorphos.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2017/11/vesta-pia15678-1920x640-1.jpg?w=1024",
+        "src": "",
         "alt": "Roundish asteroid in space"
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/186_bennu_carousel_5.jpg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/07/Meteor_Crater.jpeg?w=800&h=331&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/internal_resources/5267/Chelabinsyk_Meteor-1.jpeg?w=800&h=600&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": "Chelyabinsk Meteor"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/08/pdco-shield-white.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": "Planetary Defense Coordination Office shield"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/09/pdco-cneos.png?w=150&h=150&crop=1",
+        "src": "",
         "alt": "near-earth asteroid by a sky"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/09/pdco-minor-planet-center-logo.jpg?w=150&h=150&crop=1",
+        "src": "",
         "alt": "Minor Planet Center logo"
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/05/pia03149-copy.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2023/06/planets3x3-pluto-colormercury-axis-tilt-nolabels-1080p.00001-print.jpg?w=1024",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://science.nasa.gov/wp-content/uploads/2018/07/bennu-banner-1920x640-1.jpg?w=1536",
+        "src": "",
         "alt": ""
       },
       {
-        "src": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/06/PIA22190_1600.jpg?w=1600&h=800&fit=clip&crop=faces%2Cfocalpoint",
+        "src": "",
         "alt": ""
       }
     ]

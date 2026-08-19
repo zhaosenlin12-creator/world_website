@@ -30,26 +30,29 @@ type Placement = {
   spinZ: number;
 };
 
-function buildPlacement(index: number, total: number): Placement {
-  const ringIndex = Math.floor(index / 4);
-  const ringSize = ringIndex === 0 ? Math.min(4, total) : Math.min(3, Math.max(1, total - ringIndex * 4));
-  const ringRadius = 22 + ringIndex * 16;
-  const angleBase = (index % Math.max(ringSize, 1)) / Math.max(ringSize, 1);
-  const angle = angleBase * Math.PI * 2 + ringIndex * 0.55;
-  const verticalBand = ((index % 5) - 2) * 4.5;
-  const depthBias = ringIndex % 2 === 0 ? -10 - index * 1.5 : 10 + index * 1.2;
-
+// Fibonacci 球面分布: 飞行器在球面上均匀散开, 避免中心堆叠
+function buildPlacement(index: number, total: number, seed = 1337): Placement {
+  const PHI = Math.PI * (3 - Math.sqrt(5));
+  const y = 1 - (index / Math.max(1, total - 1)) * 2;
+  const radiusXZ = Math.sqrt(Math.max(0, 1 - y * y));
+  const theta = PHI * index;
+  const r1 = ((index * 9301 + seed) % 233280) / 233280;
+  const r2 = ((index * 49297 + seed * 7) % 233280) / 233280;
+  const r3 = ((index * 23311 + seed * 13) % 233280) / 233280;
+  const r4 = ((index * 6151 + seed * 19) % 233280) / 233280;
+  const sphereRadius = 78 + r1 * 22;
+  const yOffset = y * 34;
   return {
     position: [
-      Math.cos(angle) * ringRadius,
-      verticalBand + Math.sin(angle * 2.3) * 3.2,
-      Math.sin(angle) * (ringRadius * 0.9) + depthBias,
+      Math.cos(theta) * radiusXZ * sphereRadius,
+      yOffset + (r2 - 0.5) * 8,
+      Math.sin(theta) * radiusXZ * sphereRadius,
     ],
-    driftAmp: 1.8 + (index % 3) * 0.55,
-    driftPhase: index * 0.8,
-    driftSpeed: 0.18 + (index % 4) * 0.04,
-    spinY: 0.1 + (index % 4) * 0.03,
-    spinZ: ((index % 5) - 2) * 0.018,
+    driftAmp: 1.4 + r2 * 1.6,
+    driftPhase: r3 * Math.PI * 2,
+    driftSpeed: 0.14 + r4 * 0.22,
+    spinY: 0.06 + r1 * 0.18,
+    spinZ: (r2 - 0.5) * 0.05,
   };
 }
 
@@ -73,7 +76,7 @@ function FocusRig({
 }) {
   const { camera } = useThree();
   const lookAtRef = useRef(new THREE.Vector3(0, 0, 0));
-  const desiredCamera = useRef(new THREE.Vector3(0, 14, 110));
+  const desiredCamera = useRef(new THREE.Vector3(0, 28, 165));
 
   useFrame((_, delta) => {
     const selectedPosition = selectedSlug ? positionsRef.current[selectedSlug] : null;
@@ -82,7 +85,7 @@ function FocusRig({
       desiredCamera.current.copy(selectedPosition).add(offset);
       lookAtRef.current.lerp(selectedPosition, 1 - Math.pow(0.08, delta));
     } else {
-      desiredCamera.current.lerp(new THREE.Vector3(0, 14, 110), 1 - Math.pow(0.08, delta));
+      desiredCamera.current.lerp(new THREE.Vector3(0, 28, 165), 1 - Math.pow(0.08, delta));
       lookAtRef.current.lerp(new THREE.Vector3(0, 0, 0), 1 - Math.pow(0.08, delta));
     }
     camera.position.lerp(desiredCamera.current, 1 - Math.pow(0.12, delta));
@@ -203,7 +206,7 @@ function SceneInner({
       <directionalLight position={[45, 24, 26]} intensity={1.5} color="#fff4d6" />
       <directionalLight position={[-35, -16, -18]} intensity={0.8} color="#7dd3fc" />
       <pointLight position={[-80, 25, -70]} intensity={2.2} color="#ffd76a" distance={220} />
-      <Stars radius={220} depth={90} count={5000} factor={4} saturation={0} fade speed={0.35} />
+      <Stars radius={220} depth={90} count={2500} factor={4} saturation={0} fade speed={0.35} />
       <BackgroundSun />
       {models.map((model, index) => {
         const placement = buildPlacement(index, models.length);
@@ -238,7 +241,7 @@ export function SpacecraftFleet({ models, selectedSlug, onSelect }: Props) {
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: [0, 14, 110], fov: 42, near: 0.1, far: 700 }}
+      camera={{ position: [0, 28, 165], fov: 55, near: 0.1, far: 800 }}
       gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
       onPointerMissed={() => {
         document.body.style.cursor = "default";
@@ -263,8 +266,8 @@ export function SpacecraftFleet({ models, selectedSlug, onSelect }: Props) {
         minDistance={12}
         maxDistance={260}
         maxPolarAngle={Math.PI * 0.92}
-        autoRotate={!selectedSlug}
-        autoRotateSpeed={0.12}
+        autoRotate={false}
+        autoRotateSpeed={0.0}
       />
     </Canvas>
   );

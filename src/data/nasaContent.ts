@@ -13,8 +13,8 @@ export const heroDiscovery = {
   eyebrow: "科学发现",
   title: "钱德拉与韦布正在改写我们对宇宙的认知",
   body: "最新的探测任务持续拓展我们对恒星、星系与深空结构的理解。这一组页面汇集了最新的天文视频、图像与 3D 资源，让探索体验更具沉浸感。",
-  video: "https://assets.science.nasa.gov/content/dam/science/missions/webb/outreach/migrated/2022/STScI-01G6X376A8FS0E1GMJAPT56NZ3.mp4",
-  poster: "https://assets.science.nasa.gov/content/dam/science/missions/webb/outreach/migrated/2017/STScI-01H8PJ6083PCF4KJ1AYKVVRX8Q.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+  video: "",
+  poster: "/assets/video/discovery.svg",
   href: "https://science.nasa.gov/universe/",
 };
 
@@ -26,7 +26,7 @@ export const featuredTopics: NasaTopicCard[] = [
     href: "https://science.nasa.gov/universe/stars/",
     tone: "amber",
     mediaType: "video",
-    mediaUrl: "https://assets.science.nasa.gov/content/dam/science/missions/webb/outreach/migrated/2022/STScI-01G6X376A8FS0E1GMJAPT56NZ3.mp4",
+    mediaUrl: "",
   },
   {
     tag: "黑洞",
@@ -35,7 +35,7 @@ export const featuredTopics: NasaTopicCard[] = [
     href: "https://science.nasa.gov/universe/black-holes/",
     tone: "fuchsia",
     mediaType: "image",
-    mediaUrl: "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/09/b/blackhole_1600.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    mediaUrl: "",
   },
   {
     tag: "银河系",
@@ -44,7 +44,7 @@ export const featuredTopics: NasaTopicCard[] = [
     href: "https://science.nasa.gov/missions/chandra/nasas-chandra-examines-milky-way-at-arms-length/",
     tone: "cyan",
     mediaType: "video",
-    mediaUrl: "https://assets.science.nasa.gov/content/dam/science/missions/hubble/galaxies/milky-way/STScI-01EVSC7MAP60H76EJ48D5YEMG1.mp4",
+    mediaUrl: "",
   },
   {
     tag: "韦布",
@@ -53,7 +53,7 @@ export const featuredTopics: NasaTopicCard[] = [
     href: "https://science.nasa.gov/mission/webb/",
     tone: "fuchsia",
     mediaType: "image",
-    mediaUrl: "https://assets.science.nasa.gov/content/dam/science/missions/webb/science/2019/04/STScI-01G5A807X1CM2RBZKYFK0184YM.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    mediaUrl: "",
   },
   {
     tag: "互动探索",
@@ -62,7 +62,7 @@ export const featuredTopics: NasaTopicCard[] = [
     href: "https://science.nasa.gov/eyes/",
     tone: "cyan",
     mediaType: "image",
-    mediaUrl: "https://assets.science.nasa.gov/content/dam/science/missions/webb/outreach/migrated/2017/STScI-01H8PJ6083PCF4KJ1AYKVVRX8Q.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    mediaUrl: "",
   },
   {
     tag: "星系",
@@ -71,7 +71,7 @@ export const featuredTopics: NasaTopicCard[] = [
     href: "https://science.nasa.gov/universe/galaxies/",
     tone: "amber",
     mediaType: "image",
-    mediaUrl: "https://assets.science.nasa.gov/content/dam/science/missions/webb/science/2019/04/STScI-01G5A807X1CM2RBZKYFK0184YM.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+    mediaUrl: "",
   },
 ];
 

@@ -182,7 +182,7 @@ export default function PlayOpsConsole(props: Props) {
             <div className="relative">
               <div className="flex items-center justify-between">
                 <div className="console-eyebrow text-amber-200/85">任务播报</div>
-                <span className="font-mono text-[10px] text-white/40">CH · {String(latestLogs.length).padStart(2, "0")}</span>
+                <span className="font-mono text-[10px] text-white/40">日志 · {String(latestLogs.length).padStart(2, "0")}</span>
               </div>
               <div className="mt-2 space-y-1.5">
                 {latestLogs.map((item, idx) => (
