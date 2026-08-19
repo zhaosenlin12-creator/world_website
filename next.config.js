@@ -2,7 +2,7 @@
 const basePath = process.env.GITHUB_PAGES === 'true' ? '/world_website' : '';
 const nextConfig = {
   output: 'export',
-  reactStrictMode: true,
+  reactStrictMode: false,
   trailingSlash: true,
   basePath,
   assetPrefix: basePath || undefined,
@@ -15,3 +15,4 @@ const nextConfig = {
   }
 };
 module.exports = nextConfig;
+

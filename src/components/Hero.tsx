@@ -1,22 +1,16 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { zh } from "@/i18n/zh";
 import { ClickRipples } from "@/components/fx/ClickRipples";
 import { TextType } from "@/components/fx/TextType";
 import { MagneticButton } from "@/components/fx/MagneticButton";
 import { CountUp } from "@/components/fx/CountUp";
 
-const Hero3DScene = dynamic(() => import("@/components/fx/Hero3DScene").then((m) => m.Hero3DScene), {
-  ssr: false,
-  loading: () => (
-    <div className="absolute inset-0 bg-[#05060f]">
-      <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-transparent to-transparent" />
-    </div>
-  )
-});
+// 直接同步导入: 原 dynamic() 在生产构建中 chunk 解析异常, 改成同步导入保证首屏立即挂载
+// (Hero3DScene 内部已经 "use client" + Suspense 包裹 useTexture, 客户端水合后立即渲染)
+import { Hero3DScene } from "@/components/fx/Hero3DScene";
 
 // 多文案循环 (与项目主题相关)
 const HERO_CYCLE = [
@@ -30,6 +24,8 @@ const HERO_CYCLE = [
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.5, 0]);
@@ -42,7 +38,7 @@ export function Hero() {
         className="relative min-h-screen overflow-hidden flex items-center justify-center pt-24 pb-12 bg-[#05060f]"
         style={{ cursor: "crosshair" }}
       >
-        <Hero3DScene />
+        {mounted ? <Hero3DScene /> : <div className="absolute inset-0 bg-[#05060f]"><div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-transparent to-transparent" /></div>}
 
         <div
           className="absolute inset-0 pointer-events-none"
@@ -178,3 +174,11 @@ export function Hero() {
     </ClickRipples>
   );
 }
+
+
+
+
+
+
+
+

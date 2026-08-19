@@ -488,8 +488,8 @@ function Scene({ focusId, onPlanetClick }: { focusId: string | null; onPlanetCli
       <color attach="background" args={["#05060f"]} />
       <Starfield count={6000} radius={150} />
       <OrbitRings />
-      <Sun />
-      <OrbitSystem onPlanetClick={onPlanetClick} />
+      <Suspense fallback={null}><Sun /></Suspense>
+      <Suspense fallback={null}><OrbitSystem onPlanetClick={onPlanetClick} /></Suspense>
       <AsteroidBelt />
       <KuiperBelt />
       <Comet />
@@ -525,3 +525,8 @@ export function Hero3DScene({ className = "" }: { className?: string }) {
     </div>
   );
 }
+
+
+
+
+
