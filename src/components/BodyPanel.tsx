@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SolarBody, ALL_BODIES } from "@/data/bodies";
 import { useEffect, useState } from "react";
 import { zh } from "@/i18n/zh";
+import bodyArticles from "@/data/bodyArticles.json";
 
 interface Props { body: SolarBody; onClose: () => void }
 
@@ -31,10 +32,9 @@ export function BodyPanel({ body, onClose }: Props) {
   const [article, setArticle] = useState<Article | null>(null);
 
   useEffect(() => {
-    setArticle(null);
-    fetch(`/api/bodies/${body.id}`).then((r) => r.ok ? r.json() : null).then((d) => {
-      if (d) setArticle(d);
-    }).catch(() => {});
+    // 静态导出构建: 直接使用编译期 JSON, 无需 /api 调用
+    const list = (bodyArticles as Record<string, Article[] | undefined>)[body.id];
+    setArticle(list && list.length > 0 ? list[0] : null);
   }, [body.id]);
 
   const linked = ALL_BODIES.filter((b) => b.kind === body.kind && b.id !== body.id).slice(0, 4);

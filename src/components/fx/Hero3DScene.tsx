@@ -1,7 +1,7 @@
 "use client";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
-import { Suspense, useMemo, useRef, useState } from "react";
+import { useTexture, useGLTF } from "@react-three/drei";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 // 圆形星点贴图 (生成一次)
 const STAR_TEX_CACHE = (() => {
   if (typeof document === "undefined") return null;
@@ -19,6 +19,7 @@ const STAR_TEX_CACHE = (() => {
   return c;
 })();
 import * as THREE from "three";
+import { ErrorBoundary } from "@/components/fx/ErrorBoundary";
 
 type Body = {
   id: string;
@@ -168,8 +169,8 @@ function OrbitRings() {
     <>
       {rings.map((b) => (
         <mesh key={b.id} rotation={[Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[b.distance - 0.04, b.distance + 0.04, 128]} />
-          <meshBasicMaterial color="#a855f7" transparent opacity={0.06} side={THREE.DoubleSide} />
+          <ringGeometry args={[b.distance - 0.05, b.distance + 0.05, 64]} />
+          <meshBasicMaterial color="#a855f7" transparent opacity={0.05} side={THREE.DoubleSide} />
         </mesh>
       ))}
     </>
@@ -481,11 +482,48 @@ function AutoCamera({ focusId }: { focusId: string | null }) {
 }
 
 // 内层 Canvas 场景
+function SpacecraftTrails() {
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    // 等首屏绘制完毕再加载 4 个 GLB (降低首帧压力)
+    const t = setTimeout(() => setEnabled(true), 1200);
+    return () => clearTimeout(t);
+  }, []);
+  if (!enabled) return null;
+  return (
+    <Suspense fallback={null}>
+      <SpacecraftModels />
+    </Suspense>
+  );
+}
+
+function SpacecraftModels() {
+  const voyager = useGLTF('/assets/models/nasa/voyager-probe-b/voyager-probe-b.glb');
+  const rq36 = useGLTF('/assets/models/nasa/1999-rq36-asteroid/rq36-asteroid.glb');
+  const ref = useRef<THREE.Group>(null!);
+  useFrame((_, delta) => {
+    if (!ref.current) return;
+    ref.current.rotation.y += delta * 0.04;
+    ref.current.children.forEach((c, i) => {
+      c.rotation.y += delta * 0.5;
+      c.rotation.z += delta * 0.1 * (i % 2 ? 1 : -1);
+    });
+  });
+  return (
+    <group ref={ref} position={[0, 8, 0]}>
+      <primitive object={voyager.scene.clone()} position={[-9, 0, 0]} scale={0.6} />
+      <primitive object={voyager.scene.clone()} position={[10, 2, -4]} scale={0.5} />
+      <primitive object={rq36.scene.clone()} position={[6, -3, 4]} scale={0.35} />
+      <primitive object={rq36.scene.clone()} position={[-7, 3, -6]} scale={0.4} />
+    </group>
+  );
+}
+
 function Scene({ focusId, onPlanetClick }: { focusId: string | null; onPlanetClick: (id: string) => void }) {
   return (
     <>
       <color attach="background" args={["#05060f"]} />
-      <Starfield count={6000} radius={150} />
+      <Starfield count={2500} radius={140} />
       <OrbitRings />
       <Sun />
       <OrbitSystem onPlanetClick={onPlanetClick} />
@@ -505,9 +543,14 @@ export function Hero3DScene({ className = "" }: { className?: string }) {
     setTimeout(() => setFocusId((cur) => (cur === id ? null : cur)), 5000);
   };
   return (
+    <ErrorBoundary fallback={
+      <div className={"absolute inset-0 bg-[#05060f] " + className}>
+        <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-transparent to-transparent" />
+      </div>
+    }>
     <div className={"absolute inset-0 " + className}>
       <Canvas
-        dpr={[1, 2]}
+        dpr={[1, 1.25]}
         camera={{ position: [15, 22, 60], fov: 55, near: 0.1, far: 200 }}
         gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
       >
@@ -521,5 +564,6 @@ export function Hero3DScene({ className = "" }: { className?: string }) {
         </div>
       )}
     </div>
+    </ErrorBoundary>
   );
 }

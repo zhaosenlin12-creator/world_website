@@ -5,7 +5,7 @@ import { zh } from "@/i18n/zh";
 
 export function SiteFooter() {
   const pathname = usePathname();
-  if (pathname === "/play") return null;
+  if (pathname === "/play" || pathname === "/explore" || pathname === "/spacecrafts/fleet") return null;
   return (
     <footer className="relative z-10 mt-32 border-t border-white/10 bg-black/40 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-6 py-12">

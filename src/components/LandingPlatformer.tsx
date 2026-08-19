@@ -418,6 +418,7 @@ export default function LandingPlatformer({
   const lastHudRef = useRef(0);
   const lastTouchRef = useRef(0);
   const rafRef = useRef(0);
+  const layoutCacheRef = useRef<{width:number;height:number}>({width:0,height:0});
   const readyTimerRef = useRef<number | null>(null);
   const respawnTimerRef = useRef<number | null>(null);
   const completeTimerRef = useRef<number | null>(null);
@@ -980,6 +981,17 @@ export default function LandingPlatformer({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      layoutCacheRef.current = { width: rect.width, height: rect.height };
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
     let last = performance.now();
     const loop = (now: number) => {
       const dt = Math.min(0.034, (now - last) / 1000);
@@ -990,7 +1002,10 @@ export default function LandingPlatformer({
     };
 
     rafRef.current = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(rafRef.current);
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", resize);
+    };
   }, [active, drawWorld, stepWorld]);
 
   return (
@@ -1013,12 +1028,12 @@ export default function LandingPlatformer({
             <div className="relative h-full w-full overflow-hidden rounded-[28px] border border-cyan-400/30 bg-[#04030b] shadow-[0_0_60px_rgba(34,211,238,0.12)]">
               <canvas ref={canvasRef} width={VIEW_W} height={VIEW_H} className="h-full w-full" style={{ display: "block" }} />
 
-              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex flex-col gap-1.5 px-2 py-1.5 md:flex-row md:items-center md:justify-between md:gap-2 md:px-3 md:py-2">
-                <div className="pointer-events-auto flex items-center gap-1.5 overflow-hidden rounded-full border border-white/10 bg-black/30 px-2.5 py-1 text-[10px] text-white/75 backdrop-blur-md md:gap-2 md:px-3 md:py-1.5 md:text-[11px]">
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex flex-row items-center justify-between gap-1.5 px-2 py-1 md:gap-2 md:px-2.5 md:py-1">
+                <div className="pointer-events-auto flex items-center gap-1 overflow-hidden rounded-full border border-white/10 bg-black/30 px-2 py-0.5 text-[10px] text-white/75 backdrop-blur-md md:gap-1.5 md:px-2.5 md:py-0.5 md:text-[11px]">
                   <span className="font-semibold uppercase tracking-[0.22em] text-cyan-300/85">着陆阶段</span>
                   <span className="font-semibold text-white">{hud.stage}</span>
                 </div>
-                <div className="pointer-events-auto flex items-center gap-1.5 overflow-hidden rounded-full border border-white/10 bg-black/30 px-2.5 py-1 text-[10px] text-white/75 backdrop-blur-md md:gap-2 md:px-3 md:py-1.5 md:text-[11px]">
+                <div className="pointer-events-auto flex items-center gap-1 overflow-hidden rounded-full border border-white/10 bg-black/30 px-2 py-0.5 text-[10px] text-white/75 backdrop-blur-md md:gap-1.5 md:px-2.5 md:py-0.5 md:text-[11px]">
                   <span className="font-semibold uppercase tracking-[0.22em] text-fuchsia-300/85">{planetName} 着陆窗</span>
                   <span className="font-mono font-semibold tabular-nums text-white">{hud.distance} m</span>
                 </div>
@@ -1030,22 +1045,22 @@ export default function LandingPlatformer({
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    className="pointer-events-none absolute left-1/2 top-[196px] z-20 -translate-x-1/2 rounded-full border border-cyan-400/30 bg-black/38 px-5 py-2 text-sm text-white/90 shadow-[0_0_25px_rgba(34,211,238,0.12)] backdrop-blur-md"
+                    className="pointer-events-none absolute left-1/2 top-24 z-20 -translate-x-1/2 rounded-full border border-cyan-400/30 bg-black/42 px-4 py-1 text-[11px] text-white/90 shadow-[0_0_22px_rgba(34,211,238,0.12)] backdrop-blur-md"
                   >
                     {banner}
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <div className="pointer-events-none absolute bottom-3 left-3 right-3 z-10 flex flex-col gap-2 md:bottom-5 md:left-5 md:right-5 md:flex-row md:items-end md:justify-between">
-                <div className="rounded-2xl border border-white/10 bg-black/28 px-4 py-3 text-sm text-white/78 backdrop-blur-md">
+              <div className="pointer-events-none absolute bottom-3 left-3 right-3 z-10 flex flex-row items-end justify-between gap-2 md:bottom-4 md:left-4 md:right-4">
+                <div className="rounded-xl border border-white/10 bg-black/30 px-2.5 py-1.5 text-[11px] text-white/72 backdrop-blur-md">
                   <span className="text-cyan-300">控制：</span>
                   <span>A / D 或 ← / → 横移</span>
                   <span className="mx-2 text-white/30">·</span>
                   <span>空格 / W 脉冲跃升</span>
                 </div>
 
-                <div className="rounded-2xl border border-white/10 bg-black/28 px-4 py-3 text-sm text-white/78 backdrop-blur-md">
+                <div className="rounded-xl border border-white/10 bg-black/30 px-2.5 py-1.5 text-[11px] text-white/72 backdrop-blur-md">
                   <span className="text-amber-300">目标：</span>
                   <span>沿陨石残骸持续下降，避开高速碎石并落入着陆环</span>
                 </div>

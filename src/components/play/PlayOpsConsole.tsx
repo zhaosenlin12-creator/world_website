@@ -65,7 +65,7 @@ export default function PlayOpsConsole(props: Props) {
     totalPlanets,
     missionLog,
     routeItems,
-    onRouteSelect
+    onRouteSelect,
   } = props;
 
   const latestLogs = useMemo(() => missionLog.slice(-3).reverse(), [missionLog]);
@@ -85,8 +85,11 @@ export default function PlayOpsConsole(props: Props) {
     <>
       <div className="pointer-events-none absolute left-3 top-3 z-30 flex max-w-[360px] flex-col gap-2 md:left-5 md:top-5">
         <div className="pointer-events-auto flex items-center gap-2">
-          <Link href="/" className="rounded-full border border-white/10 bg-black/28 px-4 py-2 text-xs text-white/84 backdrop-blur-md transition hover:bg-white/10">
-            ← {backLabel}
+          <Link
+            href="/"
+            className="rounded-full border border-white/10 bg-black/28 px-4 py-2 text-xs text-white/84 backdrop-blur-md transition hover:bg-white/10"
+          >
+            返回 {backLabel}
           </Link>
           <button
             type="button"
@@ -94,14 +97,14 @@ export default function PlayOpsConsole(props: Props) {
             className="rounded-full border border-white/10 bg-black/28 px-4 py-2 text-xs text-white/84 backdrop-blur-md transition hover:bg-white/10"
             title="ESC / P"
           >
-            ⏸ 暂停
+            暂停
           </button>
           <button
             type="button"
             onClick={onToggleVoice}
             className="rounded-full border border-white/10 bg-black/28 px-4 py-2 text-xs text-white/84 backdrop-blur-md transition hover:bg-white/10"
           >
-            {voiceEnabled ? "🔊 语音开" : "🔇 语音关"}
+            {voiceEnabled ? "语音开启" : "语音关闭"}
           </button>
           <div className="rounded-full border border-cyan-400/25 bg-black/28 px-4 py-2 text-xs text-cyan-200 backdrop-blur-md">
             {title}
@@ -113,19 +116,15 @@ export default function PlayOpsConsole(props: Props) {
           <div className="relative">
             <div className="console-eyebrow text-cyan-200/85">{inMission ? "当前目标" : "任务总览"}</div>
             <div className="mt-2 font-display text-2xl font-semibold leading-tight text-white">
-              {inMission ? (activePlanetName ?? "目标锁定") : `已探索 ${exploredPlanets}/${totalPlanets} 颗行星`}
+              {inMission ? activePlanetName ?? "目标锁定中" : `已探索 ${exploredPlanets}/${totalPlanets} 颗行星`}
             </div>
             <div className="mt-1 text-sm text-white/65">
               {inMission
                 ? `${activeDistance ?? 0} AU · ${stageLabel ?? "准备起飞"}`
-                : `最高分 ${bestScore} · 当前分 ${score}`}
+                : `最佳分数 ${bestScore} · 当前分数 ${score}`}
             </div>
-            {stageHint ? (
-              <div className="console-divider my-3" />
-            ) : null}
-            {stageHint ? (
-              <div className="line-clamp-2 text-xs leading-5 text-white/65">{stageHint}</div>
-            ) : null}
+            {stageHint ? <div className="console-divider my-3" /> : null}
+            {stageHint ? <div className="line-clamp-2 text-xs leading-5 text-white/65">{stageHint}</div> : null}
 
             {combo > 1 ? (
               <motion.div
@@ -134,7 +133,7 @@ export default function PlayOpsConsole(props: Props) {
                 animate={{ scale: 1, opacity: 1, rotate: 0 }}
                 className="combo-badge mt-4 inline-block rounded-2xl px-3 py-1.5 text-xs font-bold"
               >
-                🔥 连击 × {combo}
+                连击 × {combo}
               </motion.div>
             ) : null}
           </div>
@@ -145,8 +144,8 @@ export default function PlayOpsConsole(props: Props) {
             <RingGauge label="护盾" value={shields} max={100} rgb={[34, 211, 238]} danger={shields < 30} />
             <LivesGauge label="生命" lives={lives} max={3} />
             <Mini label="样本" value={`${collectedItems}`} color="#a78bfa" />
-            <Mini label="危害" value={`${hazardsAvoided}`} color="#fb7185" />
-            <Mini label="航段" value={`${Math.round(distance)} m`} color="#f59e0b" />
+            <Mini label="规避" value={`${hazardsAvoided}`} color="#fb7185" />
+            <Mini label="航程" value={`${Math.round(distance)} m`} color="#f59e0b" />
             <Mini label="分数" value={`${score}`} color="#e879f9" />
           </div>
         ) : null}
@@ -155,21 +154,11 @@ export default function PlayOpsConsole(props: Props) {
       <div className="pointer-events-none absolute right-3 top-3 z-30 md:right-5 md:top-5">
         <AnimatePresence initial={false} mode="wait">
           {compactMap ? (
-            <motion.div
-              key="mini"
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-            >
+            <motion.div key="mini" initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}>
               <MiniRouteCard routeItems={routeItems} activePlanetName={activePlanetName} totalPlanets={totalPlanets} />
             </motion.div>
           ) : (
-            <motion.div
-              key="full"
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-            >
+            <motion.div key="full" initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}>
               <SectorMap
                 routeItems={routeItems}
                 exploredPlanets={exploredPlanets}
@@ -216,10 +205,10 @@ export default function PlayOpsConsole(props: Props) {
             className="console-panel cyan rounded-full px-6 py-2.5 text-center"
           >
             <div className="console-eyebrow text-white/45">
-              {scene === "SURFACE" ? "地表探索" : scene === "QUIZ" ? "知识考验" : "飞行进场"}
+              {scene === "SURFACE" ? "地表探索" : scene === "QUIZ" ? "知识校验" : "飞行进场"}
             </div>
             <div className="mt-1 text-sm text-white/88">
-              <span className="text-shimmer">{activePlanetName}</span> · {stageLabel ?? "—"}
+              <span className="text-shimmer">{activePlanetName}</span> · {stageLabel ?? "待命"}
             </div>
           </motion.div>
         </div>
@@ -230,10 +219,7 @@ export default function PlayOpsConsole(props: Props) {
 
 function Mini({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <div
-      className="rounded-2xl border border-white/10 bg-black/32 px-3 py-2 backdrop-blur-md"
-      style={{ boxShadow: `0 0 14px ${color}1f` }}
-    >
+    <div className="rounded-2xl border border-white/10 bg-black/32 px-3 py-2 backdrop-blur-md" style={{ boxShadow: `0 0 14px ${color}1f` }}>
       <div className="console-eyebrow text-white/45">{label}</div>
       <div className="mt-1 font-mono text-sm" style={{ color }}>
         {value}
@@ -242,7 +228,19 @@ function Mini({ label, value, color }: { label: string; value: string; color: st
   );
 }
 
-function RingGauge({ label, value, max, rgb, danger }: { label: string; value: number; max: number; rgb: [number, number, number]; danger?: boolean }) {
+function RingGauge({
+  label,
+  value,
+  max,
+  rgb,
+  danger,
+}: {
+  label: string;
+  value: number;
+  max: number;
+  rgb: [number, number, number];
+  danger?: boolean;
+}) {
   const pct = Math.max(0, Math.min(100, (value / max) * 100));
   return (
     <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/32 px-3 py-2 backdrop-blur-md">
@@ -251,20 +249,24 @@ function RingGauge({ label, value, max, rgb, danger }: { label: string; value: n
         style={
           {
             ["--pct" as string]: pct.toFixed(0),
-            ["--rgb" as string]: rgb.join(",")
+            ["--rgb" as string]: rgb.join(","),
           } as React.CSSProperties
         }
       >
         <div className="ring-gauge" style={{ width: 52, height: 52 }}>
           <div className="relative z-10 text-center">
             <div className="text-[10px] uppercase tracking-[0.2em] text-white/45">护盾</div>
-            <div className="font-mono text-xs text-cyan-200" style={{ color: `rgb(${rgb.join(",")})` }}>{Math.round(value)}</div>
+            <div className="font-mono text-xs text-cyan-200" style={{ color: `rgb(${rgb.join(",")})` }}>
+              {Math.round(value)}
+            </div>
           </div>
         </div>
       </div>
       <div className="flex flex-col">
         <div className="console-eyebrow text-white/45">{label}</div>
-        <div className="font-mono text-xs text-white/70">{Math.round(value)} / {max}</div>
+        <div className="font-mono text-xs text-white/70">
+          {Math.round(value)} / {max}
+        </div>
         <div className="neon-bar mt-1.5 w-20" style={{ color: `rgb(${rgb.join(",")})` }}>
           <span style={{ width: `${pct}%`, background: `linear-gradient(90deg, rgb(${rgb.join(",")}) 0%, rgba(255,255,255,0.85) 100%)` }} />
         </div>
@@ -289,18 +291,30 @@ function LivesGauge({ label, lives, max }: { label: string; lives: number; max: 
           />
         ))}
       </div>
-      <div className="mt-1 font-mono text-[11px] text-emerald-200">{lives} / {max}</div>
+      <div className="mt-1 font-mono text-[11px] text-emerald-200">
+        {lives} / {max}
+      </div>
     </div>
   );
 }
 
-function MiniRouteCard({ routeItems, activePlanetName, totalPlanets }: { routeItems: SectorRouteItem[]; activePlanetName: string | undefined; totalPlanets: number }) {
+function MiniRouteCard({
+  routeItems,
+  activePlanetName,
+  totalPlanets,
+}: {
+  routeItems: SectorRouteItem[];
+  activePlanetName: string | undefined;
+  totalPlanets: number;
+}) {
   const activeIndex = Math.max(0, routeItems.findIndex((item) => item.active));
   return (
     <div className="console-panel fuchsia w-[260px] px-4 py-3">
       <div className="flex items-center justify-between">
         <div className="console-eyebrow text-fuchsia-200/85">航路进度</div>
-        <span className="font-mono text-[10px] text-white/45">第 {activeIndex + 1}/{totalPlanets} 站</span>
+        <span className="font-mono text-[10px] text-white/45">
+          第 {activeIndex + 1}/{totalPlanets} 站
+        </span>
       </div>
       <div className="mt-1 text-sm font-medium text-white">{activePlanetName ?? "目标锁定中"}</div>
       <div className="mt-3 flex items-center gap-1.5">
@@ -312,7 +326,7 @@ function MiniRouteCard({ routeItems, activePlanetName, totalPlanets }: { routeIt
               width: item.active ? 22 : item.completed ? 14 : 8,
               background: item.completed ? "#34d399" : item.active ? item.glow || "#fbbf24" : "rgba(255,255,255,0.2)",
               boxShadow: item.active ? `0 0 12px ${item.glow || "#fbbf24"}` : "none",
-              opacity: item.active || item.completed ? 1 : 0.5
+              opacity: item.active || item.completed ? 1 : 0.5,
             }}
             title={item.name}
           />

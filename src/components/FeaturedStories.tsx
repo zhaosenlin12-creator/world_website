@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import featuredData from "@/data/featuredStories.json";
 import { zh } from "@/i18n/zh";
 import { ScrollReveal } from "@/components/fx/ScrollReveal";
 
@@ -46,16 +47,14 @@ const FALLBACK_STORIES: Article[] = [
   }
 ];
 
-export function FeaturedStories() {
-  const [stories, setStories] = useState<Article[]>(FALLBACK_STORIES);
+const STATIC_STORIES: Article[] = (featuredData as Article[]).slice(0, 6);
 
+export function FeaturedStories() {
+  const [stories, setStories] = useState<Article[]>(STATIC_STORIES);
+
+  // 静态导出构建: 直接使用编译期 JSON 数据, 无需 /api 调用
   useEffect(() => {
-    fetch("/api/stories")
-      .then((r) => r.ok ? r.json() : [])
-      .then((data) => {
-        if (Array.isArray(data) && data.length >= 3) setStories(data.slice(0, 6));
-      })
-      .catch(() => {});
+    setStories(STATIC_STORIES);
   }, []);
 
   return (

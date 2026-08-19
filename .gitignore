@@ -36,3 +36,9 @@ play_prod.log
 play_prod.err.log
 
 play_solar_*.png
+
+# Build artifacts
+out/
+.next/
+deploy.log
+.wrangler/

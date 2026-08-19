@@ -90,14 +90,14 @@ export default function PlayHud({
             href="/"
             className="rounded-full border border-white/10 bg-black/28 px-4 py-2 text-xs text-white/82 backdrop-blur-md transition hover:bg-white/10"
           >
-            ← {backLabel}
+            返回 {backLabel}
           </Link>
           <button
             type="button"
             onClick={onToggleVoice}
             className="rounded-full border border-white/10 bg-black/28 px-4 py-2 text-xs text-white/82 backdrop-blur-md transition hover:bg-white/10"
           >
-            {voiceEnabled ? "语音开" : "语音关"}
+            {voiceEnabled ? "语音开启" : "语音关闭"}
           </button>
           <div className="rounded-full border border-cyan-400/20 bg-black/28 px-4 py-2 text-xs text-cyan-200 backdrop-blur-md">
             {title}
@@ -112,16 +112,27 @@ export default function PlayHud({
             {inMission ? activePlanetName : `已探索 ${exploredPlanets}/${totalPlanets} 颗行星`}
           </div>
           <div className="mt-1 text-sm text-white/68">
-            {inMission ? `${activeDistance} AU · ${stageLabel || "任务准备"}` : `最高分 ${bestScore} · 总分 ${score}`}
+            {inMission ? `${activeDistance} AU · ${stageLabel || "任务准备"}` : `最佳分数 ${bestScore} · 总分 ${score}`}
           </div>
-          {stageHint ? (
-            <div className="mt-2 line-clamp-2 text-xs leading-5 text-white/60">{stageHint}</div>
-          ) : null}
+          {stageHint ? <div className="mt-2 line-clamp-2 text-xs leading-5 text-white/60">{stageHint}</div> : null}
         </div>
 
         {inPlayfield ? (
           <div className="pointer-events-auto flex flex-wrap gap-2">
-            <StatusChip label="护盾" value={`${Math.round(shields)}%`} color="#22d3ee" />
+            {(() => {
+              const lowShields = shields < 30;
+              const shieldColor = lowShields ? "#ef4444" : "#22d3ee";
+              return (
+                <motion.div
+                  animate={lowShields ? { scale: [1, 1.08, 1], opacity: [1, 0.6, 1] } : { scale: 1, opacity: 1 }}
+                  transition={lowShields ? { duration: 0.6, repeat: Infinity } : { duration: 0 }}
+                  className="rounded-full"
+                  style={lowShields ? { boxShadow: "0 0 14px rgba(239,68,68,0.55), inset 0 0 8px rgba(239,68,68,0.4)" } : undefined}
+                >
+                  <StatusChip label="护盾" value={lowShields ? `${Math.round(shields)}% 低能` : `${Math.round(shields)}%`} color={shieldColor} />
+                </motion.div>
+              );
+            })()}
             <StatusChip label="生命" value={`${lives}×`} color="#10b981" />
             <StatusChip label="距离" value={`${Math.round(distance)}m`} color="#f59e0b" />
             <StatusChip label="样本" value={`${collectedItems}`} color="#a78bfa" />
@@ -181,6 +192,14 @@ export default function PlayHud({
       {inPlayfield ? (
         <div className="pointer-events-none absolute bottom-4 left-3 z-20 max-w-[320px] md:bottom-5 md:left-5">
           <div className="rounded-2xl border border-white/10 bg-black/24 px-4 py-3 backdrop-blur-md shadow-[0_0_24px_rgba(34,211,238,0.06)]">
+            <motion.div
+              className="mb-2 overflow-hidden rounded-lg border border-red-500/40 bg-red-500/12 px-2.5 py-1.5 text-[10px] uppercase tracking-[0.28em] text-red-200"
+              animate={{ opacity: shields < 30 ? [0.4, 1, 0.4] : 0 }}
+              transition={shields < 30 ? { duration: 1.1, repeat: Infinity } : { duration: 0 }}
+              style={{ pointerEvents: "none" }}
+            >
+              护盾告急 · 注意规避
+            </motion.div>
             <div className="mb-2 text-[10px] uppercase tracking-[0.3em] text-cyan-300/75">任务播报</div>
             <div className="space-y-1.5">
               {latestLogs.map((item, index) => (
@@ -202,7 +221,7 @@ export default function PlayHud({
             className="rounded-full border border-white/10 bg-black/36 px-5 py-2.5 text-center backdrop-blur-md"
           >
             <div className="text-[10px] uppercase tracking-[0.3em] text-white/50">
-              {scene === "SURFACE" ? "地表探索" : scene === "QUIZ" ? "知识考验" : "飞行进场"}
+              {scene === "SURFACE" ? "地表探索" : scene === "QUIZ" ? "知识校验" : "飞行进场"}
             </div>
             <div className="mt-1 text-sm text-white/88">
               {activePlanetName} · {stageLabel}
@@ -216,10 +235,7 @@ export default function PlayHud({
 
 function StatusChip({ label, value, color }: { label: string; value: string; color: string }) {
   return (
-    <div
-      className="rounded-full border border-white/10 bg-black/28 px-3 py-2 backdrop-blur-md shadow-[0_0_18px_rgba(15,23,42,0.28)]"
-      style={{ boxShadow: `0 0 16px ${color}18` }}
-    >
+    <div className="rounded-full border border-white/10 bg-black/28 px-3 py-2 backdrop-blur-md shadow-[0_0_18px_rgba(15,23,42,0.28)]" style={{ boxShadow: `0 0 16px ${color}18` }}>
       <div className="text-[10px] uppercase tracking-[0.28em] text-white/48">{label}</div>
       <div className="mt-1 text-sm font-semibold" style={{ color }}>
         {value}

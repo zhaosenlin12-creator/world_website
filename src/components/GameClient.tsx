@@ -48,7 +48,7 @@ const STAGE_TEXT: Record<StageKey, string> = {
   WARP: "跃迁推进",
   APPROACH: "引力接近",
   ENTRY: "轨道切入",
-  ATMOSPHERE: "大气层穿越",
+  ATMOSPHERE: "穿越大气",
   LANDING: "终端着陆",
 };
 
@@ -56,8 +56,8 @@ const STAGE_HINT: Record<StageKey, string> = {
   WARP: "先穿过外层碎石带，保持航向稳定。",
   APPROACH: "障碍密度上升，开始微调航路。",
   ENTRY: "目标行星正在放大，准备进入近轨校正。",
-  ATMOSPHERE: "热防护与减速同步进行，注意控制节奏。",
-  LANDING: "即将切入缓降流程，准备进入残骸通道。",
+  ATMOSPHERE: "热防护与减速需要同步进行，注意控制节奏。",
+  LANDING: "即将切入缓降流程，准备进入着陆通道。",
 };
 
 const STAGE_VOICE: Partial<Record<StageKey, MissionVoiceKey>> = {
@@ -134,7 +134,7 @@ export function GameClient() {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [samples, setSamples] = useState<Set<PlanetId>>(new Set());
   const [newRecord, setNewRecord] = useState(false);
-  const [missionLog, setMissionLog] = useState<string[]>(["[总控] 太阳系任务链已上线，等待锁定目标"]);
+  const [missionLog, setMissionLog] = useState<string[]>(["[??] ????????????????"]);
   const [flashRed, setFlashRed] = useState(false);
   const [flashGreen, setFlashGreen] = useState(false);
   const [floatScore, setFloatScore] = useState<{ id: number; x: number; y: number; text: string; color: string }[]>([]);
@@ -345,33 +345,31 @@ export function GameClient() {
   }, [addFloat, combo, log, queueTimeout, sound]);
 
   const handleHazard = useCallback(() => {
-    setShields((prev) => {
-      const next = Math.max(0, prev - 25);
-      if (next === 0) {
-        setLives((currentLives) => {
-          const remaining = currentLives - 1;
-          sound.hazard();
-          if (remaining <= 0) {
-            log("[警报] 生命已耗尽，任务中止");
-            queueTimeout(() => {
-              sound.lose();
-              setScene("FINISHED");
-            }, 800);
-          } else {
-            log(`[警报] 护盾耗尽，剩余生命 ${remaining}`);
-            setShields(100);
-          }
-          return remaining;
-        });
-      } else {
-        sound.hazard();
-      }
-      return next;
-    });
+    setShields((prev) => Math.max(0, prev - 25));
+    sound.hazard();
     speakVoice("hazardWarning", { cooldownMs: 2400, interrupt: false, volume: 0.9 });
     setFlashRed(true);
     queueTimeout(() => setFlashRed(false), 220);
-  }, [log, queueTimeout, sound, speakVoice]);
+  }, [sound, speakVoice]);
+
+  // Resolve shield=0 / life loss in a single effect to avoid nested setState races.
+  useEffect(() => {
+    if (shields > 0) return;
+    setLives((currentLives) => {
+      const remaining = currentLives - 1;
+      if (remaining <= 0) {
+        log("[警报] 生命耗尽，任务中止");
+        queueTimeout(() => {
+          sound.lose();
+          setScene("FINISHED");
+        }, 800);
+      } else {
+        log("[警报] 护盾崩溃，剩余生命 " + remaining);
+        setShields(100);
+      }
+      return remaining;
+    });
+  }, [shields, log, queueTimeout, sound]);
 
   const handleLandingStart = useCallback(() => {
     if (landing2D) return;
@@ -381,7 +379,7 @@ export function GameClient() {
       (window as Window & typeof globalThis & { __landingPlanetId?: PlanetId }).__landingPlanetId = activePlanet;
     }
     speakVoice("landingTransition", { cooldownMs: 800, interrupt: true, volume: 0.96 });
-    log("[缓降] 大气层穿越完成，切入残骸下降通道");
+    log("[缓降] 大气层穿越完成，切入着陆通道");
   }, [activePlanet, landing2D, log, speakVoice]);
 
   const handleLandingComplete = useCallback(() => {
@@ -400,7 +398,7 @@ export function GameClient() {
   const handleSurfaceComplete = useCallback(() => {
     setScene("QUIZ");
     setPlayPaused(true);
-    log("[地表] 样本回收完成，开启最终科学考验");
+    log("[地表] 样本回收完成，开启最终科学校验");
   }, [log]);
 
   const handleLandingVoiceCue = useCallback((cue: LandingVoiceCue) => {
@@ -431,12 +429,13 @@ export function GameClient() {
         next.add(activePlanet);
         return next;
       });
-      log(`[正确] ${body?.name} 核心样本已登记 +200`);
+      log(`[??] ${body?.name} ??????? +200`);
       sound.collect();
     } else {
-      log(`[错误] 正确答案：${mission.quiz.options[mission.quiz.answer]}`);
+      log(`[??] ${body?.name} ???????`);
       sound.hazard();
     }
+    log(`[??] ?????${mission.quiz.options[mission.quiz.answer]}`);
   }, [activePlanet, answered, body?.name, log, mission.quiz.answer, mission.quiz.options, sound]);
 
   const handleNextMission = useCallback(() => {
@@ -451,13 +450,13 @@ export function GameClient() {
     setLanding2D(false);
     if (activeIdx + 1 >= PLANET_ORDER.length) {
       setScene("FINISHED");
-      log("[完成] 全部 8 颗行星任务已完成");
+      log("[??] ?? 8 ????????");
       sound.win();
       return;
     }
     setActiveIdx((value) => value + 1);
     setScene("SOLAR_IDLE");
-    log("[返航] 已返回太阳系，准备下一个目标");
+    log("[??] ??????????????");
   }, [activeIdx, log, sound]);
 
   const handleRestart = useCallback(() => {
@@ -474,12 +473,9 @@ export function GameClient() {
     setLives(3);
     setCollectedItems(0);
     setDistance(0);
-    setStageLabel("WARP");
-    setAnswered(false);
+    setMissionLog(["[??] ????????????????"]);
     setSelectedAnswer(null);
     setSamples(new Set());
-    setNewRecord(false);
-    setMissionLog(["[总控] 太阳系任务链已重置，等待锁定目标"]);
     setLanding2D(false);
     setPlayPaused(false);
     setCombo(0);
@@ -677,7 +673,7 @@ export function GameClient() {
         onToggleVoice={() => setVoiceEnabled((value) => !value)}
         activePlanetName={body?.name}
         activeDistance={body?.distance}
-        stageLabel={scene === "SURFACE" ? "地表探索" : scene === "QUIZ" ? "知识考验" : STAGE_TEXT[stageLabel]}
+        stageLabel={scene === "SURFACE" ? "地表探索" : scene === "QUIZ" ? "知识校验" : STAGE_TEXT[stageLabel]}
         stageHint={scene === "SURFACE" ? mission.surfaceGoal : scene === "MISSION_CONFIRM" ? mission.briefing : scene === "DESCENT" ? STAGE_HINT[stageLabel] : undefined}
         score={score}
         bestScore={bestScore}
@@ -703,7 +699,7 @@ export function GameClient() {
             : scene === "SURFACE"
               ? mission.surfaceGoal
               : scene === "QUIZ"
-                ? "知识考验 · 答题获取样本"
+                ? "知识校验 · 答题获取样本"
                 : scene === "APPROACH"
                   ? "进入星际接近窗口"
                   : undefined
@@ -729,7 +725,7 @@ export function GameClient() {
             : scene === "SURFACE"
               ? mission.surfaceGoal
               : scene === "QUIZ"
-                ? "知识考验 · 答题获取样本"
+                ? "知识校验 · 答题获取样本"
                 : undefined
         }
       />
@@ -755,7 +751,7 @@ export function GameClient() {
               <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.1, duration: 0.5 }} className="mb-3 text-xs uppercase tracking-[0.5em] text-amber-200/80">· 宇航传送中 ·</motion.div>
               <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }} className="glow-text gradient-text mb-4 font-display text-5xl font-semibold md:text-7xl">{zh.game.title}</motion.h1>
               <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.5, duration: 0.5 }} className="mb-2 text-base leading-relaxed text-white/85 md:text-lg">{zh.game.subtitle}</motion.p>
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.5 }} className="text-xs text-white/55">选星 → 飞行接近 → 残骸缓降 → 地表探索 → 科学考验</motion.p>
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7, duration: 0.5 }} className="text-xs text-white/55">选星 → 飞行接近 → 缓降着陆 → 地表探索 → 科学校验</motion.p>
             </div>
           </motion.div>
         ) : null}
@@ -777,7 +773,7 @@ export function GameClient() {
           <motion.div key="solar" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pointer-events-none absolute bottom-6 left-1/2 z-30 -translate-x-1/2">
             <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="glass-strong rounded-full px-5 py-2.5 text-center">
               <div className="mb-0.5 text-[10px] uppercase tracking-[0.4em] text-amber-200/80">点击太阳系中的行星</div>
-              <div className="text-sm text-white/90">先看任务简报，再启动完整探索流程</div>
+              <div className="text-sm text-white/90">先查看任务简报，再启动完整探索流程</div>
             </motion.div>
           </motion.div>
         ) : null}
@@ -807,7 +803,7 @@ export function GameClient() {
                 />
                 <div className="relative h-8 w-8 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.95),rgba(34,211,238,0.9),rgba(14,116,144,0.22))] shadow-[0_0_30px_rgba(34,211,238,0.45)]" />
               </div>
-              <div className="gradient-text mb-1 font-display text-3xl">超光速跳迁中</div>
+              <div className="gradient-text mb-1 font-display text-3xl">超光速跃迁中</div>
               <div className="text-sm text-white/80">目的地 <span className="font-bold text-amber-200">{body?.name}</span> · {body?.distance} AU</div>
               <div className="mt-2 text-xs uppercase tracking-[0.32em] text-cyan-200/72">航迹锁定 · 姿态同步 · 推进器稳定</div>
             </div>
@@ -817,7 +813,7 @@ export function GameClient() {
 
       {scene === "DESCENT" && collectedItems < 2 ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pointer-events-none absolute bottom-6 left-1/2 z-20 -translate-x-1/2 rounded-full border border-white/10 bg-black/30 px-4 py-1.5 text-[11px] text-white/70 backdrop-blur-md">
-          WASD / 方向键 驾驶 · 躲避陨石 · 穿入目标行星着陆窗口
+          WASD / 方向键驾驶 · 规避碎石 · 穿入目标行星着陆窗口
         </motion.div>
       ) : null}
 
@@ -848,7 +844,7 @@ export function GameClient() {
               {answered ? (
                 <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
                   <div className={`mb-2 text-sm font-medium ${selectedAnswer === mission.quiz.answer ? "text-emerald-300" : "text-rose-300"}`}>
-                    {selectedAnswer === mission.quiz.answer ? `✓ ${zh.game.correct}` : `✗ ${zh.game.wrong}`}
+                    {selectedAnswer === mission.quiz.answer ? `✓ ${zh.game.correct}` : `✦ ${zh.game.wrong}`}
                   </div>
                   <div className="mb-4 text-xs leading-relaxed text-white/65">{mission.quiz.fact}</div>
                   <button type="button" onClick={handleNextMission} className="btn-primary w-full">

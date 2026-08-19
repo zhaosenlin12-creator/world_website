@@ -57,8 +57,8 @@ export const planetAssetCatalog: Record<PlanetId | "sun", PlanetAsset> = {
 };
 
 export const shipAssetCatalog = {
-  cruiseModel: "/assets/models/nasa/voyager-probe-b.glb",
-  hazardModel: "/assets/models/nasa/rq36-asteroid.glb",
+  cruiseModel: "/assets/models/nasa/voyager-probe-b/voyager-probe-b.glb",
+  hazardModel: "/assets/models/nasa/1999-rq36-asteroid/rq36-asteroid.glb",
   hullBaseColor: "#e2e8f0",
   hullAccentColor: "#38bdf8",
   hullShadowColor: "#334155",
@@ -67,14 +67,14 @@ export const shipAssetCatalog = {
 };
 
 export const missionSubtitleCatalog = {
-  targetLocked: "目标锁定，任务简报已展开。",
-  approach: "进入接近窗口，准备修正姿态。",
-  entry: "切入目标轨道，注意引力与障碍变化。",
-  atmosphere: "即将穿越大气层，控制热防护与减速节奏。",
-  landingTransition: "进入残骸缓降通道，准备着陆程序。",
-  fragileWarning: "前方脆弱平台即将崩裂，立即转移。",
-  hazardWarning: "检测到危险干扰，注意避让。",
+  targetLocked: "目标已锁定，任务简报正在展开。",
+  approach: "进入接近窗口，准备修正飞行姿态。",
+  entry: "正在切入目标轨道，注意引力和障碍变化。",
+  atmosphere: "即将穿越大气层，请同步控制热防护与减速。",
+  landingTransition: "进入缓降通道，准备执行着陆程序。",
+  fragileWarning: "前方平台结构脆弱，请尽快转移。",
+  hazardWarning: "检测到危险干扰，请立即规避。",
   respawn: "已回收到最近安全点，重新规划路线。",
-  sample: "已回收关键样本，任务进度提升。",
+  sample: "关键样本已回收，任务进度提升。",
   touchdown: "着陆确认完成，准备展开地表探索。",
 };

@@ -296,3 +296,113 @@ html { scroll-behavior: smooth; }
   background: radial-gradient(ellipse at center, rgba(2,6,23,0.78) 0%, rgba(2,6,23,0.92) 70%);
   backdrop-filter: blur(14px) saturate(0.8);
 }
+
+﻿/* ===========================================================
+ * Liquid Glass + ASCII Title  (借鉴自 senlin hero)
+ * =========================================================== */
+.liquid-glass {
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+  --glow-color: rgba(168, 85, 247, 0.18);
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)) padding-box,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)) border-box;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 18px 60px rgba(2, 6, 23, 0.45);
+  isolation: isolate;
+}
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, 0.16), transparent 60%),
+    radial-gradient(120% 80% at 100% 100%, var(--glow-color), transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+.glass-content {
+  position: relative;
+  z-index: 1;
+}
+.liquid-pointer-glow {
+  background:
+    radial-gradient(260px circle at var(--pointer-x) var(--pointer-y), var(--glow-color), transparent 65%);
+  opacity: 0.95;
+  transition: opacity 220ms ease;
+  mix-blend-mode: screen;
+  border-radius: inherit;
+}
+
+.ascii-title {
+  --ascii-size: 64px;
+  --ascii-tilt-x: 0deg;
+  --ascii-tilt-y: 0deg;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 12px;
+  perspective: 800px;
+  user-select: none;
+}
+.ascii-title-inner {
+  position: relative;
+  display: inline-block;
+  transform: rotateX(var(--ascii-tilt-x)) rotateY(var(--ascii-tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 280ms cubic-bezier(.2,.7,.2,1);
+}
+.ascii-title-text {
+  position: relative;
+  font-family: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  font-weight: 700;
+  font-size: var(--ascii-size);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow:
+    0 0 12px rgba(168, 85, 247, 0.45),
+    0 0 36px rgba(99, 102, 241, 0.35);
+  background: linear-gradient(120deg, #c4b5fd 0%, #ffffff 40%, #f0abfc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ascii-pulse 6s ease-in-out infinite;
+}
+.ascii-title-ghost {
+  position: absolute;
+  inset: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: transparent;
+  text-shadow:
+    1px 0 rgba(34, 211, 238, 0.65),
+    -1px 0 rgba(232, 121, 249, 0.65);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: ascii-drift 4.6s ease-in-out infinite;
+  filter: blur(0.4px);
+}
+.ascii-title-caption {
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+@keyframes ascii-pulse {
+  0%, 100% { filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.45)); }
+  50%      { filter: drop-shadow(0 0 32px rgba(34, 211, 238, 0.6)); }
+}
+@keyframes ascii-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(2px, -2px, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ascii-title-text, .ascii-title-ghost { animation: none; }
+}

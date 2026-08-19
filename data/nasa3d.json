@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "1999-rq36-asteroid",
+    "title": "1999 RQ36 asteroid",
+    "description": "Scientists on NASA's asteroid sample return mission, Origins, Spectral Interpretation, Resource Identification, Security, Regolith Explorer (OSIRIS-REx), have",
+    "glb": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/1999-rq36-asteroid/1999%20RQ36%20asteroid.glb?emrc=6a4e68e4539ff",
+    "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/1999-rq36-asteroid/1999%20RQ36%20asteroid.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "href": "https://science.nasa.gov/3d-resources/1999-rq36-asteroid/",
+    "glbLocal": "/assets/models/nasa/1999-rq36-asteroid/1999-RQ36-asteroid.glb"
+  },
+  {
+    "slug": "70-meter-dish",
+    "title": "70 meter dish",
+    "description": "Each Deep Space Network, or DSN, site has one huge, 230-foot (70-meter) diameter antenna. The 70-meter antennas are the largest and most sensitive DSN",
+    "glb": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/70-meter-dish/70%20meter%20dish.glb?emrc=6a4e67244719e",
+    "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/70-meter-dish/70%20meter%20dish.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "href": "https://science.nasa.gov/3d-resources/70-meter-dish/",
+    "glbLocal": "/assets/models/nasa/70-meter-dish/70-meter-dish.glb"
+  },
+  {
+    "slug": "active-cavity-irradiance-monitor-satellite-acrimsat-a",
+    "title": "Active Cavity Irradiance Monitor Satellite (AcrimSAT) (A)",
+    "description": "ACRIMSAT studies the sun's energy output with uniform sensitivity to improve knowledge of the sun's role in global change.",
+    "glb": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/active-cavity-irradiance-monitor-satellite-(acrimsat)-(a)/Active%20Cavity%20Irradiance%20Monitor%20Satellite%20(AcrimSAT)%20(A).glb?emrc=6a4e68b99f42d",
+    "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/active-cavity-irradiance-monitor-satellite-(acrimsat)-(a)/Active%20Cavity%20Irradiance%20Monitor%20Satellite%20(AcrimSAT)%20(A).png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "href": "https://science.nasa.gov/3d-resources/active-cavity-irradiance-monitor-satellite-acrimsat-a/",
+    "glbLocal": "/assets/models/nasa/active-cavity-irradiance-monitor-satellite-acrimsat-a/Active-Cavity-Irradiance-Monitor-Satellite-(AcrimSAT)-(A).glb"
+  },
+  {
+    "slug": "active-cavity-irradiance-monitor-satellite-acrimsat-b",
+    "title": "Active Cavity Irradiance Monitor Satellite (AcrimSAT) (B)",
+    "description": "ACRIMSAT studies the sun's energy output with uniform sensitivity to improve knowledge of the sun's role in global change.",
+    "glb": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/active-cavity-irradiance-monitor-satellite-(acrimsat)-(b)/Active%20Cavity%20Irradiance%20Monitor%20Satellite%20(AcrimSAT)%20(B).glb?emrc=6a4e68ba606e7",
+    "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/active-cavity-irradiance-monitor-satellite-(acrimsat)-(b)/Active%20Cavity%20Irradiance%20Monitor%20Satellite%20(AcrimSAT)%20(B).png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "href": "https://science.nasa.gov/3d-resources/active-cavity-irradiance-monitor-satellite-acrimsat-b/",
+    "glbLocal": "/assets/models/nasa/active-cavity-irradiance-monitor-satellite-acrimsat-b/Active-Cavity-Irradiance-Monitor-Satellite-(AcrimSAT)-(B).glb"
+  },
+  {
+    "slug": "advanced-composition-explorer",
+    "title": "Advanced Composition Explorer",
+    "description": "Advanced Composition Explorer (ACE) observes particles of solar, interplanetary, interstellar, and galactic origins.",
+    "glb": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/advanced-composition-explorer/Advanced%20Composition%20Explorer.glb?emrc=6a4e6a38f14de",
+    "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/advanced-composition-explorer/Advanced%20Composition%20Explorer.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "href": "https://science.nasa.gov/3d-resources/advanced-composition-explorer/",
+    "glbLocal": "/assets/models/nasa/advanced-composition-explorer/Advanced-Composition-Explorer.glb"
+  },
+  {
+    "slug": "advanced-crew-escape-suit",
+    "title": "Advanced Crew Escape Suit",
+    "description": "The Advanced Crew Escape Suit (ACES) is a full pressure vessel providing an atmosphere of protection.",
+    "glb": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/advanced-crew-escape-suit/Advanced%20Crew%20Escape%20Suit.glb?emrc=6a4e68e91e34c",
+    "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/advanced-crew-escape-suit/Advanced%20Crew%20Escape%20Suit.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "href": "https://science.nasa.gov/3d-resources/advanced-crew-escape-suit/",
+    "glbLocal": "/assets/models/nasa/advanced-crew-escape-suit/Advanced-Crew-Escape-Suit.glb"
+  },
+  {
+    "slug": "advanced-technology-large-aperture-space-telescope-atlast",
+    "title": "Advanced Technology Large-Aperture Space Telescope (ATLAST)",
+    "description": "The Advanced Technology Large-Aperture Space Telescope (ATLAST) builds upon key technologies developed for Hubble and Webb. ATLAST's large primary mirror",
+    "glb": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/advanced-technology-large-aperture-space-telescope-(atlast)/Advanced%20Technology%20Large-Aperture%20Space%20Telescope%20(ATLAST).glb?emrc=6a4e68e9e9f5c",
+    "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/advanced-technology-large-aperture-space-telescope-(atlast)/Advanced%20Technology%20Large-Aperture%20Space%20Telescope%20(ATLAST).png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "href": "https://science.nasa.gov/3d-resources/advanced-technology-large-aperture-space-telescope-atlast/",
+    "glbLocal": "/assets/models/nasa/advanced-technology-large-aperture-space-telescope-atlast/Advanced-Technology-Large-Aperture-Space-Telescope-(ATLAST).glb"
+  },
+  {
+    "slug": "aeronomy-of-ice-in-the-mesosphere",
+    "title": "Aeronomy of Ice in the Mesosphere",
+    "description": "AIM is a two-year mission to study Polar Mesospheric Clouds (PMCs), the Earth's highest clouds, which form an icy membrane 50 miles (80.4 km) above the",
+    "glb": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/aeronomy-of-ice-in-the-mesosphere/Aeronomy%20of%20Ice%20in%20the%20Mesosphere.glb?emrc=6a4e6a3c5ac13",
+    "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/aeronomy-of-ice-in-the-mesosphere/Aeronomy%20of%20Ice%20in%20the%20Mesosphere.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "href": "https://science.nasa.gov/3d-resources/aeronomy-of-ice-in-the-mesosphere/",
+    "glbLocal": "/assets/models/nasa/aeronomy-of-ice-in-the-mesosphere/Aeronomy-of-Ice-in-the-Mesosphere.glb"
+  },
+  {
+    "slug": "agena-target-vehicle",
+    "title": "Agena Target Vehicle",
+    "description": "",
+    "glb": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/agena-target-vehicle/Agena%20Target%20Vehicle.glb?emrc=6a4e674c904fd",
+    "image": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/agena-target-vehicle/Agena%20Target%20Vehicle.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
+    "href": "https://science.nasa.gov/3d-resources/agena-target-vehicle/",
+    "glbLocal": "/assets/models/nasa/agena-target-vehicle/Agena-Target-Vehicle.glb"
+  },
+  {
+    "slug": "voyager-probe-b",
+    "title": "Voyager probe B",
+    "description": "NASA Voyager interstellar probe reference model.",
+    "glb": "local",
+    "image": "local",
+    "href": "https://science.nasa.gov/3d-resources/",
+    "glbLocal": "/assets/models/nasa/voyager-probe-b/voyager-probe-b.glb"
+  }
+]

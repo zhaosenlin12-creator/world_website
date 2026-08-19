@@ -27,8 +27,8 @@ export const zh = {
   // Hero
   hero: {
     eyebrow: "欢迎来到宇宙",
-    titleA: "一段精心策划的旅程",
-    titleB: "纵览我们的太阳系",
+    titleA: "星河万里",
+    titleB: "一眼万年",
     desc: "八大行星、数百颗卫星，以及数十颗冰封的旅行者。踏入电影感的 3D 宇宙，学习科学知识，跟随改写人类认知的探测任务。",
     stats: {
       planets: "颗行星",
@@ -391,4 +391,5 @@ export const zh = {
     built: "使用 Next.js · Three.js · Framer Motion 构建"
   }
 };
+
 

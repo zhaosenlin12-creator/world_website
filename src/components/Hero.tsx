@@ -5,11 +5,10 @@ import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { zh } from "@/i18n/zh";
 import { ClickRipples } from "@/components/fx/ClickRipples";
-import { TextSplitReveal } from "@/components/fx/TextSplitReveal";
+import { TextType } from "@/components/fx/TextType";
 import { MagneticButton } from "@/components/fx/MagneticButton";
 import { CountUp } from "@/components/fx/CountUp";
 
-// 动态加载 3D 场景 (避免 SSR + 首屏阻塞)
 const Hero3DScene = dynamic(() => import("@/components/fx/Hero3DScene").then((m) => m.Hero3DScene), {
   ssr: false,
   loading: () => (
@@ -19,11 +18,22 @@ const Hero3DScene = dynamic(() => import("@/components/fx/Hero3DScene").then((m)
   )
 });
 
+// 多文案循环 (与项目主题相关)
+const HERO_CYCLE = [
+  "探索太阳系",
+  "飞跃八大行星",
+  "穿越小行星带",
+  "靠近太阳边缘",
+  "追寻旅行者号",
+  "触碰宇宙边界",
+];
+
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
   const opacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.5, 0]);
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
   return (
     <ClickRipples className="block">
@@ -32,10 +42,8 @@ export function Hero() {
         className="relative min-h-screen overflow-hidden flex items-center justify-center pt-24 pb-12 bg-[#05060f]"
         style={{ cursor: "crosshair" }}
       >
-        {/* 3D 太阳系背景 (含粒子星空 + 自动 orbit 切换) */}
         <Hero3DScene />
 
-        {/* 暗角 (增强中心文字可读) */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -43,12 +51,11 @@ export function Hero() {
           }}
         />
 
-        {/* 文字内容 */}
         <motion.div style={{ opacity, scale }} className="relative z-10 max-w-6xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 0.8 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
             className="eyebrow mb-6 inline-block"
           >
             <span className="relative">
@@ -57,24 +64,35 @@ export function Hero() {
                 className="absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ delay: 1.8, duration: 1 }}
+                transition={{ delay: 1.4, duration: 1 }}
               />
             </span>
           </motion.div>
 
-          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.15] tracking-tight glow-text">
-            <span className="block">
-              <TextSplitReveal text={zh.hero.titleA} delay={1.1} stagger={0.025} />
-            </span>
-            <span className="block gradient-text">
-              <TextSplitReveal text={zh.hero.titleB} delay={1.4} stagger={0.025} />
-            </span>
-          </h1>
+          <motion.h1
+            style={{ y: titleY }}
+            className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.15] tracking-tight glow-text min-h-[2.4em]"
+          >
+            <TextType
+              as="span"
+              text={HERO_CYCLE}
+              typingSpeed={85}
+              deletingSpeed={40}
+              pauseDuration={1600}
+              loop
+              showCursor
+              cursorCharacter="|"
+              cursorClassName="text-cyan-300"
+              className="block gradient-text text-shimmer"
+              textColors={["#c4b5fd", "#f0abfc", "#fcd34d", "#67e8f9", "#fda4af", "#86efac"]}
+              variableSpeed={{ min: 60, max: 130 }}
+            />
+          </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.8, duration: 0.8 }}
+            transition={{ delay: 0.9, duration: 0.8 }}
             className="mt-8 max-w-2xl mx-auto text-lg md:text-xl text-white/70 leading-relaxed"
           >
             {zh.hero.desc}
@@ -83,18 +101,20 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.0, duration: 0.8 }}
+            transition={{ delay: 1.1, duration: 0.8 }}
             className="mt-10 flex flex-wrap items-center justify-center gap-4"
           >
             <MagneticButton strength={0.4} className="inline-block">
               <Link href="/explore" className="btn-primary text-base px-6 py-3 inline-flex">
                 <span>{zh.buttons.launch3d}</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m0 0-6-6m6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12h14m0 0-6-6m6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </Link>
             </MagneticButton>
             <MagneticButton strength={0.4} className="inline-block">
-              <Link href="/planets" className="btn-ghost text-base px-6 py-3 inline-flex">
-                {zh.buttons.browsePlanets}
+              <Link href="/spacecrafts/fleet" className="btn-ghost text-base px-6 py-3 inline-flex">
+                飞行器阵列
               </Link>
             </MagneticButton>
             <MagneticButton strength={0.4} className="inline-block">
@@ -109,12 +129,12 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2.4, duration: 0.8 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
             className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"
           >
             {[
               { to: 8, v: zh.hero.stats.planets },
-              { to: 5, v: zh.hero.stats.dwarfs },
+                { to: 5, v: zh.hero.stats.dwarfs },
               { to: 290, suffix: "+", v: zh.hero.stats.moons },
               { to: 1.3, format: (n: number) => n.toFixed(1) + "M+", v: zh.hero.stats.asteroids }
             ].map((s, i) => (
@@ -122,7 +142,7 @@ export function Hero() {
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.5 + i * 0.1, duration: 0.6 }}
+                transition={{ delay: 1.6 + i * 0.1, duration: 0.6 }}
                 whileHover={{ y: -4, scale: 1.04 }}
                 className="glass px-4 py-3 cursor-default transition-shadow hover:shadow-[0_0_40px_rgba(168,85,247,0.3)]"
               >
@@ -135,11 +155,10 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* 提示文字 */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2.8, duration: 0.8 }}
+          transition={{ delay: 1.9, duration: 0.8 }}
           className="absolute top-28 right-8 text-[10px] tracking-[0.3em] text-white/30 hidden md:block z-10"
         >
           ✦ 点击任意位置产生星轨波纹
@@ -151,7 +170,9 @@ export function Hero() {
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
           <span>向下滚动探索</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 13l5 5 5-5M7 7l5 5 5-5"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M7 13l5 5 5-5M7 7l5 5 5-5" />
+          </svg>
         </motion.div>
       </section>
     </ClickRipples>

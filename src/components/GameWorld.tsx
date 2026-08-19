@@ -740,8 +740,9 @@ function EnergyOrb({ position, color, getPlayer, onCollect }: { position: [numbe
       const dx = p.x - position[0];
       const dy = p.y - position[1];
       const dz = p.z - position[2];
-      const d = Math.hypot(dx, dy, dz);
-      if (d < 2.4) {
+      const lateral = Math.hypot(dx, dy);
+      const sweep = Math.max(0.8, Math.abs(state.clock.getDelta ? state.clock.getDelta() : 0.016) * 28 + 0.8);
+      if (dz > -sweep && dz < 1.2 && lateral < 1.6) {
         collected.current = true;
         onCollect();
       }
@@ -840,10 +841,11 @@ const ShipPlayer = forwardRef<THREE.Group, { onPositionUpdate: (x: number, y: nu
       const hazards = getHazards();
       for (const h of hazards) {
         if (h.hit) continue;
-        const dx = Math.abs(px.x - h.x);
-        const dy = Math.abs(px.y - h.y);
-        const dz = Math.abs(px.z - h.z);
-        if (dz < 1.0 && dx < 0.9 && dy < 0.9) {
+        const dx = px.x - h.x;
+        const dy = px.y - h.y;
+        const dz = px.z - h.z;
+        const lateral = Math.hypot(dx, dy);
+        if (dz > -1.0 && dz < 0.6 && lateral < 1.1) {
           h.hit = true;
           hitCountRef.current++;
           // 撞击节流 220ms: 防止密集 hazard 区快速连?
