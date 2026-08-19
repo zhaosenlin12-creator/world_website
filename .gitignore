@@ -20,4 +20,8 @@ fleet_gh.html
 play_gh.html
 home_gh.html
 facts_gh.html
-shot.log
+shot.logverify_*.png
+screenshots/
+tmp/
+test_*.png
+shot*.png
