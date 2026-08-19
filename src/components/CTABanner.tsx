@@ -28,7 +28,7 @@ export function CTABanner() {
               <TextSplitReveal text="由你掌控的 3D 之旅" stagger={0.02} />
               <br />
               <span className="text-white/70 text-2xl md:text-3xl block mt-2">
-                <TextSplitReveal text="—— 如 NASA\u2019s Eyes 般的体验，重新构想" stagger={0.015} />
+                <TextSplitReveal text="—— 让电影感的太阳系触手可及" stagger={0.015} />
               </span>
             </h2>
             <p className="mt-6 max-w-2xl mx-auto text-white/70">

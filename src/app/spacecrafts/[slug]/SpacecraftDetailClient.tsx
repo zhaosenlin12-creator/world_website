@@ -80,7 +80,7 @@ export default function SpacecraftDetailClient({ slug, entries }: { slug: string
             rel="noreferrer"
             className="rounded-full border border-white/20 px-4 py-2 text-sm text-white/85 hover:bg-white/10"
           >
-            NASA Science 原始页面
+            查看原始资料
           </a>
           <Link
             href="/spacecrafts/fleet/"

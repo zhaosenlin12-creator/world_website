@@ -22,7 +22,7 @@ const body = Inter({
 export const metadata: Metadata = {
   title: "宇宙探索者 — 太阳系与远方",
   description: "一段电影感、互动式的太阳系旅程——3D 探索、任务故事与宇宙科学。",
-  keywords: ["太阳系","行星","太空","NASA","探索","3D","宇宙"],
+  keywords: ["太阳系","行星","太空","探索","3D","宇宙"],
   openGraph: {
     title: "宇宙探索者 — 太阳系与远方",
     description: "一段电影感、互动式的太阳系旅程。",

@@ -2,7 +2,7 @@
 export const zh = {
   // Site
   siteName: "宇宙探索者",
-  siteTagline: "EXPLORER",
+  siteTagline: "宇宙之旅",
   nav: {
     home: "首页",
     explorer: "3D 探索",
@@ -81,7 +81,7 @@ export const zh = {
   storiesSection: {
     eyebrow: "文章与新闻",
     title: "来自太阳系的故事",
-    desc: "精选自 NASA 科学任务理事会——发现、任务更新以及头条背后的科学。"
+    desc: "来自太阳系探索与公开天文观测的最新动态——任务进展、关键发现与前沿故事。"
   },
   facts: {
     eyebrow: "数字说话",
@@ -116,13 +116,13 @@ export const zh = {
     desc: "教学计划、活动、可打印图形、3D 模型，以及精选的太阳系资源包。",
     cards: [
       { tag: "教学套件", title: "太阳系教学资源包", desc: "面向 K-12 教室的完整教学计划、可打印海报与学生动手手册。", url: "https://science.nasa.gov/solar-system/" },
-      { tag: "3D 模型", title: "NASA 3D 模型库", desc: "NASA 发布的 3D 打印模型与可视化资源（STL / OBJ 格式）。", url: "https://science.nasa.gov/solar-system/" },
+      { tag: "3D 模型", title: "公开 3D 模型库", desc: "公开发布的 3D 打印模型与可视化资源（STL / OBJ 格式）。", url: "https://science.nasa.gov/solar-system/" },
       { tag: "数据集", title: "行星数据集", desc: "轨道参数、物理属性、大气组成的可下载结构化数据表。", url: "https://science.nasa.gov/solar-system/" },
-      { tag: "图像", title: "NASA 图像档案", desc: "超过 50 年的太阳系探测高清图像，可用于研究和教学。", url: "https://images.nasa.gov/" },
+      { tag: "图像", title: "公开图像档案", desc: "超过 50 年的太阳系探测高清图像，可用于研究和教学。", url: "https://images.nasa.gov/" },
       { tag: "活动", title: "动手实践活动", desc: "为家庭和学校设计的动手实验：陨石模型、鸡蛋降落伞实验等。", url: "https://science.nasa.gov/solar-system/" },
-      { tag: "视频", title: "探索者任务视频", desc: "旅行者号、毅力号、新视野号等任务的官方视频档案。", url: "https://science.nasa.gov/solar-system/" },
+      { tag: "视频", title: "任务视频集锦", desc: "旅行者号、毅力号、新视野号等任务的公开视频档案。", url: "https://science.nasa.gov/solar-system/" },
       { tag: "海报", title: "可打印海报", desc: "高分辨率行星、卫星、任务徽标海报，适合教室与展览。", url: "https://science.nasa.gov/solar-system/" },
-      { tag: "应用", title: "NASA 官方 App", desc: "NASA App、Eyes on the Solar System 等互动应用。", url: "https://www.nasa.gov/" },
+      { tag: "应用", title: "官方互动应用", desc: "公开的太阳系可视化互动应用。", url: "https://www.nasa.gov/" },
       { tag: "可视化", title: "太阳系轨道可视化", desc: "基于真实 JPL 历表的行星轨道交互可视化工具。", url: "https://eyes.nasa.gov/" }
     ]
   },
@@ -131,12 +131,12 @@ export const zh = {
     eyebrow: "影视级产品",
     title: "宇宙探索者",
     subtitle: "一体化太阳系科教平台",
-    intro: "一个面向大众的高品质 3D 太阳系探索平台。我们将 NASA 官方的探测数据、图像和实录文献，在浏览器中渲染为电影级品质的体验。",
+    intro: "一个面向大众的高品质 3D 太阳系探索平台。我们将公开的探测数据、图像和实录文献，在浏览器中渲染为电影级品质的体验。",
     missionTitle: "我们的使命",
     mission: "让太阳系科学深入人心。我们将复杂的天体参数、轨道数据和实录任务，转化为可点击、可吸收的电影故事。",
     featuresTitle: "核心优势",
     features: [
-      { icon: "globe", title: "可信源 NASA", desc: "所有天体参数、轨道数据和实录图像来自 NASA 开放数据库，并按科学公布的事实清单进行呈现。" },
+      { icon: "globe", title: "公开数据源", desc: "所有天体参数、轨道数据和图像来自公开的太阳系观测数据库，并按科学公布的事实清单进行呈现。" },
       { icon: "cube", title: "浏览器内 3D", desc: "以 Three.js 与 WebGL 的同步渲染改造，60fps 流畅滚动，鼠标拖拽镜头不受限。" },
       { icon: "sparkle", title: "电影级语言", desc: "整个体验遵循电影的静/动调性：渐变进屏、贴图层缩变、视差隐/现，让每个画面都有对话感。" },
       { icon: "book", title: "适合学习", desc: "你可以掌握各天体的物理实况、轨道公转规律、以及任务间的传奇，用于课程、计划、探索软件。" },
@@ -151,16 +151,16 @@ export const zh = {
       { k: "面向未来", v: "持续集成 AI、WebXR 等新技术。" }
     ],
     dataTitle: "数据来源",
-    data: "所有文本、图像和结构化数据均来自 NASA 开放科学文库。3D 太阳系数据——包括物理参数、轨道根数和大气的组成——源自 NASA 公开的事实清单。",
+    data: "所有文本、图像和结构化数据均来自公开的太阳系科学资料。3D 太阳系数据——包括物理参数、轨道根数和大气的组成——源自公开的事实清单。",
     stackTitle: "技术栈",
     stack: [
       { k: "3D 渲染", v: "Three.js + React Three Fiber + drei" },
       { k: "UI", v: "Next.js 14 + TailwindCSS + Framer Motion" },
-      { k: "数据", v: "NASA Science Mission Directorate 开放数据" },
+      { k: "数据", v: "公开太阳系科学资料库" },
       { k: "构建", v: "Vercel 边缘网页 + CDN 加速" }
     ],
     creditsTitle: "致谢",
-    creditsText: "原始内容 © NASA。所有商标、徽标和品牌名称均属其各自所有者。本项目与 NASA 无关，也未得到其认可。"
+    creditsText: "原始资料来自公开的科学观测与探测任务。所有商标、徽标和品牌名称均属其各自所有者。本项目为独立的科学可视化作品。"
   },
   // Planets index
   planetsIndex: {
@@ -177,8 +177,8 @@ export const zh = {
   planetDetail: {
     about: "关于 {name}",
     didYouKnow: "你知道吗？",
-    fromNasa: "来自 NASA",
-    readOnNasa: "在 NASA 站点阅读", nasaColors: "NASA 真实色彩", dragRotate: "拖动旋转",
+    fromNasa: "公开资料",
+    readOnNasa: "在来源站点阅读", nasaColors: "真实色彩", dragRotate: "拖动旋转",
     related: "相关世界",
     openIn3d: "在 3D 中打开"
   },
@@ -187,7 +187,7 @@ export const zh = {
     about: "关于",
     atmosphere: "大气",
     didYouKnow: "你知道吗？",
-    fromNasa: "来自 NASA",
+    fromNasa: "公开资料",
     close: "关闭"
   },
   // Explorer
@@ -276,7 +276,7 @@ export const zh = {
     questCollect: "采集 5 颗能量晶体",
     questAsteroid: "穿越小行星带",
     questKuiper: "抵达柯伊伯带",
-    questProbe: "找到 NASA 探测器 (旅行者号/卡西尼号/水手号)",
+    questProbe: "找到旅行者号/卡西尼号/水手号探测器",
     tunnelTitle: "超光速穿越",
     tunnelDesc: "飞船正在穿越小行星带! 使用 WASD / 方向键 操控飞船躲避陨石, 收集青色能量球补充燃料。",
     tunnelHint: "WASD / 方向键 移动 · 撞击陨石扣护盾 · 收集能量球加燃料",
@@ -311,7 +311,7 @@ export const zh = {
     asteroidZone: "小行星带",
     kuiperZone: "柯伊伯带",
     probe: "探测器",
-    probePicked: "回收 NASA 探测器 +500",
+    probePicked: "回收探测器 +500",
     energyCollected: "回收能量晶体 +5 燃料",
     questComplete: "任务完成",
     shieldActivated: "护盾启动",
@@ -351,9 +351,9 @@ export const zh = {
   stories: {
     eyebrow: "文章与新闻",
     title: "来自太阳系的故事",
-    desc: "精选自 NASA 科学任务理事会——发现、任务更新以及头条背后的科学。",
+    desc: "来自太阳系探索与公开天文观测的最新动态——任务进展、关键发现与前沿故事。",
     searchPlaceholder: "搜索故事…",
-    readMore: "在 NASA 站点阅读",
+    readMore: "在来源站点阅读",
     items: [
       { slug: "sun", tag: "恒星", title: "太阳:46 亿岁的核聚变熔炉", desc: "每秒钟,太阳把 600 万吨氢聚变成氦。它照耀了恐龙、人类,也将照耀未来数十亿年。", image: "/assets/textures/sun.jpg", accent: "#fbbf24" },
       { slug: "mercury", tag: "行星", title: "水星:疾驰的使者", desc: "一个水星日长达 176 个地球日,是它公转周期的两倍。MESSENGER 与 BepiColombo 已揭开它的铁核秘密。", image: "/assets/textures/mercury.jpg", accent: "#a8a29e" },
@@ -381,12 +381,12 @@ export const zh = {
   // Footer
   footer: {
     aboutTitle: "宇宙探索者",
-    aboutDesc: "一段精心策划的太阳系电影之旅。所有内容均来自 NASA 公有领域素材，并经过重新渲染以提供交互式学习体验。",
+    aboutDesc: "一段精心策划的太阳系电影之旅。所有内容均来自公开的科学观测与探测任务数据，并经过重新渲染以提供交互式学习体验。",
     exploreCol: "探索",
     learnCol: "学习",
     dataCol: "数据与图像",
-    dataDesc: "所有文本和图像来自 NASA 科学任务理事会，按其公有领域政策使用。已重新组织以提供交互式学习体验。",
-    original: "去 NASA 站点 →",
+    dataDesc: "所有文本和图像来自公开的太阳系科学资料，按其公有领域政策使用。已重新组织以提供交互式学习体验。",
+    original: "前往来源站点 →",
     copyright: "© {year} 宇宙探索者。教学性质粉丝项目。",
     built: "使用 Next.js · Three.js · Framer Motion 构建"
   }

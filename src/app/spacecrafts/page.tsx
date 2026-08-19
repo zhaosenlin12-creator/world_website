@@ -6,8 +6,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "飞行器展廊 - NASA 3D 模型",
-  description: "浏览并探索 NASA 3D 资源中的飞行器模型，进入共享宇宙场景自由观看。",
+  title: "飞行器展廊 - 公开 3D 模型",
+  description: "浏览并探索公开的太阳系飞行器 3D 模型，进入共享宇宙场景自由观看。",
 };
 
 interface Entry {
@@ -25,9 +25,9 @@ export default function SpacecraftsPage() {
     <div className="relative pt-28 pb-24">
       <section className="px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="eyebrow mb-3 text-center">NASA 3D 资源库</div>
+          <div className="eyebrow mb-3 text-center">公开 3D 模型库</div>
           <div className="flex justify-center mb-6">
-            <AsciiTitle text="FLEET" size={84} caption="自由漂浮飞行器宇宙场景" />
+            <AsciiTitle text="飞行器阵列" size={84} caption="自由漂浮飞行器宇宙场景" />
           </div>
           <LiquidGlassPanel
             tone="cyan"
@@ -36,7 +36,7 @@ export default function SpacecraftsPage() {
           >
             <div className="p-5 md:p-6 text-center">
               <p className="text-sm md:text-base text-white/80 leading-relaxed">
-                下方展廊收录了从 NASA Science 3D Resources 抓取并整理的 {items.length} 个
+                下方展廊收录了从公开的科学 3D 资源库整理的 {items.length} 个
                 GLB 模型。进入宇宙场景后，你可以在同一片星空中观看这些飞行器自由漂浮，
                 并通过点击逐个收听介绍。
               </p>
@@ -53,7 +53,7 @@ export default function SpacecraftsPage() {
                   rel="noreferrer"
                   className="rounded-full border border-white/20 px-4 py-2 text-white/80 hover:bg-white/10"
                 >
-                  NASA 官方来源
+                  查看原始资料
                 </a>
               </div>
             </div>

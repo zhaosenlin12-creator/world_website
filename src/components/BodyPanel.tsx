@@ -108,7 +108,7 @@ export function BodyPanel({ body, onClose }: Props) {
                   <p key={i}>{p}</p>
                 ))}
                 <a href={article.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-purple-300 hover:text-white text-xs">
-                  在 NASA.gov 上阅读 →
+                  在来源站点阅读 →
                 </a>
               </div>
             </div>

@@ -15,7 +15,7 @@ export function QuickFactsGrid() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-8 text-center"
         >
-          <div className="eyebrow mb-3">NASA 快速事实</div>
+          <div className="eyebrow mb-3">太阳系快速事实</div>
           <h2 className="h-section gradient-text">用数据快速认识宇宙尺度</h2>
         </motion.div>
 

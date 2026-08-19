@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "故事 — 宇宙探索者",
-  description: "精选自 NASA 科学任务理事会——发现、任务更新以及头条背后的科学。"
+  description: "精选自公开的太阳系观测与探测资料——任务进展、关键发现与前沿故事。"
 };
 
 export default function Page() {

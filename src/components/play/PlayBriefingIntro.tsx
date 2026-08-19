@@ -59,7 +59,7 @@ export default function PlayBriefingIntro({ open, onStart, onBack, voiceEnabled,
               <div>
                 <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.38em] text-cyan-200/85">
                   <span>任务启动序列</span>
-                  <span className="rounded-full border border-white/10 px-3 py-1 text-white/55">SOL MISSION</span>
+                  <span className="rounded-full border border-white/10 px-3 py-1 text-white/55">太阳系任务</span>
                   <span className="rounded-full border border-amber-300/30 bg-amber-300/10 px-3 py-1 text-amber-100/90">操作员：在线</span>
                 </div>
                 <h2 className="mt-3 font-display text-4xl font-semibold leading-tight text-white md:text-5xl text-shimmer">

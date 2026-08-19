@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { zh } from "@/i18n/zh";
 
 interface Props {
@@ -74,12 +75,12 @@ export function ControlBar({
         </button>
       </div>
 
-      <a
+      <Link
         href="/spacecrafts/fleet/"
         className="btn-ghost ml-1 inline-flex items-center gap-2 border-l border-white/10 px-3 py-1.5 text-xs text-cyan-200 hover:bg-white/5"
       >
         <span aria-hidden>&#8594;</span>飞行器场景
-      </a>
+      </Link>
 
       <button onClick={onReset} className="btn-ghost ml-1 border-l border-white/10 px-3 py-1.5">
         <span className="text-xs">{zh.buttons.reset}</span>

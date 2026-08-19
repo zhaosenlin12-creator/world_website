@@ -110,7 +110,7 @@ export function ResourcesView() {
                   <h2 className="font-display text-lg leading-snug text-white">{c.title}</h2>
                   <p className="text-sm text-white/65 mt-2 leading-relaxed">{c.desc}</p>
                   <div className="mt-4 inline-flex items-center gap-1 text-xs text-purple-300 group-hover:text-white transition">
-                    <span>前往 NASA</span>
+                    <span>前往来源</span>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ export function ResourcesView() {
           >
             <h2 className="font-display text-2xl mb-3 gradient-text inline-block">数据来源</h2>
             <p className="text-white/70 max-w-2xl mx-auto leading-relaxed">
-              所有文本、图像和结构化数据均来自 NASA 开放科学文库。3D 太阳系数据——包括物理参数、轨道根数和大气的组成——源自 NASA 公开的事实清单。
+              所有文本、图像和结构化数据均来自公开的太阳系科学资料。3D 太阳系数据——包括物理参数、轨道根数和大气的组成——源自公开的事实清单。
             </p>
           </motion.div>
         </div>

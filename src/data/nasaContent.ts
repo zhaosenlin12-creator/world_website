@@ -10,9 +10,9 @@ export interface NasaTopicCard {
 }
 
 export const heroDiscovery = {
-  eyebrow: "NASA 科学发现",
+  eyebrow: "科学发现",
   title: "钱德拉与韦布正在改写我们对宇宙的认知",
-  body: "NASA 的多项任务仍在不断拓展我们对恒星、星系与深空结构的理解。这一组页面汇集了最新的 NASA Science 视频、图像和 3D 资源，让探索体验更具沉浸感。",
+  body: "最新的探测任务持续拓展我们对恒星、星系与深空结构的理解。这一组页面汇集了最新的天文视频、图像与 3D 资源，让探索体验更具沉浸感。",
   video: "https://assets.science.nasa.gov/content/dam/science/missions/webb/outreach/migrated/2022/STScI-01G6X376A8FS0E1GMJAPT56NZ3.mp4",
   poster: "https://assets.science.nasa.gov/content/dam/science/missions/webb/outreach/migrated/2017/STScI-01H8PJ6083PCF4KJ1AYKVVRX8Q.png/jcr:content/renditions/cq5dam.web.1280.1280.png",
   href: "https://science.nasa.gov/universe/",
@@ -22,7 +22,7 @@ export const featuredTopics: NasaTopicCard[] = [
   {
     tag: "恒星",
     title: "恒星如何诞生并走向演化",
-    description: "NASA Science 指出，可观测宇宙中的恒星数量可能高达 1 千万亿亿颗。它们从分子云中凝聚诞生，并根据质量不同走向完全不同的生命历程。",
+    description: "研究指出，可观测宇宙中的恒星数量可能高达 1 千万亿亿颗。它们从分子云中凝聚诞生，并根据质量不同走向完全不同的生命历程。",
     href: "https://science.nasa.gov/universe/stars/",
     tone: "amber",
     mediaType: "video",
@@ -56,9 +56,9 @@ export const featuredTopics: NasaTopicCard[] = [
     mediaUrl: "https://assets.science.nasa.gov/content/dam/science/missions/webb/science/2019/04/STScI-01G5A807X1CM2RBZKYFK0184YM.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
   },
   {
-    tag: "NASA Eyes",
+    tag: "互动探索",
     title: "交互式宇宙可视化工具",
-    description: "NASA Eyes 可以让你穿越太阳系、悬停在遥远的系外行星上方，并实时追踪正在执行任务的飞行器。",
+    description: "这个互动工具可以让你穿越太阳系、悬停在遥远的系外行星上方，并实时追踪正在执行任务的飞行器。",
     href: "https://science.nasa.gov/eyes/",
     tone: "cyan",
     mediaType: "image",
@@ -91,7 +91,7 @@ export const quickFacts = [
   {
     value: "1000 亿+",
     label: "银河系恒星数量",
-    description: "NASA Science 估计，银河系中的恒星数量至少超过 1000 亿颗，是一个极其庞大的恒星系统。",
+    description: "估计，银河系中的恒星数量至少超过 1000 亿颗，是一个极其庞大的恒星系统。",
     href: "https://science.nasa.gov/universe/stars/",
   },
   {
@@ -103,12 +103,12 @@ export const quickFacts = [
 ];
 
 export const sources = [
-  { label: "NASA Science 首页", href: "https://science.nasa.gov/" },
+  { label: "科学首页", href: "https://science.nasa.gov/" },
   { label: "宇宙总览", href: "https://science.nasa.gov/universe/overview/" },
   { label: "太阳系探索", href: "https://science.nasa.gov/solar-system/" },
   { label: "星系", href: "https://science.nasa.gov/universe/galaxies/" },
   { label: "恒星", href: "https://science.nasa.gov/universe/stars/" },
   { label: "黑洞", href: "https://science.nasa.gov/universe/black-holes/" },
-  { label: "NASA 3D 资源库", href: "https://science.nasa.gov/3d-resources/" },
+  { label: "3D 资源库", href: "https://science.nasa.gov/3d-resources/" },
 ];
 

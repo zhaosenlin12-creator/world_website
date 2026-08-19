@@ -21,7 +21,7 @@ const FALLBACK_STORIES: Article[] = [
   {
     url: "#",
     slug: "psyche",
-    title: "NASA 的灵神星任务",
+    title: "灵神星任务",
     description: "一艘航天器造访了一颗由金属构成的小行星——一颗远古原行星裸露的金属核心。",
     hero: null,
     body: [],
@@ -69,7 +69,7 @@ export function FeaturedStories() {
           className="flex items-end justify-between flex-wrap gap-4 mb-10"
         >
           <div>
-            <div className="eyebrow mb-3">NASA 最新动态</div>
+            <div className="eyebrow mb-3">最新探测动态</div>
             <h2 className="h-section gradient-text">精选故事</h2>
           </div>
           <Link href="/stories" className="btn-ghost">全部故事</Link>
