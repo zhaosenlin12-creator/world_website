@@ -1,9 +1,4 @@
-// Helpers to load scraped articles and merge with our curated bodies data.
-import path from "path";
-import fs from "fs";
 import { BODIES, SolarBody } from "@/data/bodies";
-
-const DATA = path.join(process.cwd(), "data");
 
 export interface ScrapedArticle {
   url: string;
@@ -17,19 +12,40 @@ export interface ScrapedArticle {
 }
 
 let cache: ScrapedArticle[] | null = null;
+let inflight: Promise<ScrapedArticle[]> | null = null;
 
+// 从 /public/data/articles.json 运行时拉取, 不参与 build bundle, 让 stories 页首屏轻量化.
+async function loadFromPublic(): Promise<ScrapedArticle[]> {
+  const url = "/data/articles.json";
+  try {
+    const r = await fetch(url, { cache: "force-cache" });
+    if (!r.ok) return [];
+    const arr = (await r.json()) as ScrapedArticle[];
+    return arr.filter((a) => a.title && !/Page not found/i.test(a.title));
+  } catch {
+    return [];
+  }
+}
+
+export async function loadArticlesAsync(): Promise<ScrapedArticle[]> {
+  if (cache) return cache;
+  if (!inflight) {
+    inflight = loadFromPublic().then((arr) => {
+      cache = arr;
+      return arr;
+    });
+  }
+  return inflight;
+}
+
+// 同步接口: 返回已缓存数据 (空数组若尚未加载)
 export function loadArticles(): ScrapedArticle[] {
   if (cache) return cache;
-  try {
-    const fp = path.join(DATA, "articles.json");
-    if (!fs.existsSync(fp)) return (cache = []);
-    const raw = fs.readFileSync(fp, "utf-8");
-    const arr = JSON.parse(raw) as ScrapedArticle[];
-    cache = arr.filter((a) => a.title && !/Page not found/i.test(a.title));
-    return cache;
-  } catch {
-    return (cache = []);
+  // 在客户端异步加载 (仅 stories 页 fallback 使用, 主路径走 zh.stories.items)
+  if (typeof window !== "undefined") {
+    void loadArticlesAsync();
   }
+  return cache || [];
 }
 
 export function articlesForBody(body: SolarBody): ScrapedArticle[] {
@@ -37,5 +53,7 @@ export function articlesForBody(body: SolarBody): ScrapedArticle[] {
 }
 
 export function allStories(): ScrapedArticle[] {
-  return loadArticles().filter((a) => !BODIES.some((b) => a.slug.startsWith(b.id)) && a.body.length > 1);
+  return loadArticles().filter(
+    (a) => !BODIES.some((b) => a.slug.startsWith(b.id)) && a.body.length > 1
+  );
 }
