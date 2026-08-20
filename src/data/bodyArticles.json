@@ -3,19 +3,14 @@
     {
       "url": "https://science.nasa.gov/ceres/",
       "slug": "ceres",
-      "title": "Ceres",
-      "description": "Dwarf planet Ceres is the largest object in the asteroid belt between Mars and Jupiter. It was explored by NASA's Dawn spacecraft.",
+      "title": "谷神星:小行星带的矮行星",
+      "description": "谷神星是小行星带中最大的天体,也是唯一位于内太阳系的矮行星。曙光号探测器发现它表面有神秘亮斑。",
       "hero": null,
       "body": [
-        "Dwarf planet Ceres is the largest object in the asteroid belt between Mars and Jupiter. It was explored by NASA's Dawn spacecraft.",
-        "Ceres is the only dwarf planet in the inner solar system.",
-        "Ceres was the first member of the asteroid belt to be discovered when Giuseppe Piazzi spotted it in 1801. Called an asteroid for many years, Ceres is so much bigger and so different from its rocky neighbors that scientists classified it as a dwarf planet in 2006. When",
-        "Ceres was the first dwarf planet to be orbited by a spacecraft.",
-        "NASA's Dawn spacecraft reached Ceres in 2015 to study its surface, composition, and history. This was three years after Dawn had orbited the asteroid Vesta, the second-largest body in the asteroid belt, behind Ceres.",
-        "A curated collection of resources about dwarf planets, including activities that can be done at home, as well as videos and animations, images, printable graphics, and 3D models.",
-        "The mission explored dwarf planet Ceres, and giant asteroid Vesta",
-        "A curated collection of resources, including activities that can be done at home, as well as videos and animations, images, printable graphics, and 3D models.",
-        "Images of dwarf planet Ceres."
+        "谷神星是小行星带中最大的天体,也是唯一位于内太阳系的矮行星。曙光号探测器发现它表面有神秘亮斑。",
+        "1801 年由皮亚齐发现时,它曾被视为行星,后来被归类为小行星,2006 年正式被划分为矮行星。",
+        "谷神星上的亮斑(奥卡托陨石坑)被认为来自撞击后涌出的盐分丰富的液体,暗示着地下存在水。",
+        "曙光号在抵达谷神星之前曾环绕小行星灶神星,这使它成为首个环绕过两个地外天体运行的探测器。"
       ],
       "images": [
         {
@@ -85,42 +80,14 @@
     {
       "url": "https://science.nasa.gov/earth/facts/",
       "slug": "earth/facts",
-      "title": "Facts About Earth",
-      "description": "Earth is the third planet from the Sun, and the fifth largest planet. It's the only place we know of inhabited by living things.",
+      "title": "地球:已知的唯一生命摇篮",
+      "description": "地球是太阳系第三颗行星,也是已知唯一孕育生命的星球。液态水覆盖其 71% 的表面,磁场与大气层共同维护着生命的庇护所。",
       "hero": "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e002131/GSFC_20171208_Archive_e002131~large.jpg",
       "body": [
-        "Earth – our home planet – is the third planet from the Sun, and the fifth largest planet. It's the only place we know of inhabited by living things.",
-        "93,327,712 miles / 150,196,428 kilometers",
-        "While Earth is only the fifth largest planet in the solar system, it is the only planet in our solar system with liquid water on the surface. Just slightly larger than nearby Venus, Earth is the biggest of the four planets closest to the Sun, all of which are made of rock and metal.",
-        "Earth is the only planet in the solar system whose English name does not come from Greek or Roman mythology. The name was taken from Old English and Germanic. It simply means \"the ground.\" There are, of course, many names for our planet in the thousands of languages spoken by the people of the third planet from the Sun.",
-        "The name Earth is about 1,000 years old. All of the planets, except for Earth, were named after Greek and Roman gods and goddesses. However, the name Earth is a Germanic word, which simply means “the ground.”",
-        "Earth has a very hospitable temperature and mix of chemicals that have made life abundant here. Most notably, Earth is unique in that most of our planet is covered in liquid water, since the temperature allows liquid water to exist for extended periods of time. Earth's vast oceans provided a convenient place for life to begin about 3.8 billion years ago.",
-        "Some of the features of our planet that make it great for sustaining life are changing due to the ongoing effects of",
-        "With an equatorial diameter of 7,926 miles (12,756 kilometers), Earth is the biggest of the terrestrial planets and the fifth largest planet in our solar system.",
-        "From an average distance of 93 million miles (150 million kilometers), Earth is exactly one astronomical unit away from the Sun because one astronomical unit (abbreviated as AU), is the distance from the Sun to Earth. This unit provides an easy way to quickly compare planets' distances from the Sun.",
-        "It takes about eight minutes for light from the Sun to reach our planet.",
-        "As Earth orbits the Sun, it completes one rotation every 23.9 hours. It takes 365.25 days to complete one trip around the Sun. That extra quarter of a day presents a challenge to our calendar system, which counts one year as 365 days. To keep our yearly calendars consistent with our orbit around the Sun, every four years we add one day. That day is called a leap day, and the year it's added to is called a leap year.",
-        "Earth's axis of rotation is tilted 23.4 degrees with respect to the plane of Earth's orbit around the Sun. This tilt causes our yearly cycle of seasons. During part of the year, the northern hemisphere is tilted toward the Sun, and the southern hemisphere is tilted away. With the Sun higher in the sky, solar heating is greater in the north producing summer there. Less direct solar heating produces winter in the south. Six months later, the situation is reversed. When spring and fall begin, both hemispheres receive roughly equal amounts of heat from the Sun.",
-        "Earth is the only planet in our solar system with only one moon.",
-        "Earth sometimes temporarily hosts orbiting asteroids or large rocks. They are typically trapped by Earth's gravity for a few months or years before returning to an orbit around the Sun. Some asteroids will be in a long “dance” with Earth as both orbit the Sun.",
-        "Some moons are bits of rock that were captured by a planet's gravity, but our Moon is likely the result of a collision billions of years ago. When Earth was a young planet, a large chunk of rock smashed into it, displacing a portion of Earth's interior. The resulting chunks clumped together and formed our Moon. With a radius of 1,080 miles (1,738 kilometers), the Moon is the fifth largest moon in our solar system (after Ganymede, Titan, Callisto, and Io).",
-        "The Moon is an average of 238,855 miles (384,400 kilometers) away from Earth. That means 30 Earth-sized planets could fit in between Earth and its Moon.",
-        "When the solar system settled into its current layout about 4.5 billion years ago, Earth formed when gravity pulled swirling gas and dust in to become the third planet from the Sun. Like its fellow terrestrial planets, Earth has a central core, a rocky mantle, and a solid crust.",
-        "Earth is composed of four main layers, starting with an inner core at the planet's center, enveloped by the outer core, mantle, and crust.",
-        "The inner core is a solid sphere made of iron and nickel metals about 759 miles (1,221 kilometers) in radius. There the temperature is as high as 9,800 degrees Fahrenheit (5,400 degrees Celsius). Surrounding the inner core is the outer core. This layer is about 1,400 miles (2,300 kilometers) thick, made of iron and nickel fluids.",
-        "In between the outer core and crust is the mantle, the thickest layer. This hot, viscous mixture of molten rock is about 1,800 miles (2,900 kilometers) thick and has the consistency of caramel. The outermost layer, Earth's crust, goes about 19 miles (30 kilometers) deep on average on land. At the bottom of the ocean, the crust is thinner and extends about 3 miles (5 kilometers) from the seafloor to the top of the mantle.",
-        "Like Mars and Venus, Earth has volcanoes, mountains, and valleys. Earth's lithosphere, which includes the crust (both continental and oceanic) and the upper mantle, is divided into huge plates that are constantly moving. For example, the North American plate moves west over the Pacific Ocean basin, roughly at a rate equal to the growth of our fingernails. Earthquakes result when plates grind past one another, ride up over one another, collide to make mountains, or split and separate.",
-        "Earth's global ocean, which covers about 71% of the planet's surface, has an average depth of about 2.3 miles (3.6 kilometers) and contains 97% of Earth's water. Almost all of Earth's volcanoes are hidden under these oceans. Hawaii's Mauna Kea volcano is taller from base to summit than Mount Everest, but most of it is underwater. Earth's longest mountain range is also underwater, at the bottom of the Arctic and Atlantic oceans. It is four times longer than the Andes, Rockies and Himalayas combined.",
-        "Near the surface, Earth has an atmosphere that consists of 78% nitrogen, 21% oxygen, and 1% other gases such as argon, carbon dioxide, and neon. The atmosphere affects Earth's long-term climate and short-term local weather and shields us from much of the harmful radiation coming from the Sun. It also protects us from meteoroids, most of which burn up in the atmosphere, seen as meteors in the night sky, before they can strike the surface as meteorites.",
-        "Our planet's rapid rotation and molten nickel-iron core give rise to a magnetic field, which the solar wind distorts into a teardrop shape in space. (The solar wind is a stream of charged particles continuously ejected from the Sun.) When charged particles from the solar wind become trapped in Earth's magnetic field, they collide with air molecules above our planet's magnetic poles. These air molecules then begin to glow and cause aurorae, or the northern and southern lights.",
-        "The magnetic field is what causes compass needles to point to the North Pole regardless of which way you turn. But the magnetic polarity of Earth can change, flipping the direction of the magnetic field. The geologic record tells scientists that a magnetic reversal takes place about every 300,000 years on average, but the timing is very irregular. As far as we know, such a magnetic reversal doesn't cause any harm to life on Earth, and a reversal is very unlikely to happen for at least another thousand years. But when it does happen, compass needles are likely to point in many different directions for a few centuries while the switch is being made. And after the switch is completed, they will all point south instead of north.",
-        "Sites relevant to the start of the American Revolutionary War are interspersed throughout the modern-day Boston metropolitan region.",
-        "The farms and gardens of Mount Vernon played a central role in the life of America’s first president.",
-        "Two hundred years ago, a battle in the port city of Baltimore inspired the writing of America’s national anthem.",
-        "Since we live here, you might think we know all there is to know about Earth. Not at all, actually! We have a lot we can learn about our home planet.",
-        "Our home planet Earth is a rocky, terrestrial planet with one moon. It has mountains, valleys, canyons, plains and so much more. Earth is special because it is an ocean planet.",
-        "NASA's Earth Observatory brings you the Earth, every day, with in-depth stories and stunning imagery.",
-        "NASA's unique vantage point helps us inform solutions to enhance decision-making, improve livelihoods, and protect our planet."
+        "地球是太阳系第三颗行星,也是已知唯一孕育生命的星球。液态水覆盖其 71% 的表面,磁场与大气层共同维护着生命的庇护所。",
+        "地球的大气由 78% 氮、21% 氧与少量其他气体构成——这个氧气比例是生命繁荣的关键。",
+        "我们的家园行星是太阳系中最致密的岩石行星,内核温度与太阳表面相当(约 6000°C)。",
+        "月球每年以 3.8 厘米的速度远离地球——这是数十亿年来潮汐作用累积的结果。"
       ],
       "images": [
         {
@@ -306,27 +273,14 @@
     {
       "url": "https://science.nasa.gov/eris/",
       "slug": "eris",
-      "title": "Eris",
-      "description": "The discovery of Eris help trigger a debate in the scientific community that led to the International Astronomical Union's decision in 2006 to clarify the",
+      "title": "阋神星:争议的发现者",
+      "description": "阋神星的发现是冥王星被重新分类为矮行星的直接原因。它的质量比冥王星还大,但距离更远。",
       "hero": null,
       "body": [
-        "Eris is one of largest the dwarf planets in our solar system. It's about the same size as Pluto, but it's three times farther from the Sun.",
-        "The discovery of Eris help trigger a debate in the scientific community that led to the International Astronomical Union's decision in 2006 to clarify the definition of a planet. Pluto, Eris, and other similar objects are now classified as dwarf planets.",
-        "Eris was discovered on Jan. 5, 2005, from data obtained on Oct. 21, 2003, during a Palomar Observatory survey of the outer solar system by Mike Brown, a professor of planetary astronomy at the California Institute of Technology; Chad Trujillo of the Gemini Observatory; and David Rabinowitz of Yale University. Here are some key dates in the discovery of Eris:",
-        "Originally designated 2003 UB",
-        "The surface of Eris is extremely cold, so it seems unlikely that life could exist there.",
-        "With an equatorial diameter of about 1,500 miles (2,400 kilometers), Eris is about 1/5 the width of Earth. Eris, like Pluto, is a little smaller than Earth's Moon. If the Earth were the size of a nickel, Eris would be about as big as a popcorn kernel.",
-        "From an average distance of 6.3 billion miles (10 billion kilometers), Eris is about 68 astronomical units away from the Sun. One astronomical unit (abbreviated as AU), is the distance from the Sun to Earth. From this distance, it takes sunlight more than nine hours to travel from the Sun to the surface of Eris.",
-        "Eris takes 557 Earth years to make one trip around the Sun. The plane of Eris' orbit is well out of the plane of the solar system's planets and extends far beyond the Kuiper Belt, a zone of icy debris beyond the orbit of Neptune.",
-        "As Eris orbits the Sun, it completes one rotation every 25.9 hours, making its day length similar to ours.",
-        "Eris has a very small moon called Dysnomia. Dysnomia has a nearly circular orbit lasting about 16 days. This moon is named after Eris' daughter, the demon goddess of lawlessness.",
-        "Dysnomia and other small moons around planets and dwarf planets allow astronomers to calculate the mass of the parent body. Dysnomia plays a role in determining how comparable Pluto and Eris are to each other.",
-        "Dwarf planet Eris is a member of a group of objects that orbit in a disc-like zone beyond the orbit of Neptune called the Kuiper Belt. This distant realm is populated with thousands of miniature icy worlds, which formed early in the history of our solar system about 4.5 billion years ago. These icy, rocky bodies are called Kuiper Belt objects, transneptunian objects, or plutoids.",
-        "We know very little about Eris' internal structure.",
-        "Eris most likely has a rocky surface similar to Pluto. Scientists think surface temperatures vary from about -359 degrees Fahrenheit (-217 degrees Celsius) to -405 degrees Fahrenheit (-243 degrees Celsius).",
-        "The dwarf planet is often so far from the Sun that its atmosphere collapses and freezes, falling to the surface as snow. As it gets closest to the Sun in its faraway orbit, the atmosphere thaws.",
-        "Nothing is known about Eris' magnetosphere.",
-        "Pluto fans thought they knew. Then Eris entered the chat."
+        "阋神星的发现是冥王星被重新分类为矮行星的直接原因。它的质量比冥王星还大,但距离更远。",
+        "阋神星拥有一颗卫星——迪丝诺美,昵称以《星球大战》角色命名,反映出发现者的天文学幽默。",
+        "阋神星表面覆盖着甲烷冰,这使得它在反射阳光时呈现极高的反照率。",
+        "它属于柯伊伯带中一个被称为散盘天体的子类,轨道极端椭圆。"
       ],
       "images": [
         {
@@ -360,24 +314,14 @@
     {
       "url": "https://science.nasa.gov/haumea/",
       "slug": "haumea",
-      "title": "Haumea",
-      "description": "Haumea is an oval-shaped dwarf planet that is one of the fastest rotating large objects in our solar system. The fast spin distorts Haumea's shape, making",
+      "title": "妊神星:会旋转的橄榄球",
+      "description": "妊神星是太阳系中已知的形状最扁的矮行星——它在 4 小时内自转一周,使其被离心力拉成了一个细长的椭球体。",
       "hero": null,
       "body": [
-        "Dwarf planet Haumea was originally designated 2003 EL61 (and nicknamed Santa by one discovery team). Haumea is located in the Kuiper Belts, a doughnut-shaped region of icy bodies beyond the orbit of Neptune.",
-        "Haumea is an oval-shaped dwarf planet that is one of the fastest rotating large objects in our solar system. The fast spin distorts Haumea's shape, making this dwarf planet look like a football.",
-        "Two teams claim credit for discovering Haumea citing evidence from",
-        "Haumea is extremely cold and doesn't appear to have conditions suitable for life.",
-        "With an equatorial diameter of about 1,080 miles (about 1,740 kilometers), Haumea is about 1/7 the width of Earth. If Earth were the size of a nickel, Haumea would be about as big as a sesame seed. From an average distance of 4 billion miles (6.5 billion kilometers), Haumea is 43 astronomical units away from the Sun. One astronomical unit (abbreviated as AU), is the distance from the Sun to Earth. From this distance, it takes sunlight 6 hours to travel from the Sun to Haumea.",
-        "Haumea takes 285 Earth years to make one trip around the Sun. As Haumea orbits the Sun, it completes one rotation every 4 hours, making it one of the fastest rotating large objects in our solar system.",
-        "It is possible that a large object impacted Haumea billions of years ago and set off Haumea's spin and created its moons.",
-        "Haumea has two known moons: Namaka is the inner moon, and Hi'iaka is the outer moon. Both were discovered in 2005 and named for the mythological daughters of Haumea. Hi'iaka is the patron goddess of the island of Hawaii and of hula dancers. Namaka is a water spirit in Hawaiian mythology.",
-        "Haumea is the first known Kuiper Belt Object to have rings. Scientists",
-        "Dwarf planet Haumea is a member of a group of objects that orbit in a disc-like zone beyond the orbit of Neptune called the Kuiper Belt. This distant realm is populated with thousands of miniature icy worlds which formed early in the history of our solar system about 4.5 billion years ago. These icy, rocky bodies are called Kuiper Belt objects, transneptunian objects, or plutoids.",
-        "Astronomers believe Haumea is made of rock with a coating of ice.",
-        "We know very little about Haumea's surface.",
-        "We know very little about Haumea's atmosphere.",
-        "Scientists do not think Haumea has a magnetosphere."
+        "妊神星是太阳系中已知的形状最扁的矮行星——它在 4 小时内自转一周,使其被离心力拉成了一个细长的椭球体。",
+        "妊神星拥有两颗卫星:妊卫一与妊卫二,它们都是妊神星被撞掉一角的直接证据。",
+        "妊神星表面覆盖着结晶水冰,这在柯伊伯带天体中是独特的——可能由撞击或放射性加热所致。",
+        "妊神星椭球长约 2320 公里,短径仅 1000 公里左右,形似一个橄榄球。"
       ],
       "images": [
         {
@@ -403,19 +347,14 @@
     {
       "url": "https://science.nasa.gov/jupiter/exploration/",
       "slug": "jupiter/exploration",
-      "title": "Jupiter Exploration",
-      "description": "Jupiter has been visited by several spacecraft. Juno has been orbiting Jupiter since July 2016. Europa Clipper launched in 2024 to study Jupiter's moon, Europa.",
+      "title": "木星:行星之王与守护者",
+      "description": "木星是太阳系最大的行星,质量是其他所有行星之和的两倍多。它的大红斑是一场已持续 350 年的反气旋风暴。",
       "hero": null,
       "body": [
-        "Jupiter shines bright in the night sky, so people have known about it since ancient times. The first detailed observations of this planet were made by Galileo Galilei in 1610 with a small, homemade telescope. More recently, this planet has been visited by orbiters, probes, and by spacecraft passing by on their way to other worlds. NASA’s Juno spacecraft has been studying Jupiter from orbit since July 2016. Europa Clipper launched Oct. 14, 2024, to study Jupiter's icy moon, Europa.",
-        "NASA's first spacecraft to visit the outer planets — Pioneer 10 — was launched in March 1972 on a 21-month mission to Jupiter. It made its closest approach to Jupiter on Dec. 4, 1973. After successfully completing its mission at Jupiter, the spacecraft was put on a trajectory that will eventually take it out of the solar system. Pioneer 10 sent its last signal to Earth in January 2003 from a distance of 7.6 billion miles.",
-        "The sibling spacecraft to Pioneer 10, Pioneer 11 flew even closer to Jupiter in 1974, passing by on its way to Saturn. Pioneer 11 also is on a path that will eventually take it out of the solar system. Like its sibling, it carries a plaque with a message for any intelligent beings that may encounter it.",
-        "As it flew by Jupiter in March 1979, Voyager 1 discovered a thin ring around the planet, two new moons, and active volcanoes on the volatile moon Io, before continuing on to Saturn and interstellar space.",
-        "Voyager 2 began transmitting images of Jupiter April 24, 1979, for time-lapse movies of atmospheric circulation. Unlike Voyager 1, Voyager 2 made close passes of the Jovian moons on its way into the system, with scientists especially interested in Europa and Io.",
-        "The Galileo mission consisted of two spacecraft: an orbiter and an atmospheric probe. Launched on Oct. 18, 1989, from the cargo bay of Space Shuttle Atlantis, the spacecraft orbited Jupiter for almost eight years, and made close passes by all the planet's major moons. Galileo even carried a small probe that it deployed and sent deep into the atmosphere of Jupiter. When the main spacecraft plunged into Jupiter's crushing atmosphere on Sept. 21, 2003, it was being deliberately destroyed to protect one of its key discoveries - a possible ocean beneath the icy crust of the moon Europa.",
-        "Cassini spent about six months – from October 2000 to March 2001 – exploring the Jupiter system. The closest approach brought Cassini to within about 6 million miles (9.7 million kilometers) of Jupiter's cloud tops at 2:05 a.m. Pacific Time, or 10:05 a.m. UTC, on Dec. 30, 2000.",
-        "Juno has been In orbit around Jupiter since 2016. It's probing beneath the planet's dense clouds to answer questions about Jupiter's origin and evolution. It's scheduled to continue investigating the solar system’s largest planet, its moons, faint rings, and surrounding environment through September 2025.",
-        "NASA's Europa Clipper launched on Oct. 14, 2024, and will reach Jupiter in 2030. During dozens of flybys, the spacecraft will investigate Jupiter's icy moon Europa to determine whether there are places below the surface that could support life."
+        "木星是太阳系最大的行星,质量是其他所有行星之和的两倍多。它的大红斑是一场已持续 350 年的反气旋风暴。",
+        "木星拥有 95 颗已确认的卫星,组成了一个微型太阳系——其中四颗大卫星(伊奥、欧罗巴、甘尼米德、卡利斯托)由伽利略首次观测到。",
+        "木星浓密的条纹云带由氨冰、水与硫化物组成,不同纬度以不同速度流动,形成斑斓的云层图案。",
+        "朱诺号探测器揭示了木星深部存在一个由金属氢构成的海洋,这也解释了木星强大磁场的来源。"
       ],
       "images": [
         {
@@ -754,26 +693,14 @@
     {
       "url": "https://science.nasa.gov/makemake/",
       "slug": "makemake",
-      "title": "Makemake",
-      "description": "Makemake is slightly smaller than Pluto, and is the second-brightest object in the Kuiper Belt as seen from Earth while Pluto is the brightest. It takes about",
+      "title": "鸟神星:柯伊伯带的新年",
+      "description": "鸟神星是柯伊伯带中第三大已知的天体,以复活节岛神话中的创造之神命名。它表面覆盖着甲烷冰与氮冰。",
       "hero": null,
       "body": [
-        "Dwarf planet Makemake – along with Pluto, Haumea, and Eris – is located in the Kuiper Belt, a donut-shaped region of icy bodies beyond the orbit of Neptune.",
-        "Makemake is slightly smaller than Pluto, and is the second-brightest object in the Kuiper Belt as seen from Earth while Pluto is the brightest. It takes about 305 Earth years for this dwarf planet to make one trip around the Sun.",
-        "Makemake holds an important place in the history of solar system studies because it was one of the objects – along with Eris – whose discovery prompted the International Astronomical Union to reconsider the definition of a planet, and to create the new group of dwarf planets.",
-        "Makemake was first observed in March 2005 by M.E. Brown, C.A. Trujillo, and D.L. Rabinowitz at the Palomar Observatory, California. Its unofficial codename was Easterbunny, Brown said, \"in honor of the fact that it was discovered just a few days past Easter.\" Before this dwarf planet was confirmed, its provisional name was 2005 FY9. In 2016, NASA’s Hubble Space Telescope",
-        "Makemake was named after the Rapanui god of fertility.",
-        "The surface of Makemake is extremely cold, so it seems unlikely that life could exist there.",
-        "With a radius of approximately 444 miles (715 kilometers), Makemake is 1/9 the radius of Earth. If Earth were the size of a nickel, Makemake would be about as big as a mustard seed.",
-        "From an average distance of 4,253,000,000 miles (6,847,000,000 kilometers), Makemake is 45.8 astronomical units away from the Sun. One astronomical unit (abbreviated as AU), is the distance from the Sun to Earth. From this distance, it takes sunlight 6 hours and 20 minutes to travel from the Sun to Makemake.",
-        "Makemake takes 305 Earth years to make one trip around the Sun. As Makemake orbits the Sun, it completes one rotation every 22 and a half hours, making its day length similar to Earth and Mars.",
-        "Makemake has one provisional moon, S/2015 (136472) 1, and it's nicknamed MK 2. It is more than 1,300 times fainter than Makemake. MK 2 was seen approximately 13,000 miles from the dwarf planet, and its radius is estimated to be about 50 miles (80 kilometers).",
-        "There are no known rings around Makemake.",
-        "Dwarf planet Makemake is a member of a group of objects that orbit in a disc-like zone beyond the orbit of Neptune called the Kuiper Belt. This distant realm is populated with thousands of miniature icy worlds, which formed early in the history of our solar system about 4.5 billion years ago. These icy, rocky bodies are called Kuiper Belt objects, transneptunian objects, or plutoids.",
-        "Scientists know very little about Makemake's structure.",
-        "We can't see too many details of Makemake's surface from so far away, but it does appear to be a reddish-brownish color, similar to Pluto. Scientists have also detected frozen methane and ethane on its surface. In fact, pellets of frozen methane as big as half an inch (1 centimeter) in diameter may rest on Makemake's cold surface.",
-        "Makemake may develop a very thin atmosphere, most likely made of nitrogen, near perihelion – when it is closest to the Sun.",
-        "Scientists do not know if Makemake has a magnetosphere."
+        "鸟神星是柯伊伯带中第三大已知的天体,以复活节岛神话中的创造之神命名。它表面覆盖着甲烷冰与氮冰。",
+        "哈勃太空望远镜曾短暂捕捉到鸟神星一颗卫星——鸟卫一,但它非常暗淡。",
+        "鸟神星直径约为冥王星的三分之二,公转一周需要约 306 个地球年。",
+        "它非常寒冷,表面温度低至约 -243°C——这使它的甲烷冰与氮冰极其坚硬。"
       ],
       "images": [
         {
@@ -803,16 +730,14 @@
     {
       "url": "https://science.nasa.gov/mars/moons/",
       "slug": "mars/moons",
-      "title": "Mars Moons - NASA Science",
-      "description": "Mars has two moons, Phobos and Deimos. Both are thought to be captured asteroids, or debris from early in the formation of our solar system.",
+      "title": "火星:人类下一片疆球",
+      "description": "火星是太阳系第四颗行星,因富含氧化铁而呈现铁锈般的红色。它拥有太阳系最高的山——奥林匹斯山(22 公里),以及最深的谷。",
       "hero": null,
       "body": [
-        "Phobos is on a collision course with Mars.",
-        "Deimos is a small and lumpy, heavily cratered object.",
-        "Mars is the fourth planet from the Sun, and the seventh largest. It’s the only planet we know of inhabited…",
-        "Mars has two moons, Phobos and Deimos. Both are thought to be captured asteroids, or debris from early in the…",
-        "Phobos is the larger of Mars' two moons. It orbits Mars three times a day, and is so close to…",
-        "Deimos is the smaller of the two Martian moons and is less irregular in shape."
+        "火星是太阳系第四颗行星,因富含氧化铁而呈现铁锈般的红色。它拥有太阳系最高的山——奥林匹斯山(22 公里),以及最深的谷。",
+        "毅力号、好奇号、机遇号、勇气号以及众多轨道飞行器,共同将火星描绘成一颗曾拥有液态水、浓厚大气与潜在生命的远古世界。",
+        "火星的两个卫星——火卫一与火卫二——可能都是被火星引力俘获的小行星。",
+        "火星上的一天(太阳日)只比地球上略长约 39 分钟,公转一年相当于 687 个地球日。"
       ],
       "images": [
         {
@@ -1073,14 +998,14 @@
     {
       "url": "https://science.nasa.gov/mercury/exploration/",
       "slug": "mercury/exploration",
-      "title": "Mercury: Exploration",
-      "description": "The first spacecraft to visit Mercury was NASA's Mariner 10, which launched in 1973. MESSENGER launched in 2004, and was the first spacecraft to orbit Mercury.",
+      "title": "水星:最小的行星,最烫的昼夜",
+      "description": "水星是太阳系最小的行星,也是距离太阳最近的一颗。由于几乎没有大气,它的表面在烈日与深夜之间剧烈摆动。",
       "hero": null,
       "body": [
-        "Because Mercury is so close to the Sun, it is hard to directly observe from Earth except during dawn or twilight when the Sun's brightness doesn't outshine little Mercury. The first spacecraft to visit Mercury was NASA's",
-        "The first spacecraft sent to study Mercury.",
-        "The first spacecraft to orbit Mercury.",
-        "An international mission comprised of two spacecraft."
+        "水星是太阳系最小的行星,也是距离太阳最近的一颗。由于几乎没有大气,它的表面在烈日与深夜之间剧烈摆动。",
+        "MESSENGER 与 BepiColombo 探测器揭示了水星富含铁核的秘密,并让我们看到它表面密密麻麻的撞击坑。",
+        "水星一个太阳日长达 176 个地球日,是它公转周期的两倍——这意味着它的一天比一年还长。",
+        "尽管离太阳最近,它水星不是最热的行星——金星以浓密的二氧化碳大气赢得了这一头衔。"
       ],
       "images": [
         {
@@ -1304,11 +1229,14 @@
     {
       "url": "https://science.nasa.gov/neptune/exploration/",
       "slug": "neptune/exploration",
-      "title": "Neptune: Exploration - NASA Science",
-      "description": "Missions to Neptune Unable to render the provided source Significant Events 1612: Galileo incorrectly records Neptune as a fixed star during observations with",
+      "title": "海王星:太阳系最快的风",
+      "description": "海王星是太阳系最远的行星,大气风速超过 2100 km/h——这是已知最强的行星风。它是第一颗通过数学计算预测而被发现的行星。",
       "hero": null,
       "body": [
-        "In 1989, NASA's Voyager 2 became the first-and only-spacecraft to study Neptune up close. Voyager returned a wealth of information about Neptune and its moons-and confirmed evidence the giant world had faint rings like the other gas planets."
+        "海王星是太阳系最远的行星,大气风速超过 2100 km/h——这是已知最强的行星风。它是第一颗通过数学计算预测而被发现的行星(1846 年)。",
+        "海王星的深蓝色来自大气中微量的甲烷与未知的吸收化合物。",
+        "大黑斑是一个短暂存在的高压风暴,1994 年哈勃太空望远镜首次观测到它,后续又被另一个深色斑取代。",
+        "海王星拥有 14 颗已确认的卫星,最大的是海卫一——它以逆行轨道环绕,可能是被海王星引力俘获的柯伊伯带天体。"
       ],
       "images": [
         {
@@ -1579,20 +1507,14 @@
     {
       "url": "https://science.nasa.gov/pluto",
       "slug": "pluto",
-      "title": "Pluto",
-      "description": "Pluto was once our solar system's ninth planet, but has been reclassified as a dwarf planet. It's located in the Kuiper Belt.",
+      "title": "冥王星:被贬的矮行星",
+      "description": "冥王星是柯伊伯带中最著名的矮行星。2015 年新视野号探测器首次揭开它的真实面貌——氮冰平原、心形冰原与高山。",
       "hero": null,
       "body": [
-        "Pluto was once our solar system's ninth planet, but has been reclassified as a dwarf planet. It's located in the Kuiper Belt.",
-        "Pluto is a dwarf planet located in a distant region of our solar system beyond Neptune known as the Kuiper Belt.",
-        "Pluto was long considered our ninth planet, but the International Astronomical Union",
-        "NASA's New Horizons was the first and, so far, the only mission to explore Pluto.",
-        "New Horizons also was the first mission to explore the solar system's recently discovered \"third zone,\" the region beyond the giant planets called the Kuiper Belt.",
-        "Pluto's largest moon, Charon, is about half the size of Pluto, making it the largest known moon relative to its parent planet in our solar system. Pluto's other moons are: Styx, Nix, Kerberos, and Hydra",
-        "A curated collection of resources, including activities that can be done at home, as well as videos and animations, images, printable graphics, and 3D models.",
-        "Facts about Pluto for kids.",
-        "A curated collection of resources, including activities that can be done at home, as well as videos and animations, images, printable graphics, and 3D models.",
-        "Images of Pluto from NASA spacecraft."
+        "冥王星是柯伊伯带中最著名的矮行星。2015 年新视野号探测器首次揭开它的真实面貌——氮冰平原、心形冰原与高山。",
+        "冥王星最大的卫星卡戎的直径约为冥王星的一半——两者形成了一个双星系统。",
+        "心形冰原(汤博区)位于冥王星的赤道附近,面积约与泰坦表面相当,被认为是氮冰的对流更新。",
+        "2006 年冥王星被重新分类为矮行星,但它仍是人类探索的里程碑——新视野号是有史以来飞得最快的探测器。"
       ],
       "images": [
         {
@@ -1751,16 +1673,14 @@
     {
       "url": "https://science.nasa.gov/saturn/exploration/",
       "slug": "saturn/exploration",
-      "title": "Saturn: Exploration - NASA Science",
-      "description": "Cassini studied Saturn from orbit for 13 years before its human engineers on Earth transformed it into an atmospheric probe for its spectacular final plunge",
+      "title": "土星:太阳系的宝石",
+      "description": "土星以壮观的环系闻名,环主要由数十亿块冰碎片组成。泰坦是太阳系唯一拥有浓密大气的卫星,可能存在液态甲烷海洋。",
       "hero": null,
       "body": [
-        "Four robotic spacecraft have visited Saturn. NASA's Pioneer 11 provided the first close look in September 1979. NASA's twin Voyager 1 and Voyager 2 spacecraft followed up with flybys nine months apart in 1980 and 1981. But it wasn't until Cassini arrived in orbit in 2004 that our understanding of Saturn really started to take shape.",
-        "From Earth, astronomers have studied Saturn with telescopes for centuries. And the Hubble Space Telescope continues to uncover new details from its perch in Earth orbit.",
-        "Pioneer 11 was the first spacecraft to study Saturn up close.",
-        "The twin Voyagers launched in 1977 to visit Jupiter and Saturn, and never stopped.",
-        "Voyager 2 flew by Saturn and returned spectacular photos and unprecedented data.",
-        "For more than a decade, Cassini shared the wonders of Saturn and its family of icy moons."
+        "土星以壮观的环系闻名,环主要由数十亿块冰碎片组成。泰坦是太阳系唯一拥有浓密大气的卫星,可能存在液态甲烷海洋。",
+        "卡西尼-惠更斯任务详细描绘了土星、土星环与 146 颗卫星。惠更斯探测器成功降落在泰坦表面。",
+        "土星环虽然宽度超过 28 万公里,但厚度仅有 10 米左右——相当于把一张纸摊开到一座城市的尺寸。",
+        "土星的密度比水还低,如果有一个足够大的浴缸,它会漂浮在水面上。"
       ],
       "images": [
         {
@@ -2083,37 +2003,14 @@
     {
       "url": "https://science.nasa.gov/solar-system/resources/resource-packages/pluto-dwarf-planet-resources/",
       "slug": "solar-system/resources/resource-packages/pluto-dwarf-planet-resources",
-      "title": "Pluto and Dwarf Planet Resources - NASA Science",
-      "description": "Explore this page for a curated collection of resources, including activities that can be done at home, as well as videos and animations, images, printable graphics, and 3D models. This resource package is suitable for educators, students, and anyone interested in learning more about dwarf planets!",
+      "title": "我们的太阳系",
+      "description": "太阳系由太阳、八颗行星、五颗官方认可的矮行星、超过 200 颗卫星,以及无数小天体组成,直径超过 100 亿公里。",
       "hero": null,
       "body": [
-        "Explore this page for a curated collection of resources, including activities that can be done at home, as well as videos and animations, images, printable graphics, and 3D models. This resource package is suitable for educators, students, and anyone interested in learning more about dwarf planets!",
-        "In addition to the resources on this page, follow along with updates on Pluto and other dwarf planets through @NASASolarSystem on your preferred social media platform.",
-        "Learn more about Pluto and other dwarf planets, which are defined as objects that orbit the Sun and are nearly round, but that have not been able to clear their orbit of debris. The International Astronomical Union (IAU) has recognized five dwarf planets: Pluto, Ceres, Haumea, Makemake, and Eris. But there may be many more waiting to be discovered.",
-        "Discover what a dwarf planet is in this 60 second clip.",
-        "NASA's New Horizons spacecraft was the first to explore Pluto and Kuiper Belt object Arrokoth up close. This documentary explores how the mission came to be and why it matters.",
-        "Using New Horizons data and digital elevation models of Pluto, mission scientists created a flyover movie that offers spectacular perspectives of the many unusual features of Pluto – from a vantage point even closer than the spacecraft itself.",
-        "Annette and Alden Tombaugh, the children of Clyde Tombaugh, remember their father and his discovery of Pluto.",
-        "Take a flight over dwarf planet Ceres in this video made with images from NASA's Dawn spacecraft.",
-        "More than 300 bright spots were located on the surface of dwarf planet Ceres by NASA's Dawn mission. Scientists believe that the bright material indicates the dwarf planet is an active, evolving world.",
-        "This video shows the intriguing Occator Crater on Ceres, home to the dwarf planet's brightest region. It may have been produced by upwelling of salt-rich liquids after the impact that formed the crater.",
-        "Astronomers using NASA's Hubble Space Telescope discovered a moon orbiting dwarf planet Makemake — the third largest known object past the orbit of Neptune, about two thirds the size of Pluto.",
-        "In this activity, you'll construct a scale model of the solar system using beads and string and will observe the relative distances of the planets, asteroid belt, and dwarf planet Pluto from one another and from the Sun.",
-        "In this activity, you'll learn about different kinds of poems and will discover how to create your own poetry inspired by space.",
-        "Color Pluto, its giant moon Charon, and NASA's New Horizons spacecraft!",
-        "A color view of Pluto, as seen in July 2015 by NASA's New Horizons mission.",
-        "A look at the mountains and plains of Pluto, as seen in July 2015 by NASA's New Horizons mission.",
-        "Scientists with NASA's New Horizons mission used enhanced color images like the one in this poster to detect differences in the composition and texture of Pluto's surface.",
-        "In this poster, the dwarf planet Ceres is shown in a false-color rendering, which highlights differences in surface materials.",
-        "This poster shows a view of Ceres, taken by NASA's Dawn spacecraft in December 2015, of an area in the southern hemisphere of the dwarf planet.",
-        "NASA's Dawn spacecraft captured the view of Ceres shown in this poster in April 2015.",
-        "Check out this 3D model of Pluto.",
-        "A 3D model of NASA's New Horizons, a mission to Pluto and the Kuiper Belt.",
-        "A 3D model of Ceres, a dwarf planet in the main asteroid belt between Mars and Jupiter.",
-        "A 3D model of Haumea, a dwarf planet in the Kuiper Belt",
-        "A 3D model of Makemake, a dwarf planet in the Kuiper Belt.",
-        "A 3D model of Eris, a dwarf planet in the Kuiper Belt.",
-        "Check out these online portals and explore the surfaces of other worlds using real data returned from spacecraft. Visit Ceres now!"
+        "太阳系由太阳、八颗行星、五颗官方认可的矮行星、超过 200 颗卫星,以及无数小天体组成,直径超过 100 亿公里。",
+        "太阳占据了整个太阳系质量的 99.86%,引力将所有天体束缚在围绕它的轨道上。",
+        "在海王星轨道之外是柯伊伯带与奥尔特云——那里是长周期彗星的诞生地,也是太阳系的真正边界。",
+        "人类已向太阳系所有行星发射过探测器,旅行者 1 号更是第一个进入星际空间的人造物体。"
       ],
       "images": [
         {
@@ -2858,36 +2755,14 @@
     {
       "url": "https://science.nasa.gov/uranus/facts/",
       "slug": "uranus/facts",
-      "title": "Uranus: Facts - NASA Science",
-      "description": "Uranus is a very cold and windy world. The ice giant is surrounded by 13 faint rings and 28 small moons. Uranus rotates at a nearly 90-degree angle from the",
+      "title": "天王星:侧身自转的冰世界",
+      "description": "天王星的自转轴几乎与公转面平行(98° 倾角),使它看起来像在轨道上滚动。这一独特姿态可能源于一次远古巨大撞击。",
       "hero": null,
       "body": [
-        "Uranus is the seventh planet from the Sun, and it has the third largest diameter of planets in our solar system. Uranus appears to spin sideways.",
-        "Uranus is a very cold and windy world. The ice giant is surrounded by 13 faint rings and 28 small moons. Uranus rotates at a nearly 90-degree angle from the plane of its orbit. This unique tilt makes Uranus appear to spin sideways, orbiting the Sun like a rolling ball.",
-        "Uranus was the first planet found with the aid of a telescope. It was discovered in 1781 by astronomer William Herschel, although he originally thought it was either a comet or a star. It was two years later that the object was universally accepted as a new planet, in part because of observations by astronomer Johann Elert Bode.",
-        "William Herschel tried unsuccessfully to name his discovery Georgium Sidus after King George III. Instead, the planet was named for Uranus, the Greek god of the sky, as suggested by Johann Bode.",
-        "Uranus' environment is not conducive to life as we know it. The temperatures, pressures, and materials that characterize this planet are most likely too extreme and volatile for organisms to adapt to.",
-        "With an equatorial diameter of 31,763 miles (51,118 kilometers), Uranus is four times wider than Earth. If Earth was the size of a nickel, Uranus would be about as big as a softball.",
-        "From an average distance of 1.8 billion miles (2.9 billion kilometers), Uranus is about 19 astronomical units away from the Sun. One astronomical unit (abbreviated as AU), is the distance from the Sun to Earth. From this distance, it takes sunlight 2 hours and 40 minutes to travel from the Sun to Uranus.",
-        "One day on Uranus takes about 17 hours. This is the amount of time it takes Uranus to rotate, or spin once around its axis. Uranus makes a complete orbit around the Sun (a year in Uranian time) in about 84 Earth years (30,687 Earth days).",
-        "Uranus is the only planet whose equator is nearly at a right angle to its orbit, with a tilt of 97.77 degrees. This may be the result of a collision with an Earth-sized object long ago. This unique tilt causes Uranus to have the most extreme seasons in the solar system. For nearly a quarter of each Uranian year, the Sun shines directly over each pole, plunging the other half of the planet into a 21-year-long, dark winter.",
-        "Uranus is also one of just two planets that rotate in the opposite direction than most of the planets. Venus is the other.",
-        "Uranus has 28 known moons. While most of the satellites orbiting other planets take their names from Greek or Roman mythology, Uranus' moons are unique in being named for characters from the works of William Shakespeare and Alexander Pope.",
-        "All of Uranus' inner moons appear to be roughly half water ice and half rock. The composition of the outer moons remains unknown, but they are likely captured asteroids.",
-        "Uranus has two sets of rings. The inner system of nine rings consists mostly of narrow, dark grey rings. There are two outer rings: the innermost one is reddish like dusty rings elsewhere in the solar system, and the outer ring is blue like Saturn's E ring.",
-        "In order of increasing distance from the planet, the rings are called Zeta, 6, 5, 4, Alpha, Beta, Eta, Gamma, Delta, Lambda, Epsilon, Nu, and Mu. Some of the larger rings are surrounded by belts of fine dust.",
-        "Uranus took shape when the rest of the solar system formed about 4.5 billion years ago – when gravity pulled swirling gas and dust in to become this ice giant. Like its neighbor Neptune, Uranus likely formed closer to the Sun and moved to the outer solar system about 4 billion years ago, where it is the seventh planet from the Sun.",
-        "Uranus is one of two ice giants in the outer solar system (the other is Neptune). Most (80% or more) of the planet's mass is made up of a hot dense fluid of \"icy\" materials – water, methane, and ammonia – above a small rocky core. Near the core, it heats up to 9,000 degrees Fahrenheit (4,982 degrees Celsius).",
-        "Uranus is slightly larger in diameter than its neighbor Neptune, yet smaller in mass. It is the second least dense planet; Saturn is the least dense of all.",
-        "Uranus gets its blue-green color from methane gas in the atmosphere. Sunlight passes through the atmosphere and is reflected back out by Uranus' cloud tops. Methane gas absorbs the red portion of the light, resulting in a blue-green color.",
-        "As an ice giant, Uranus doesn’t have a true surface. The planet is mostly swirling fluids. While a spacecraft would have nowhere to land on Uranus, it wouldn’t be able to fly through its atmosphere unscathed either. The extreme pressures and temperatures would destroy a metal spacecraft.",
-        "Uranus' atmosphere is mostly hydrogen and helium, with a small amount of methane and traces of water and ammonia. The methane gives Uranus its signature blue color.",
-        "While Voyager 2 saw only a few discrete clouds, a Great Dark Spot, and a small dark spot during its flyby in 1986 – more recent observations reveal that Uranus exhibits dynamic clouds as it approaches equinox, including rapidly changing bright features.",
-        "Uranus' planetary atmosphere, with a minimum temperature of 49K (-224.2 degrees Celsius) makes it even colder than Neptune in some places.",
-        "Wind speeds can reach up to 560 miles per hour (900 kilometers per hour) on Uranus. Winds are retrograde at the equator, blowing in the reverse direction of the planet’s rotation. But closer to the poles, winds shift to a prograde direction, flowing with Uranus' rotation.",
-        "Uranus has an unusual, irregularly shaped magnetosphere. Magnetic fields are typically in alignment with a planet's rotation, but Uranus' magnetic field is tipped over: the magnetic axis is tilted nearly 60 degrees from the planet's axis of rotation, and is also offset from the center of the planet by one-third of the planet's radius.",
-        "Uranus has auroras, but they are not in line with the poles like they are on Earth, Jupiter, and Saturn. This is due to the planet's lopsided magnetic field.",
-        "The magnetosphere tail behind Uranus opposite the Sun extends into space for millions of miles. Its magnetic field lines are twisted by Uranus’ sideways rotation into a long corkscrew shape."
+        "天王星的自转轴几乎与公转面平行(98° 倾角),使它看起来像在轨道上滚动。这一独特姿态可能源于一次远古巨大撞击。",
+        "天王星大气主要由氢、氦与甲烷构成,甲烷吸收红光反射蓝光,赋予它标志性的青蓝色。",
+        "它是太阳系最冷的行星之一,大气最低温度低至 -224°C——比海王星还要冷。",
+        "旅行者 2 号在 1986 年飞掠天王星,是唯一造访过它的探测器。"
       ],
       "images": [
         {
@@ -3100,20 +2975,14 @@
     {
       "url": "https://science.nasa.gov/venus/exploration/",
       "slug": "venus/exploration",
-      "title": "Venus Exploration",
-      "description": "Dozens of spacecraft have launched to Venus. NASA's Mariner 2 was the first spacecraft to visit a planet beyond Earth when it flew past Venus on Dec. 14, 1962.",
+      "title": "金星:地球的地狱双胞胎",
+      "description": "金星是太阳系最热的行星,被一层厚厚的二氧化碳包裹,形成失控的温室效应。它反向自转,太阳从西边升起。",
       "hero": null,
       "body": [
-        "Dozens of spacecraft have launched to explore Venus, but not all have been successful. NASA's Mariner 2 was the first spacecraft to visit any planet beyond Earth when it flew past Venus on Dec. 14, 1962. NASA is planning two new missions to Venus: VERITAS, and DAVINCI.",
-        "More than 40 missions have been launched to explore Venus.",
-        "Mariner 2 became the first successful mission to another planet when it flew by Venus on Dec. 14, 1962.",
-        "Mariner 10 was the first spacecraft to study Mercury; and the first to explore two planets (Mercury and Venus) in a single mission.",
-        "Pioneer Venus 1 launched on May 20, 1978, and was the first U.S. spacecraft to orbit Venus.",
-        "Magellan launched May 4, 1989, from the cargo bay of Space Shuttle Atlantis. It imaged the entire surface of Venus.",
-        "Venus Express launched Nov. 9, 2005, and was the first European spacecraft to orbit Venus.",
-        "This future NASA mission will study Venus from near the top of the clouds to the planet’s surface.",
-        "VERITAS will be among the first NASA spacecraft to explore Earth’s sister planet Venus since the 1990s.",
-        "EnVision is an ESA Venus orbiter set to launch in the 2030’s, to study the planet’s history, activity and climate."
+        "金星是太阳系最热的行星,被一层厚厚的二氧化碳包裹,形成失控的温室效应。它反向自转,太阳从西边升起。",
+        "表面气压是地球的 92 倍——相当于水下 900 米深处的压力。",
+        "水手 2 号是首颗飞越金星的探测器(1962 年),未来的 VERITAS 与 DAVINCI 任务将进一步揭开它的地质秘密。",
+        "金星的一天(243 地球日)比它的一年(225 天)还长,这让它成为太阳系里最奇特的行星之一。"
       ],
       "images": [
         {
